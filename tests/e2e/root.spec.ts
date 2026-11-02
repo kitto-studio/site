@@ -84,7 +84,11 @@ test.describe("root redirect", () => {
 test.describe("root page without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
-  test("lists every language as a link to its home", async ({ page }) => {
+  test("lists every language as a link to its home", async ({ page, issues }) => {
+    issues.allow(
+      /requestfailed: .*\/assets\/chunk-[\w-]+\.js csp/,
+      "with JavaScript off, Chromium reports the modulepreload of the SPA chunk as a CSP block"
+    );
     await page.goto("/");
     const links = page.locator('[data-component="root-page"] [data-languages] a');
     await expect(links).toHaveCount(LOCALES.length);

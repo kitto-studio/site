@@ -142,7 +142,8 @@ function peekingStickers(sheets: readonly StackSheet[]): HTMLElement[] {
 
 /**
  * Stick each sheet taller than the room under its sticky top by its bottom instead, so no part of
- * it hides under the next sheet. Runs at load and on resize, never per scrolled frame.
+ * it hides under the next sheet. Runs at load, on resize and whenever a sheet changes size (Safari
+ * lays the sheets out after the island starts), never per scrolled frame.
  *
  * @param sheets - The sheets of the stack.
  * @returns {void} Nothing; a tall sheet has its `--stick-top`, every other sheet its CSS top.
@@ -170,9 +171,10 @@ function pinTallSheets(sheets: readonly StackSheet[]): void {
  */
 function startStack(root: Element): () => void {
   const sheets = collectSheets(root);
-  // A touch screen keeps the sheets still, as under reduced motion: following the lift restyled
-  // every sheet on every scrolled frame.
-  const reduced = prefersReducedMotion() || isTouchScreen();
+  // A touch screen keeps the sheets still, as under reduced motion: following the lift and the
+  // cover restyled every sheet on every scrolled frame. The sheets still stack (CSS sticky).
+  const touch = isTouchScreen();
+  const reduced = prefersReducedMotion() || touch;
   let armed = false;
   let frame = 0;
 
@@ -204,6 +206,17 @@ function startStack(root: Element): () => void {
     pinTallSheets(sheets);
     render(true);
   };
+  // A sheet measured before its fonts and art settled is pinned from a wrong height: pin again
+  // whenever a sheet changes size, at most once a frame.
+  let resizeFrame = 0;
+  const sheetsResized = new ResizeObserver(() => {
+    if (resizeFrame !== 0) return;
+    resizeFrame = requestAnimationFrame(() => {
+      resizeFrame = 0;
+      onResize();
+    });
+  });
+  for (const { sheet } of sheets) sheetsResized.observe(sheet);
 
   pinTallSheets(sheets);
   render(true);
@@ -214,10 +227,12 @@ function startStack(root: Element): () => void {
       popUp(sticker, ENTRANCE_DELAY);
     }
   }
-  globalThis.addEventListener("scroll", onScroll, { passive: true });
+  if (!touch) globalThis.addEventListener("scroll", onScroll, { passive: true });
   globalThis.addEventListener("resize", onResize);
   return () => {
     cancelAnimationFrame(frame);
+    cancelAnimationFrame(resizeFrame);
+    sheetsResized.disconnect();
     globalThis.removeEventListener("scroll", onScroll);
     globalThis.removeEventListener("resize", onResize);
   };

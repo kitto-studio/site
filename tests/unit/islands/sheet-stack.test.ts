@@ -83,4 +83,38 @@ describe("sheet-stack island", () => {
     // 600 px sheets in a 500 px window stick 116 px above it: 500 - 600 - 16.
     expect(tops).toEqual(["-116px", "-116px", "-116px"]);
   });
+
+  // Catches: sheets pinned from the height they had before Safari laid them out (a sheet measured
+  // at 3282 px stuck 2634 px above the window) and never pinned again.
+  it("pins a sheet again when its size changes", () => {
+    vi.stubGlobal("innerHeight", 500);
+    let resized: (() => void) | undefined;
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        constructor(callback: () => void) {
+          resized = callback;
+        }
+        observe(): void {}
+        disconnect(): void {}
+      }
+    );
+    let height = 3000;
+    vi.mocked(
+      Object.getOwnPropertyDescriptor(HTMLElement.prototype, "offsetHeight")?.get as () => number
+    ).mockImplementation(() => height);
+    const tops: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--stick-top") tops.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+    tops.length = 0;
+
+    height = 600;
+    resized?.();
+    vi.advanceTimersToNextFrame();
+
+    // 600 px sheets in a 500 px window: 500 - 600 - 16.
+    expect(tops).toEqual(["-116px", "-116px", "-116px"]);
+  });
 });

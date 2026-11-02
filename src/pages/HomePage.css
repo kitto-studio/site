@@ -44,6 +44,14 @@
     will-change: transform;
   }
 
+  /* A touch screen gets the still hero (home-hero island): no plane moves, so none needs its own
+     GPU layer. Four layers 2.3 times the screen width took most of a phone's layer memory. */
+  @media (hover: none) {
+    [data-plane] {
+      will-change: auto;
+    }
+  }
+
   [data-plane] img {
     position: absolute;
     inset: 0;
