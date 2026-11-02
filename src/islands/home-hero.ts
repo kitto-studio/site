@@ -21,6 +21,7 @@ import {
   sunOpacity,
   sunShift
 } from "../lib/parallax";
+import { isTouchScreen } from "./motion-pref";
 
 /** How much of the remaining pointer distance the planes catch up per frame. */
 const POINTER_EASE = 0.08;
@@ -289,7 +290,9 @@ function startHero(root: HTMLElement): () => void {
     phone: globalThis.matchMedia(PHONE_QUERY),
     finePointer: globalThis.matchMedia(FINE_POINTER_QUERY)
   };
-  const still = globalThis.matchMedia(REDUCED_MOTION_QUERY).matches;
+  // A touch screen gets the still hero too: the parallax redrew four planes per scrolled frame,
+  // more than a phone's GPU keeps up with.
+  const still = globalThis.matchMedia(REDUCED_MOTION_QUERY).matches || isTouchScreen();
   const pointer: Pointer = { x: 0, y: 0 };
   const target: Pointer = { x: 0, y: 0 };
   let frame = 0;

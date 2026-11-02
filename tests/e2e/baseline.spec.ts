@@ -55,6 +55,10 @@ for (const theme of THEMES) {
 
     test("root golden", async ({ page, issues }) => {
       issues.allow(
+        /requestfailed: .*\/assets\/chunk-[\w-]+\.js csp/,
+        "with JavaScript off, Chromium reports the modulepreload of the SPA chunk as a CSP block"
+      );
+      issues.allow(
         /nunito-latin-900\.woff2.*preload.*not used/,
         "the root page preloads the heading font for the locale page its redirect opens next"
       );

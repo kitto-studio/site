@@ -10,6 +10,7 @@ test.describe("motion on", () => {
   test.use({ contextOptions: { reducedMotion: "no-preference" } });
 
   test("home parallax moves the planes and sinks the headline on scroll", async ({ page }) => {
+    test.skip(isPhone(test.info().project.name), "a touch screen keeps the hero still");
     await visit(page, "/en/");
     const near = page.locator('[data-plane="near"]');
     const text = page.locator("[data-hero-text]");
@@ -21,6 +22,17 @@ test.describe("motion on", () => {
     // Scroll the whole page: the sheet stack and stickers run without errors.
     for (let step = 0; step < 12; step += 1) await page.mouse.wheel(0, 400);
     await page.waitForTimeout(600);
+  });
+
+  // Catches: the parallax running on a phone, where redrawing four planes per frame stalls scrolling.
+  test("a touch screen keeps the hero planes still on scroll", async ({ page }) => {
+    test.skip(!isPhone(test.info().project.name), "phones only");
+    await visit(page, "/en/");
+    const near = page.locator('[data-plane="near"]');
+    const before = await near.evaluate(element => element.style.transform);
+    await page.evaluate(() => scrollBy(0, 320));
+    await page.waitForTimeout(300);
+    expect(await near.evaluate(element => element.style.transform)).toBe(before);
   });
 
   test("a pop-up sticker springs up in view and replays on a click", async ({ page }) => {

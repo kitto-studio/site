@@ -123,82 +123,69 @@ test("a hard load of a deep page works and the chrome mounts", async ({ page }) 
 });
 
 /**
- * Record, for the next view transition, whether the old page's snapshot is drawn.
+ * Count the view transitions the page starts from now on.
  *
  * @param page - The page.
- * @returns Resolves once the hook is installed.
+ * @returns Resolves once the counter is installed.
  */
-async function watchOldSnapshot(page: import("@playwright/test").Page): Promise<void> {
+async function countTransitions(page: import("@playwright/test").Page): Promise<void> {
   await page.evaluate(() => {
-    const own = globalThis as unknown as { oldSnapshotShown?: boolean };
+    const own = globalThis as unknown as { transitions?: number };
+    own.transitions = 0;
+    if (typeof document.startViewTransition !== "function") return;
     const start = document.startViewTransition.bind(document);
     document.startViewTransition = (update => {
-      const transition = start(update);
-      void transition.ready.then(() => {
-        const old = getComputedStyle(document.documentElement, "::view-transition-old(root)");
-        own.oldSnapshotShown = old.display !== "none";
-      });
-      return transition;
+      own.transitions = (own.transitions ?? 0) + 1;
+      return start(update);
     }) as typeof document.startViewTransition;
   });
 }
 
 /**
- * Whether the last view transition drew the old page's snapshot.
+ * The view transitions started since `countTransitions`.
  *
  * @param page - The page.
- * @returns True when it did, `undefined` while no transition ran.
+ * @returns The count.
  */
-function oldSnapshotShown(page: import("@playwright/test").Page): Promise<boolean | undefined> {
-  return page.evaluate(
-    () => (globalThis as unknown as { oldSnapshotShown?: boolean }).oldSnapshotShown
-  );
+function transitions(page: import("@playwright/test").Page): Promise<number | undefined> {
+  return page.evaluate(() => (globalThis as unknown as { transitions?: number }).transitions);
 }
 
 test.describe("with motion", () => {
   test.use({ contextOptions: { reducedMotion: "no-preference" } });
 
-  test("a link low on the page fades in the new page, not the top of the old one", async ({
+  // Catches: the crossfade back on. It froze the page after every tap on a phone (site config
+  // `viewTransitions: "none"`), and from low on a page it faded out of a top the reader never saw.
+  test("a link low on the page swaps at once and opens the new page at its top", async ({
     page
   }) => {
-    // The kernel scrolls to the top before the old snapshot is taken: from the footer the crossfade
-    // started from the home hero, a page the reader never saw there.
     await visit(page, "/en/");
-    test.skip(
-      await page.evaluate(() => typeof document.startViewTransition !== "function"),
-      "no view transitions in this engine"
-    );
-    await watchOldSnapshot(page);
+    await countTransitions(page);
     await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
     expect(await page.evaluate(() => scrollY), "the click is made below the top").toBeGreaterThan(
       0
     );
     await page.locator('[data-component="footer"] a[href="/en/privacy/"]').click();
     await page.waitForURL(url => url.pathname === "/en/privacy/");
-    await expect.poll(() => oldSnapshotShown(page)).toBe(false);
+    await expect(page.locator("h1")).toHaveText(/Privacy/);
+    expect(await transitions(page)).toBe(0);
+    await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   });
 
-  test("a link at the top of the page keeps the crossfade from the old page", async ({ page }) => {
+  test("a link at the top of the page swaps at once", async ({ page }) => {
     await visit(page, "/en/");
-    test.skip(
-      await page.evaluate(() => typeof document.startViewTransition !== "function"),
-      "no view transitions in this engine"
-    );
-    await watchOldSnapshot(page);
+    await countTransitions(page);
     await page.locator('[data-component="footer"] a[href="/en/privacy/"]').focus();
     await page.evaluate(() => scrollTo(0, 0));
-    expect(await page.evaluate(() => scrollY), "the click is made at the top").toBe(0);
     await page.keyboard.press("Enter");
     await page.waitForURL(url => url.pathname === "/en/privacy/");
-    await expect.poll(() => oldSnapshotShown(page)).toBe(true);
+    expect(await transitions(page)).toBe(0);
   });
 
   test("Forward returns to where the reader left a long page", async ({ page }) => {
-    // Known defect of @moku-labs/web 2.4.11 (SPA kernel): with the crossfade on, Back takes the
-    // position of the page being left after the shorter page is swapped in, so Forward lands at most
-    // at the bottom of the shorter page. Chromium, Firefox and WebKit alike; reduced motion is fine.
-    // Remove `fail` once the framework is fixed.
-    test.fail(true, "@moku-labs/web: traverse saves the outgoing scroll after the swap");
+    // With the crossfade on, Back took the position of the page being left after the shorter page
+    // was swapped in, so Forward landed at most at the bottom of the shorter page. The site swaps
+    // without a crossfade now, and Forward lands where the reader left.
     await visit(page, "/en/games/");
     const gamesBottom = await page.evaluate(
       () => document.documentElement.scrollHeight - innerHeight
