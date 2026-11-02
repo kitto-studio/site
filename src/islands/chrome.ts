@@ -31,6 +31,16 @@ const WIDE_HEADER = "(min-width: 901px)";
 /** Scroll distance after which the header plate casts its shadow. */
 const SCROLLED_PX = 4;
 
+/**
+ * Drop the from-below mark: Back and Forward, and links followed from the top, keep the crossfade
+ * from the old page.
+ *
+ * @returns {void} Nothing; `data-nav-from-below` is gone from `<html>`.
+ */
+function forgetNavFromBelow(): void {
+  delete document.documentElement.dataset.navFromBelow;
+}
+
 /** An event handler that works on the island root as an HTML element. */
 type RootHandler = (root: HTMLElement, event: Event, target: Element) => void;
 
@@ -115,18 +125,29 @@ function watchHeader(ctx: Spa.IslandContext<object>, root: HTMLElement): void {
     if (scrollY > SCROLLED_PX) root.dataset.scrolled = "";
     else delete root.dataset.scrolled;
   };
+  // The kernel jumps to the top before the crossfade takes its picture of the old page, so a link
+  // followed from lower down would fade out of the top of the old page. Mark that case for the CSS.
+  const onLinkClick = (event: MouseEvent): void => {
+    if (!(event.target instanceof Element && event.target.closest("a[href]"))) return;
+    if (scrollY > 0) document.documentElement.dataset.navFromBelow = "";
+    else forgetNavFromBelow();
+  };
 
   // Listen until the island is torn down; the shadow is set for the current scroll at once.
   document.addEventListener("keydown", onKeydown);
   document.addEventListener("pointerdown", onPointerdown);
   wide.addEventListener("change", onWide);
   addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("click", onLinkClick, { capture: true });
+  addEventListener("popstate", forgetNavFromBelow);
   onScroll();
   ctx.cleanup(() => {
     document.removeEventListener("keydown", onKeydown);
     document.removeEventListener("pointerdown", onPointerdown);
     wide.removeEventListener("change", onWide);
     removeEventListener("scroll", onScroll);
+    document.removeEventListener("click", onLinkClick, { capture: true });
+    removeEventListener("popstate", forgetNavFromBelow);
   });
 }
 
