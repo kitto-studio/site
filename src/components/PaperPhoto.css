@@ -1,0 +1,67 @@
+/* Paper photo (design-context §6 F2, G): an 8px paper border, a strip of tape, a -1.4deg tilt and
+   an optional stamp. Inside a hovered link the print straightens and lifts. */
+@scope ([data-component="paper-photo"]) {
+  :scope {
+    position: relative;
+    display: block;
+    padding: var(--space-8);
+    border-radius: var(--radius-4);
+    /* A darker print in dark mode, so the photo does not glow. */
+    background: light-dark(var(--surface), color-mix(in srgb, var(--surface) 72%, var(--ink)))
+      var(--grain);
+    transform: rotate(-1.4deg);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent),
+      0 2px 3px rgb(var(--shadow-rgb) / 0.12),
+      0 14px 26px -12px rgb(var(--shadow-rgb) / 0.38);
+    transition:
+      transform 0.45s var(--ease-spring),
+      box-shadow 0.3s ease,
+      background-color var(--duration-crossfade) ease;
+  }
+
+  a:hover :scope {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--line) 70%, transparent),
+      0 3px 4px rgb(var(--shadow-rgb) / 0.12),
+      0 22px 36px -14px rgb(var(--shadow-rgb) / 0.45);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 2px;
+    object-fit: cover;
+    object-position: 56% 50%;
+  }
+
+  /* A strip of paper tape holding the print to the sheet. */
+  [data-photo-tape] {
+    position: absolute;
+    top: -11px;
+    left: calc(50% - 40px);
+    width: 80px;
+    height: 24px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--line) 78%, transparent) var(--grain);
+    opacity: 0.92;
+    transform: rotate(2.5deg);
+    box-shadow: 0 1px 2px rgb(var(--shadow-rgb) / 0.14);
+  }
+
+  [data-photo-stamp] {
+    position: absolute;
+    right: var(--space-16);
+    bottom: var(--space-16);
+    padding: var(--space-4) var(--space-12);
+    border: 2px solid currentColor;
+    border-radius: var(--radius-8);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    color: var(--ink);
+    font: 800 14px / 1.3 var(--font-heading);
+    white-space: nowrap;
+    transform: rotate(-5deg);
+  }
+}

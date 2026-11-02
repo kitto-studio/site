@@ -1,0 +1,149 @@
+/* Games page (design-context §6 A3, F1; numbers from the prototype Games page). The page head on
+   the paper sky with the band under it, the game card sheet tucked 48px into the band, then the
+   «New game» sheet on the other paper angle: the slot cut into the paper, its note and the gift
+   sticker in one row (two rows below 900px, one column on the phone, the gift on top). The sheets
+   and the slot are shared components; rules that reach into them start with :scope so they
+   outrank the component's own scope. */
+@scope ([data-component="games-page"]) {
+  :scope {
+    padding-bottom: 96px;
+    overflow-x: clip;
+  }
+
+  /* — Page head — */
+  [data-page-head] {
+    position: relative;
+    padding-top: var(--space-64);
+  }
+
+  [data-page-head] [data-container] {
+    position: relative;
+    z-index: 2;
+  }
+
+  [data-page-head] h1 {
+    max-width: 15em;
+    text-shadow: var(--cut-shadow);
+  }
+
+  [data-page-head] [data-lead] {
+    max-width: 36em;
+    font-size: var(--text-lead-page);
+    margin-top: var(--space-20);
+  }
+
+  /* — Sheets — */
+  :scope [data-page-head] + [data-component="paper-sheet"] {
+    margin-top: calc(-1 * var(--space-48));
+  }
+
+  :scope [data-component="paper-sheet"] + [data-component="paper-sheet"] {
+    margin-top: var(--space-48);
+  }
+
+  :scope [data-component="paper-sheet"][aria-labelledby="games-slot"] {
+    --sheet-angle: 0.22deg;
+  }
+
+  :scope [data-component="paper-sheet"][aria-labelledby="games-slot"]::before {
+    transform: translate(-8px, 9px) rotate(-0.8deg);
+  }
+
+  :scope [aria-labelledby="games-slot"] [data-sheet-face] {
+    padding-block: var(--space-40);
+  }
+
+  /* — The next game: the slot, its note and the gift — */
+  [data-games-next] {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr) auto;
+    gap: var(--space-40);
+    align-items: center;
+  }
+
+  :scope [data-component="coming-soon-slot"] {
+    aspect-ratio: auto;
+    min-height: 168px;
+    padding: var(--space-20) var(--space-24);
+  }
+
+  :scope [data-component="coming-soon-slot"] [data-slot-name] {
+    font-size: 22px;
+  }
+
+  :scope [data-component="coming-soon-slot"] [data-slot-status] {
+    font-size: 15px;
+  }
+
+  [data-games-next] > p {
+    max-width: 24em;
+  }
+
+  [data-games-gift] {
+    width: 200px;
+    margin: calc(-1 * var(--space-32)) 0 calc(-1 * var(--space-24));
+  }
+
+  /* — Support pointer — */
+  [data-games-help] {
+    width: var(--grid);
+    max-width: none;
+    margin: var(--space-64) auto 0;
+  }
+
+  @media (max-width: 900px) {
+    [data-games-next] {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    [data-games-next] > p {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      padding-bottom: var(--space-64);
+    }
+
+    [data-page-head] {
+      padding-top: var(--space-40);
+    }
+
+    [data-page-head] [data-lead] {
+      margin-top: var(--space-16);
+      font-size: 17px;
+    }
+
+    :scope [data-page-head] + [data-component="paper-sheet"] {
+      margin-top: calc(-1 * var(--space-24));
+    }
+
+    :scope [data-component="paper-sheet"] + [data-component="paper-sheet"] {
+      margin-top: var(--space-32);
+    }
+
+    :scope [data-component="paper-sheet"][aria-labelledby="games-slot"] {
+      --sheet-angle: 0.35deg;
+    }
+
+    [data-games-next] {
+      grid-template-columns: 1fr;
+      gap: var(--space-20);
+    }
+
+    :scope [data-component="coming-soon-slot"] {
+      min-height: 120px;
+    }
+
+    [data-games-gift] {
+      order: -1;
+      width: 160px;
+      margin: calc(-1 * var(--space-24)) auto calc(-1 * var(--space-16));
+    }
+
+    [data-games-help] {
+      margin-top: var(--space-48);
+    }
+  }
+}

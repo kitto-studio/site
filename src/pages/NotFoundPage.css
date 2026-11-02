@@ -1,0 +1,25 @@
+/* 404 page: the dot, the heading, one sentence and the way home, on the grid's left edge. */
+@scope ([data-component="not-found"]) {
+  :scope {
+    padding-block: clamp(64px, 10vw, 128px) clamp(80px, 12vw, 160px);
+  }
+
+  [data-dot-mark] {
+    width: 24px;
+    height: 24px;
+    overflow: visible;
+
+    path {
+      fill: var(--dot);
+    }
+  }
+
+  h1 {
+    margin-top: var(--space-24);
+  }
+
+  p {
+    max-width: 60ch;
+    margin-top: var(--space-16);
+  }
+}

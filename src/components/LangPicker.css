@@ -1,0 +1,172 @@
+/* Language picker (D1): a paper tab button (globe + code) and a paper popover, 340 px, with the 11
+   languages in two columns; the current one is marked with the dot. A second sheet peeks out under
+   the popover (stack thickness, as on the home sheets). */
+@scope ([data-component="lang-picker"]) to ([data-component]) {
+  :scope {
+    position: relative;
+  }
+
+  [data-lang-toggle] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 44px;
+    padding: 0 var(--space-12) 0 var(--space-8);
+    border: 0;
+    border-radius: var(--radius-12);
+    background: transparent;
+    color: var(--ink);
+    font: 800 14px / 1 var(--font-heading);
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover,
+    &[aria-expanded="true"] {
+      background: var(--surface);
+      box-shadow: var(--cut-shadow);
+    }
+  }
+
+  [data-globe] {
+    width: 20px;
+    height: 20px;
+    flex: none;
+  }
+
+  [data-chevron] {
+    width: 10px;
+    height: 10px;
+    flex: none;
+    opacity: 0.6;
+    transition: transform 0.3s var(--ease-spring);
+  }
+
+  [aria-expanded="true"] > [data-chevron] {
+    transform: rotate(180deg);
+  }
+
+  [data-lang-menu] {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: -8px;
+    z-index: 2;
+    width: 340px;
+    transform-origin: 88% 0;
+
+    &[hidden] {
+      display: none;
+    }
+
+    /* Paper under the paper. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: var(--radius-16);
+      background: color-mix(in srgb, var(--surface) 82%, var(--line));
+      transform: translate(6px, 7px) rotate(1deg);
+      box-shadow: 0 14px 30px -14px rgb(var(--shadow-rgb) / 0.3);
+    }
+
+    &:not([hidden]) {
+      animation: lang-picker-unfold 0.34s var(--ease-spring) both;
+    }
+  }
+
+  [data-menu-face] {
+    padding: var(--space-16) var(--space-12) var(--space-12);
+    border-radius: var(--radius-16);
+    background-color: var(--surface);
+    background-image: var(--sheen), var(--grain);
+    box-shadow: var(--lift-shadow);
+  }
+
+  [data-menu-label] {
+    margin: 0 var(--space-12) var(--space-8);
+    color: var(--quiet);
+    font: 500 13px / 1.3 var(--font-text);
+  }
+
+  [data-lang-grid] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px var(--space-4);
+  }
+
+  [data-lang] {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-12);
+    border: 0;
+    border-radius: var(--radius-8);
+    background: transparent;
+    color: var(--text);
+    font: 500 16px / 1.2 var(--font-text);
+    text-align: start;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: color-mix(in srgb, var(--ink) 7%, transparent);
+    }
+
+    &[aria-checked="true"] {
+      color: var(--ink);
+      font-weight: 600;
+    }
+  }
+
+  [data-lang-menu]:not([hidden]) [data-lang] {
+    animation: lang-picker-rise 0.32s var(--ease-out) both;
+    animation-delay: calc(70ms + var(--n) * 16ms);
+  }
+
+  /* The dot sits before the name; margin, not flex gap (Safari gap quirk on dot/label pairs). */
+  [data-dot-mark] {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-inline-end: var(--space-8);
+    overflow: visible;
+    transform: scale(0);
+    transition: transform 0.35s var(--ease-spring);
+
+    path {
+      fill: var(--dot);
+    }
+  }
+
+  [aria-checked="true"] > [data-dot-mark] {
+    transform: scale(1);
+  }
+}
+
+@keyframes lang-picker-unfold {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-34deg) translateY(-6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lang-picker-rise {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

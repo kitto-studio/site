@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "light-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Original full logo at its exact original position, scale and colors, composited on solid warm paper #F6F2EA. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "dark-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Full logo at exact original position and scale on solid #211C19. Recolor original dark ink to warm off-white #EFE7DA; preserve any original accent colors. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-black-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Full logo at exact original position and scale, every opaque logo element in single solid near-black #1E1916 on pure white #FFFFFF. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-white-on-accent-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Full logo at exact original position and scale in solid pure white on solid background using the original logo's dominant charcoal color #24292C (the supplied logo is monochrome and has no distinct accent). Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-indigo-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Full logo at exact original position and scale. Recolor wordmark ink #202B39 and the existing four-tile symbol accent #3C5D93 on solid #E8EDF4. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-matcha-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Full logo at exact original position and scale. Recolor wordmark ink #2C332A and the existing four-tile symbol accent #6B8F4E on solid #EDF0E2. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "github-avatar-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Isolate only the original four-tile symbol, remove the wordmark. Preserve the exact relative tile composition, shape, angle and spacing. Uniformly scale the entire symbol to fit inside a centered 650x700 area, centered on square solid brand charcoal #24292C, symbol warm white #EFE7DA. Ensure entire symbol is safely within circle crop and legible at 40px. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "favicon-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Isolate only the original four-tile symbol, remove the wordmark. Preserve exact relative tile composition, shape, angle and spacing. Uniformly enlarge and center the complete symbol to occupy about 860px height on square solid brand charcoal #24292C, symbol warm white #EFE7DA. Tighter bolder framing for 16-32px favicon without changing geometry. Flat no fine detail. Output 1024x1024.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "splash-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Portrait phone splash, exactly 1024x2048. Solid brand charcoal #24292C background. Full original logo in warm white #EFE7DA, uniformly scaled to about 510px width, horizontally centered with its visual center at y=900 slightly above screen middle. Preserve exact logo composition. Nothing else.",
+      "size": "1024x2048",
+      "transparent": false
+    },
+    {
+      "file": "motion-storyboard-v2.png",
+      "prompt": "Edit the supplied approved Kitto logo image as an immutable source asset. Never redraw, restyle, reinterpret, retype, or change any letter shape, tile shape, proportion, spacing, or relative composition. Preserve original silhouettes and antialiased edges exactly; only apply the specified recoloring, background and framing. The only lettering permitted is the existing original 'kitto' wordmark. No labels, slogans, hex codes or extra text. Flat PNG output, no mockup, texture, shadows or decorations. Exactly 2048x512 horizontal strip of four equal 512x512 frames, solid warm paper #F6F2EA with no borders or labels. Show original charcoal logo pieces arriving and settling: frame 1 original four tile pieces separated outward with original wordmark below; frame 2 tiles approaching their final positions, wordmark unchanged; frame 3 tiles almost settled, wordmark unchanged; frame 4 exact original full logo at half original 1024 scale within its 512 square. Use only the original logo's actual unchanged pieces translated in frames 1-3; never alter their shapes, angles, or scale. No motion lines, arrows, new symbols or text. Final frame must equal original composition.",
+      "size": "2048x512",
+      "transparent": false
+    }
+  ]
+}

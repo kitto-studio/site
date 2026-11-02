@@ -1,0 +1,10 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Moku", "createApp", "createPlugin", "pluginConfigs", "ctx", "bun", "bunx", "vitest", "biome",
+    "oxlint", "lefthook", "tsc", "preact", "SSG", "SPA", "Cloudflare", "wrangler", "kitto", "Kitto",
+    "Nunito", "Golos"
+  ],
+  "ignorePaths": ["node_modules/**", "dist/**", ".planning/**", "assets/**", "prototypes/**"]
+}

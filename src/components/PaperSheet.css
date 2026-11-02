@@ -1,0 +1,205 @@
+/* Paper sheet (design-context §6 G, brand-system §6–§7; numbers from the prototype home stack and
+   inner-page sheets): surface + sheen + grain, radius 16, a lift shadow and a second sheet under it.
+   Stacked sheets ([data-stack], the home) are moved by the sheet-stack island through:
+     --lift   1 entering at the window bottom … 0 landed in its place
+     --cover  0 … 1, how far the next sheet lies over it
+   A parent may set --sheet-columns to change the split face's columns. */
+@scope ([data-component="paper-sheet"]) {
+  :scope {
+    --sheet-angle: -0.25deg;
+    position: relative;
+    width: var(--grid);
+    margin-inline: auto;
+    transform: rotate(var(--sheet-angle));
+  }
+
+  /* The paper under the paper: the thickness of the stack. */
+  :scope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--radius-16);
+    background: color-mix(in srgb, var(--surface) 82%, var(--line));
+    transform: translate(7px, 8px) rotate(0.7deg);
+    box-shadow:
+      0 2px 3px rgb(var(--shadow-rgb) / 0.08),
+      0 14px 30px -12px rgb(var(--shadow-rgb) / 0.22);
+  }
+
+  /* — The home stack: a sheet slides up with a small tilt that straightens as it lands, then sinks
+     a touch as the next one covers it. — */
+  :scope[data-stack] {
+    --lift: 0;
+    --cover: 0;
+    --stack-index: 0;
+    --enter-tilt: 0deg;
+    top: calc(var(--header-height) + 18px + var(--stack-index) * 16px);
+    margin-bottom: 24vh;
+    transform-origin: 50% 0;
+    transform: translateY(calc(var(--lift) * 18px))
+      rotate(calc(var(--sheet-angle) + var(--lift) * var(--enter-tilt)))
+      scale(calc(1 - var(--cover) * 0.05));
+  }
+
+  :scope[data-stack]:last-child {
+    margin-bottom: 0;
+  }
+
+  :scope[data-stack="0"] {
+    --stack-index: 0;
+    --sheet-angle: -0.3deg;
+    --enter-tilt: -2.2deg;
+  }
+
+  :scope[data-stack="1"] {
+    --stack-index: 1;
+    --sheet-angle: 0.28deg;
+    --enter-tilt: 2.4deg;
+  }
+
+  :scope[data-stack="2"] {
+    --stack-index: 2;
+    --sheet-angle: -0.16deg;
+    --enter-tilt: -1.8deg;
+  }
+
+  :scope[data-stack="1"]::before {
+    transform: translate(-8px, 9px) rotate(-0.8deg);
+  }
+
+  /* The carried shadow: deep while the sheet is still in the hand, gone when it lands. */
+  :scope[data-stack]::after {
+    content: "";
+    position: absolute;
+    inset: 6% 4% -1%;
+    z-index: -2;
+    border-radius: 28px;
+    opacity: var(--lift);
+    box-shadow:
+      0 60px 90px -24px rgb(var(--shadow-rgb) / 0.5),
+      0 24px 40px -18px rgb(var(--shadow-rgb) / 0.35);
+  }
+
+  /* Sheets stack on each other only where the window is tall enough to hold them. */
+  @media (min-height: 620px) {
+    :scope[data-stack] {
+      position: sticky;
+    }
+  }
+
+  /* — The face — */
+  [data-sheet-face] {
+    position: relative;
+    padding: var(--space-48) var(--space-64);
+    border-radius: var(--radius-16);
+    overflow: clip;
+    background-color: var(--surface);
+    background-image: var(--sheen), var(--grain);
+    box-shadow:
+      inset 0 1px 0 rgb(var(--white-rgb) / 0.5),
+      0 1px 1px rgb(var(--shadow-rgb) / 0.1),
+      0 6px 12px -4px rgb(var(--shadow-rgb) / 0.12),
+      0 26px 50px -18px rgb(var(--shadow-rgb) / 0.3),
+      0 60px 90px -40px rgb(var(--shadow-rgb) / 0.28);
+    transition: background-color var(--duration-crossfade) ease;
+  }
+
+  [data-sheet-face][data-split] {
+    display: grid;
+    grid-template-columns: var(--sheet-columns, minmax(0, 1.08fr) minmax(0, 0.92fr));
+    gap: var(--space-48);
+    align-items: center;
+  }
+
+  /* The shade of the next sheet lying over this one. */
+  :scope[data-stack] [data-sheet-face]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgb(var(--shadow-rgb) / 0.35);
+    opacity: calc(var(--cover) * 0.5);
+    pointer-events: none;
+  }
+
+  /* The art column, sized for a pop-up sticker standing on the sheet. */
+  [data-sheet-art] {
+    justify-self: center;
+    width: min(360px, 100%);
+    margin: calc(-1 * var(--space-24)) 0;
+  }
+
+  [data-flip] > [data-sheet-art] {
+    order: -1;
+  }
+
+  @media (max-width: 1060px) {
+    [data-sheet-face] {
+      padding: var(--space-40);
+    }
+
+    [data-sheet-face][data-split] {
+      gap: var(--space-32);
+    }
+  }
+
+  /* Phone: one column, the sticker above the copy, gentler angles. */
+  @media (max-width: 760px) {
+    :scope {
+      --sheet-angle: -0.4deg;
+    }
+
+    :scope::before,
+    :scope[data-stack="1"]::before {
+      transform: translate(4px, 6px) rotate(0.9deg);
+    }
+
+    :scope[data-stack] {
+      top: calc(var(--header-height) + 10px + var(--stack-index) * 12px);
+      margin-bottom: 16vh;
+    }
+
+    :scope[data-stack="0"] {
+      --sheet-angle: -0.5deg;
+      --enter-tilt: -1.2deg;
+    }
+
+    :scope[data-stack="1"] {
+      --sheet-angle: 0.45deg;
+      --enter-tilt: 1.2deg;
+    }
+
+    :scope[data-stack="2"] {
+      --sheet-angle: -0.3deg;
+      --enter-tilt: -1deg;
+    }
+
+    [data-sheet-face] {
+      padding: var(--space-32) var(--space-24);
+    }
+
+    [data-sheet-face][data-split] {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: var(--space-8) var(--space-24) var(--space-32);
+    }
+
+    [data-sheet-art] {
+      order: -1;
+      width: 200px;
+      margin: 0 auto calc(-1 * var(--space-12));
+    }
+  }
+
+  /* Reduced motion: the sheets lie flat and still. */
+  @media (prefers-reduced-motion: reduce) {
+    :scope[data-stack] {
+      transform: none;
+    }
+
+    :scope[data-stack]::after {
+      opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,196 @@
+/* Pop-up sticker (design-context §6 F9): a die-cut paper object on a glued tab.
+   Geometry is in each sticker's own 1024px image space, measured from its alpha channel:
+     --hinge         the fold line, two pixels below the art's lowest opaque row (alpha ≥ 200), so
+                     the art sits on the fold (gift 921, mug 885, envelope 816 of 1024)
+     --tongue-left   left and right edges of the paper tongue that joins the art to the fold,
+     --tongue-right  centred under the art's foot
+     --tongue-top    top of the tongue, tucked behind the art
+     --silhouette    the art's lower outline traced from its alpha (threshold 200, 8px columns, 2px
+                     out): it trims the soft shadow baked into the image, so the die-cut edge hugs
+                     the object and the piece ends exactly at the fold
+   Every rig is shifted so its hinge lands on --sticker-floor: stickers share one floor.
+   The island writes --sticker-up (1 standing … 0 flat) and --sticker-light, and rotates the stand. */
+@scope ([data-component="popup-sticker"]) {
+  :scope {
+    --sticker-up: 1;
+    --sticker-light: 1;
+    --sticker-floor: 0.86;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Gift box: art x 144–896, lowest at the ribbon's V corner (x 576). */
+  :scope[data-sticker="gift-box"] {
+    --hinge: 0.9014;
+    --tongue-left: 0.465;
+    --tongue-right: 0.66;
+    --tongue-top: 0.825;
+    --silhouette: polygon(
+      87.70% 0%, 87.70% 48.73%, 86.72% 49.51%, 85.94% 72.17%, 85.16% 73.44%, 84.38% 74.02%,
+      83.59% 74.61%, 82.81% 75.20%, 82.03% 75.59%, 81.25% 75.98%, 80.47% 76.46%, 79.69% 77.05%,
+      78.91% 77.54%, 78.13% 78.13%, 77.34% 78.71%, 76.56% 79.30%, 75.78% 79.79%, 75.00% 80.37%,
+      74.22% 80.76%, 73.44% 81.25%, 72.66% 81.84%, 71.88% 82.23%, 71.09% 82.81%, 70.31% 83.20%,
+      69.53% 83.50%, 68.75% 84.08%, 67.97% 84.47%, 67.19% 84.86%, 66.41% 85.35%, 65.63% 85.84%,
+      64.84% 86.23%, 64.06% 86.82%, 63.28% 87.21%, 62.50% 87.70%, 61.72% 88.18%, 60.94% 88.67%,
+      60.16% 89.16%, 59.38% 89.75%, 58.59% 90.04%, 57.81% 90.14%, 57.03% 90.14%, 56.25% 90.14%,
+      55.47% 90.14%, 54.69% 89.94%, 53.91% 89.75%, 53.13% 89.55%, 52.34% 89.16%, 51.56% 88.87%,
+      50.78% 88.67%, 50.00% 88.48%, 49.22% 88.18%, 48.44% 87.89%, 47.66% 87.50%, 46.88% 87.30%,
+      46.09% 87.21%, 45.31% 86.91%, 44.53% 86.62%, 43.75% 86.33%, 42.97% 86.13%, 42.19% 85.94%,
+      41.41% 85.84%, 40.63% 85.64%, 39.84% 85.25%, 39.06% 84.96%, 38.28% 84.67%, 37.50% 84.47%,
+      36.72% 84.28%, 35.94% 83.98%, 35.16% 83.69%, 34.38% 83.40%, 33.59% 83.30%, 32.81% 83.11%,
+      32.03% 82.62%, 31.25% 82.23%, 30.47% 82.03%, 29.69% 81.84%, 28.91% 81.54%, 28.13% 81.25%,
+      27.34% 80.96%, 26.56% 80.76%, 25.78% 80.57%, 25.00% 80.27%, 24.22% 79.88%, 23.44% 79.69%,
+      22.66% 79.49%, 21.88% 79.20%, 21.09% 78.81%, 20.31% 78.61%, 19.53% 78.32%, 18.75% 78.13%,
+      17.97% 77.73%, 17.19% 77.44%, 16.41% 76.86%, 15.63% 66.21%, 14.84% 52.93%, 13.87% 52.44%,
+      13.87% 0%
+    );
+  }
+
+  /* Tea mug: art x 179–926, flat base x 384–576. */
+  :scope[data-sticker="tea-mug"] {
+    --hinge: 0.8662;
+    --tongue-left: 0.3516;
+    --tongue-right: 0.5859;
+    --tongue-top: 0.822;
+    --silhouette: polygon(
+      90.63% 0%, 90.63% 62.60%, 89.84% 65.04%, 89.06% 66.60%, 88.28% 67.97%, 87.50% 68.95%,
+      86.72% 69.82%, 85.94% 70.70%, 85.16% 71.39%, 84.38% 71.97%, 83.59% 72.46%, 82.81% 72.95%,
+      82.03% 73.34%, 81.25% 73.73%, 80.47% 74.02%, 79.69% 74.32%, 78.91% 74.51%, 78.13% 74.80%,
+      77.34% 74.90%, 76.56% 75.10%, 75.78% 75.20%, 75.00% 75.20%, 74.22% 75.29%, 73.44% 75.29%,
+      72.66% 75.29%, 71.88% 75.78%, 71.09% 76.86%, 70.31% 77.73%, 69.53% 78.52%, 68.75% 79.30%,
+      67.97% 79.88%, 67.19% 80.57%, 66.41% 81.15%, 65.63% 81.64%, 64.84% 82.13%, 64.06% 82.91%,
+      63.28% 83.79%, 62.50% 84.18%, 61.72% 84.28%, 60.94% 84.67%, 60.16% 84.96%, 59.38% 85.16%,
+      58.59% 85.45%, 57.81% 85.55%, 57.03% 85.84%, 56.25% 85.84%, 55.47% 85.94%, 54.69% 86.04%,
+      53.91% 86.13%, 53.13% 86.23%, 52.34% 86.33%, 51.56% 86.43%, 50.78% 86.43%, 50.00% 86.52%,
+      49.22% 86.52%, 48.44% 86.52%, 47.66% 86.62%, 46.88% 86.62%, 46.09% 86.62%, 45.31% 86.62%,
+      44.53% 86.62%, 43.75% 86.62%, 42.97% 86.43%, 42.19% 86.33%, 41.41% 86.23%, 40.63% 86.23%,
+      39.84% 86.04%, 39.06% 86.04%, 38.28% 86.04%, 37.50% 85.94%, 36.72% 85.84%, 35.94% 85.64%,
+      35.16% 85.45%, 34.38% 85.16%, 33.59% 84.77%, 32.81% 84.77%, 32.03% 84.47%, 31.25% 84.18%,
+      30.47% 83.79%, 29.69% 83.30%, 28.91% 82.71%, 28.13% 82.23%, 27.34% 81.84%, 26.56% 81.25%,
+      25.78% 80.76%, 25.00% 80.18%, 24.22% 79.49%, 23.44% 78.81%, 22.66% 78.03%, 21.88% 77.15%,
+      21.09% 76.27%, 20.31% 75.20%, 19.53% 73.93%, 18.75% 72.36%, 17.97% 70.51%, 17.29% 68.07%,
+      17.29% 0%
+    );
+  }
+
+  /* Envelope: art x 147–906, its bottom edge tilts from y 816 (x 224) to y 730 (x 896); the
+     tongue fills the wedge down to the fold. */
+  :scope[data-sticker="envelope"] {
+    --hinge: 0.7988;
+    --tongue-left: 0.3223;
+    --tongue-right: 0.6738;
+    --tongue-top: 0.7197;
+    --silhouette: polygon(
+      88.67% 0%, 88.67% 71.29%, 88.28% 71.48%, 87.50% 71.78%, 86.72% 71.88%, 85.94% 72.07%,
+      85.16% 72.17%, 84.38% 72.27%, 83.59% 72.36%, 82.81% 72.46%, 82.03% 72.66%, 81.25% 72.75%,
+      80.47% 72.85%, 79.69% 72.95%, 78.91% 73.05%, 78.13% 73.14%, 77.34% 73.24%, 76.56% 73.34%,
+      75.78% 73.44%, 75.00% 73.54%, 74.22% 73.63%, 73.44% 73.83%, 72.66% 73.93%, 71.88% 74.02%,
+      71.09% 74.12%, 70.31% 74.22%, 69.53% 74.32%, 68.75% 74.41%, 67.97% 74.51%, 67.19% 74.61%,
+      66.41% 74.71%, 65.63% 74.80%, 64.84% 74.90%, 64.06% 75.00%, 63.28% 75.10%, 62.50% 75.29%,
+      61.72% 75.39%, 60.94% 75.49%, 60.16% 75.59%, 59.38% 75.68%, 58.59% 75.68%, 57.81% 75.78%,
+      57.03% 75.88%, 56.25% 75.98%, 55.47% 76.07%, 54.69% 76.17%, 53.91% 76.27%, 53.13% 76.37%,
+      52.34% 76.56%, 51.56% 76.66%, 50.78% 76.66%, 50.00% 76.86%, 49.22% 76.86%, 48.44% 76.95%,
+      47.66% 77.05%, 46.88% 77.15%, 46.09% 77.25%, 45.31% 77.34%, 44.53% 77.44%, 43.75% 77.54%,
+      42.97% 77.64%, 42.19% 77.73%, 41.41% 77.83%, 40.63% 77.93%, 39.84% 78.03%, 39.06% 78.13%,
+      38.28% 78.22%, 37.50% 78.32%, 36.72% 78.42%, 35.94% 78.52%, 35.16% 78.52%, 34.38% 78.71%,
+      33.59% 78.81%, 32.81% 78.91%, 32.03% 79.00%, 31.25% 79.00%, 30.47% 79.20%, 29.69% 79.30%,
+      28.91% 79.30%, 28.13% 79.39%, 27.34% 79.49%, 26.56% 79.59%, 25.78% 79.69%, 25.00% 79.79%,
+      24.22% 79.88%, 23.44% 79.88%, 22.66% 79.88%, 21.88% 79.88%, 21.09% 79.88%, 20.31% 79.59%,
+      19.53% 79.10%, 18.75% 78.13%, 17.97% 75.88%, 17.19% 70.41%, 16.41% 63.09%, 15.63% 55.27%,
+      14.84% 47.75%, 14.16% 40.53%, 14.16% 0%
+    );
+  }
+
+  [data-sticker-rig] {
+    position: absolute;
+    top: calc((var(--sticker-floor) - var(--hinge)) * 100%);
+    right: 0;
+    left: 0;
+    height: 100%;
+    perspective: 900px;
+    perspective-origin: 50% -40%;
+  }
+
+  [data-sticker-rig] img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: var(--silhouette);
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* The cast shadow: the piece's own silhouette laid back on the sheet, growing as it stands. */
+  [data-sticker-cast] {
+    opacity: calc(var(--sticker-up) * var(--cast-opacity));
+    filter: brightness(0) blur(5px);
+    transform-origin: 50% calc(var(--hinge) * 100%);
+    transform: skewX(-42deg) scaleY(calc(0.04 + var(--sticker-up) * 0.3));
+  }
+
+  /* The glued tab lying on the sheet; its top edge is the fold. */
+  [data-sticker-tab] {
+    position: absolute;
+    top: calc(var(--hinge) * 100%);
+    right: calc((1.015 - var(--tongue-right)) * 100%);
+    left: calc((var(--tongue-left) - 0.015) * 100%);
+    height: 5.5%;
+    border-radius: 0 0 var(--radius-4) var(--radius-4);
+    background: var(--cut) var(--grain);
+    box-shadow:
+      inset 0 1px 0 rgb(var(--shadow-rgb) / 0.3),
+      inset 0 2px 0 var(--highlight),
+      0 1px 1px rgb(var(--shadow-rgb) / 0.18),
+      0 4px 6px -3px rgb(var(--shadow-rgb) / 0.28);
+    transition: background-color var(--duration-crossfade) ease;
+  }
+
+  /* The fold's shade on the tab, as deep as the piece stands. */
+  [data-sticker-tab]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 10px;
+    background: linear-gradient(180deg, rgb(var(--shadow-rgb) / 0.28), rgb(var(--shadow-rgb) / 0));
+    opacity: var(--sticker-up);
+  }
+
+  [data-sticker-stand] {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% calc(var(--hinge) * 100%);
+  }
+
+  /* One die-cut silhouette: the art and its tongue, outlined together in cut paper. */
+  [data-sticker-cutout] {
+    position: absolute;
+    inset: 0;
+    filter: brightness(var(--sticker-light)) drop-shadow(2px 0 0 var(--cut))
+      drop-shadow(-2px 0 0 var(--cut)) drop-shadow(0 2px 0 var(--cut))
+      drop-shadow(0 -2px 0 var(--cut)) drop-shadow(0 1px 1px rgb(var(--shadow-rgb) / 0.3))
+      drop-shadow(0 8px 9px rgb(var(--shadow-rgb) / 0.16));
+  }
+
+  [data-sticker-tongue] {
+    position: absolute;
+    top: calc(var(--tongue-top) * 100%);
+    right: calc((1 - var(--tongue-right)) * 100%);
+    bottom: calc((1 - var(--hinge)) * 100%);
+    left: calc(var(--tongue-left) * 100%);
+    background:
+      linear-gradient(180deg, rgb(var(--shadow-rgb) / 0) 40%, rgb(var(--shadow-rgb) / 0.12)),
+      var(--grain),
+      var(--cut);
+    transition: background-color var(--duration-crossfade) ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope {
+      cursor: default;
+    }
+  }
+}

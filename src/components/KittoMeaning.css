@@ -1,0 +1,124 @@
+/* Kitto meaning (design-context §6 A2; numbers from the prototype About page, «Why the name
+   Kitto»): the copy beside the large きっと. The kana are 800 in the "Kitto Kana" face, each glyph
+   cut from paper with the cut shadow. The kana-drop island sets data-kana on the kana block:
+     wait  hidden, below the fold, until they come into view
+     drop  falling in one by one and landing with a squash (the logo's Jump, as a CSS echo)
+   Phone: one column, the kana above the copy. */
+@scope ([data-component="kitto-meaning"]) {
+  :scope {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-48);
+    align-items: center;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    max-width: 38em;
+    margin: var(--space-16) 0 0;
+  }
+
+  [data-meaning-text="big"] {
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.55;
+  }
+
+  [data-meaning-kana] {
+    max-width: none;
+    margin: var(--space-16) 0 0;
+    padding: 0 var(--space-32) 0 0;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  [data-kana-glyphs] {
+    display: flex;
+    gap: 0.02em;
+    justify-content: center;
+    color: var(--ink);
+    font: 800 var(--text-kana) / 1 var(--font-kana);
+    letter-spacing: -0.02em;
+  }
+
+  [data-kana-glyphs] > span {
+    display: block;
+    text-shadow: var(--cut-shadow);
+  }
+
+  [data-kana-reading] {
+    display: block;
+    margin-top: var(--space-12);
+    color: var(--quiet);
+    font: 600 20px / 1.2 var(--font-text);
+    letter-spacing: 0.06em;
+  }
+
+  [data-meaning-kana][data-kana="wait"] [data-kana-glyphs] > span {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-meaning-kana][data-kana="drop"] [data-kana-glyphs] > span {
+      animation: kitto-meaning-drop 0.9s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+    }
+
+    [data-meaning-kana][data-kana="drop"] [data-kana-glyphs] > span:nth-child(2) {
+      animation-delay: 0.09s;
+    }
+
+    [data-meaning-kana][data-kana="drop"] [data-kana-glyphs] > span:nth-child(3) {
+      animation-delay: 0.18s;
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      grid-template-columns: 1fr;
+      gap: var(--space-24);
+    }
+
+    [data-meaning-kana] {
+      order: -1;
+      padding: 0;
+    }
+
+    [data-kana-glyphs] {
+      font-size: clamp(84px, 26vw, 112px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-meaning-kana] {
+      cursor: default;
+    }
+  }
+}
+
+@keyframes kitto-meaning-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-70%);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(0) scale(1.06, 0.9);
+  }
+
+  58% {
+    transform: translateY(-12%) scale(0.98, 1.03);
+  }
+
+  76% {
+    transform: translateY(0) scale(1.02, 0.97);
+  }
+
+  100% {
+    transform: none;
+  }
+}

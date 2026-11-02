@@ -1,0 +1,38 @@
+# dependencies
+node_modules
+
+# output
+out
+dist
+*.tgz
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+_.log
+
+# dotenv environment variable files
+.env
+.env.*.local
+.env.local
+
+# caches
+.cache
+*.tsbuildinfo
+
+# test output
+test-results
+playwright-report
+e2e-server.log
+
+# Finder (MacOS) folder config
+.DS_Store
+
+# Claude Code
+.claude
+
+# Planning artifacts
+.planning

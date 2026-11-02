@@ -1,0 +1,79 @@
+/* Root language page (`/`). Not in the design inventory (design-context §6): laid out from the
+   logo and the language list, in the language picker's paper (D1). Seen only without JavaScript or
+   for the instant before the redirect: the logo, a heading, then a paper sheet with the 11
+   languages in three columns (two on a phone), each a 48 px row. */
+@scope ([data-component="root-page"]) {
+  :scope {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-32);
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: var(--space-64) var(--gutter);
+  }
+
+  /* An explicit :scope outranks the logo's own scope, which is closer to it. */
+  :scope [data-component="logo"] {
+    width: clamp(200px, 26vw, 320px);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: var(--text-h3);
+    font-weight: 800;
+    line-height: var(--leading-h3);
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  [data-languages] {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px var(--space-8);
+    width: min(600px, 100%);
+    margin: 0;
+    padding: var(--space-16);
+    list-style: none;
+    border-radius: var(--radius-16);
+    background-color: var(--surface);
+    background-image: var(--sheen), var(--grain);
+    box-shadow: var(--lift-shadow);
+  }
+
+  [data-languages] a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 var(--space-12);
+    border-radius: var(--radius-8);
+    color: var(--ink);
+    font: 600 17px / 1.2 var(--font-text);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: color-mix(in srgb, var(--ink) 7%, transparent);
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      gap: var(--space-24);
+      padding-block: var(--space-40);
+    }
+
+    [data-languages] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: var(--space-12);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-languages] a {
+      transition: none;
+    }
+  }
+}

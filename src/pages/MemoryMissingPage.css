@@ -1,0 +1,188 @@
+/* A Memory Missing page (design-context §6 A4, §7; numbers from the approved prototype game page).
+   The head on the paper sky: breadcrumb, title (two lines at desktop), tags. The gallery sheet 40px
+   below, its face padded 40 (12 on the phone, so the print gets the width). The story beside «Where
+   to play» (one column from 900px). The merge board 96px below the story (64px on the phone); it
+   lays out its own grid. The features on a second sheet at the other paper angle, two columns (one
+   on the phone). The help line closes the page. Sheets, tags and the board are shared components;
+   rules that reach into them start with :scope so they outrank the component's own scope. */
+@scope ([data-component="memory-missing-page"]) {
+  :scope {
+    padding-bottom: 96px;
+    overflow-x: clip;
+  }
+
+  /* — Head — */
+  [data-game-head] {
+    padding-top: var(--space-48);
+  }
+
+  [data-game-head] h1 {
+    max-width: 13em;
+    text-shadow: var(--cut-shadow);
+  }
+
+  [data-game-tags] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-12);
+    margin-top: var(--space-24);
+  }
+
+  /* — Gallery sheet — */
+  :scope [data-game-head] + [data-component="paper-sheet"] {
+    margin-top: var(--space-40);
+  }
+
+  :scope [aria-labelledby="game-gallery"] [data-sheet-face] {
+    padding: var(--space-40);
+  }
+
+  /* — The story and where to play — */
+  [data-game-story] {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    gap: var(--space-64);
+    align-items: start;
+    margin-top: var(--space-64);
+  }
+
+  [data-game-premise] {
+    max-width: 34em;
+    margin-top: var(--space-16);
+    font-size: clamp(19px, 1.65vw, 23px);
+    line-height: 1.55;
+  }
+
+  [data-game-platforms] {
+    padding-top: var(--space-24);
+    border-top: 1px solid var(--line);
+  }
+
+  [data-game-platforms] h2 {
+    font-size: 22px;
+  }
+
+  [data-game-platforms] ul {
+    display: grid;
+    gap: var(--space-12);
+    margin: var(--space-16) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-game-platforms] li {
+    display: flex;
+    gap: var(--space-12);
+    align-items: center;
+    color: var(--ink);
+    font: 800 19px / 1.2 var(--font-heading);
+  }
+
+  [data-game-platforms] li svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    color: var(--quiet);
+  }
+
+  :scope [data-game-platforms] [data-component="tag"] {
+    margin-left: auto;
+  }
+
+  [data-game-platforms] p {
+    margin-top: var(--space-16);
+    color: var(--quiet);
+    font-size: 15px;
+  }
+
+  /* — The merge board — */
+  [data-game-play] {
+    margin-top: 96px;
+  }
+
+  /* — Features: the second sheet, at the other paper angle — */
+  :scope [data-game-play] + [data-component="paper-sheet"] {
+    --sheet-angle: 0.22deg;
+    margin-top: var(--space-64);
+  }
+
+  :scope [data-game-play] + [data-component="paper-sheet"]::before {
+    transform: translate(-8px, 9px) rotate(-0.8deg);
+  }
+
+  [data-game-features] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-32) var(--space-48);
+    margin: var(--space-32) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-game-features] li {
+    padding-top: var(--space-20);
+    border-top: 1px solid var(--line);
+  }
+
+  [data-game-features] p {
+    max-width: 38em;
+    margin-top: var(--space-8);
+  }
+
+  /* — Help — */
+  [data-game-help] {
+    margin-top: var(--space-64);
+  }
+
+  [data-game-help] p {
+    max-width: 38em;
+    margin-top: var(--space-12);
+  }
+
+  @media (max-width: 900px) {
+    [data-game-story] {
+      grid-template-columns: 1fr;
+      gap: var(--space-40);
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      padding-bottom: var(--space-64);
+    }
+
+    [data-game-head] {
+      padding-top: var(--space-32);
+    }
+
+    :scope [data-game-head] + [data-component="paper-sheet"] {
+      margin-top: var(--space-32);
+    }
+
+    :scope [aria-labelledby="game-gallery"] [data-sheet-face] {
+      padding: var(--space-12);
+    }
+
+    [data-game-story] {
+      margin-top: var(--space-48);
+    }
+
+    [data-game-play] {
+      margin-top: var(--space-64);
+    }
+
+    :scope [data-game-play] + [data-component="paper-sheet"] {
+      --sheet-angle: 0.35deg;
+      margin-top: var(--space-48);
+    }
+
+    [data-game-features] {
+      grid-template-columns: 1fr;
+      gap: var(--space-20);
+    }
+
+    [data-game-help] {
+      margin-top: var(--space-48);
+    }
+  }
+}

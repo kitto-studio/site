@@ -1,0 +1,105 @@
+/* Email card (design-context §6 A5, F3; numbers from the prototype support page). The sheet face
+   splits into the copy and a 250 px envelope sticker; the address is the largest text on the page,
+   selectable as a whole. The copy button swaps its icon to a check while it says «Copied».
+   The sheet's own parts are reached with an explicit `:scope`: PaperSheet's scope is closer to
+   them, so only a higher specificity overrides it. */
+@scope ([data-component="email-card"]) {
+  :scope {
+    --sheet-columns: minmax(0, 1fr) auto;
+  }
+
+  :scope [data-sheet-face][data-split] {
+    gap: var(--space-32);
+  }
+
+  :scope [data-sheet-art] {
+    width: 250px;
+    margin: calc(-1 * var(--space-32)) var(--space-16) calc(-1 * var(--space-24)) 0;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--quiet);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+
+  [data-email-address] {
+    width: fit-content;
+    max-width: 100%;
+    margin: var(--space-16) 0 0;
+    color: var(--ink);
+    font: 900 clamp(30px, 5.2vw, 72px) / 1.08 var(--font-heading);
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    user-select: all;
+    cursor: text;
+
+    &::selection {
+      background: color-mix(in srgb, var(--dot) 28%, transparent);
+    }
+  }
+
+  [data-mail-actions] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12) var(--space-16);
+    align-items: center;
+    margin-top: var(--space-32);
+  }
+
+  /* Without the island there is nothing to copy with: the address stays selectable. */
+  [data-island="copy-email"]:not([data-ready]) [data-copy-button] {
+    display: none;
+  }
+
+  [data-copy-button] svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+  }
+
+  [data-icon="done"],
+  [data-copy-button][data-state="done"] [data-icon="copy"] {
+    display: none;
+  }
+
+  [data-copy-button][data-state="done"] [data-icon="done"] {
+    display: block;
+  }
+
+  [data-copy-note] {
+    flex-basis: 100%;
+    max-width: 38em;
+    min-height: 1.4em;
+    margin: 0;
+    color: var(--quiet);
+    font-size: var(--text-small);
+  }
+
+  /* Phone: one column, the envelope above the copy, both buttons full width. */
+  @media (max-width: 760px) {
+    :scope [data-sheet-face][data-split] {
+      gap: 0;
+    }
+
+    :scope [data-sheet-art] {
+      width: 170px;
+      margin: 0 auto calc(-1 * var(--space-4));
+    }
+
+    [data-email-address] {
+      font-size: clamp(26px, 8.2vw, 40px);
+    }
+
+    [data-mail-actions] {
+      margin-top: var(--space-24);
+    }
+
+    [data-copy-button] {
+      width: 100%;
+    }
+  }
+}

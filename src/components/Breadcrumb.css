@@ -1,0 +1,47 @@
+/* Breadcrumb (design-context §4, §6 A4; numbers from the prototype game page). The link is a pill
+   with the orange current-item outline, radius 12, 36px tall (44px on the phone for the thumb),
+   a chevron drawn from two borders before the label; 12px below it the page title starts. */
+@scope ([data-component="breadcrumb"]) {
+  :scope {
+    display: flex;
+    margin-bottom: var(--space-12);
+  }
+
+  a {
+    display: inline-flex;
+    gap: var(--space-8);
+    align-items: center;
+    min-height: 36px;
+    padding: 0 var(--space-16) 0 var(--space-12);
+    border-radius: var(--radius-12);
+    box-shadow: inset 0 0 0 2px var(--dot);
+    color: var(--ink);
+    font: 600 14px / 1 var(--font-text);
+    text-decoration: none;
+  }
+
+  a::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    margin-left: 3px;
+    border: solid var(--dot);
+    border-width: 0 0 2px 2px;
+    transform: rotate(45deg);
+  }
+
+  a:hover {
+    background: var(--surface);
+  }
+
+  /* The focus ring keeps the pill's own corners. */
+  a:focus-visible {
+    border-radius: var(--radius-12);
+  }
+
+  @media (max-width: 760px) {
+    a {
+      min-height: 44px;
+    }
+  }
+}

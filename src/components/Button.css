@@ -1,0 +1,67 @@
+/* Button (design-context §6 G; numbers from the prototype's home and inner-page buttons).
+   primary: the one filled orange button of a screen, at least 46px tall (52 here).
+   paper: the quiet paper button beside it. */
+@scope ([data-component="button"]) {
+  :scope {
+    display: inline-flex;
+    gap: var(--space-8);
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 var(--space-32);
+    border: 0;
+    border-radius: var(--radius-12);
+    background: var(--link);
+    color: var(--paper);
+    font: 800 18px / 1.1 var(--font-heading);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgb(var(--white-rgb) / 0.18),
+      0 1px 0 rgb(var(--shadow-rgb) / 0.25),
+      0 10px 20px -8px rgb(var(--shadow-rgb) / 0.45);
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+
+  :scope:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgb(var(--white-rgb) / 0.18),
+      0 2px 0 rgb(var(--shadow-rgb) / 0.25),
+      0 14px 26px -8px rgb(var(--shadow-rgb) / 0.5);
+  }
+
+  :scope:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 1px 0 rgb(var(--white-rgb) / 0.1),
+      0 4px 8px -4px rgb(var(--shadow-rgb) / 0.4);
+  }
+
+  :scope[data-variant="paper"] {
+    min-height: 48px;
+    padding: 0 var(--space-20);
+    background: var(--surface);
+    color: var(--ink);
+    font: 600 16px / 1.1 var(--font-text);
+    box-shadow:
+      var(--cut-shadow),
+      inset 0 0 0 1px var(--line);
+  }
+
+  :scope[data-variant="paper"]:is(:hover, :active) {
+    box-shadow:
+      var(--cut-shadow),
+      inset 0 0 0 1px var(--line);
+  }
+
+  @media (max-width: 760px) {
+    :scope[data-variant="primary"] {
+      width: 100%;
+    }
+  }
+}
