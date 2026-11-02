@@ -4,10 +4,6 @@ import type { UIStrings } from "../types";
 /** Simplified Chinese strings, translated from English. */
 export const zh: UIStrings = {
   meta: {
-    root: {
-      title: "选择语言",
-      description: "Kitto Studio 是一家小小的家庭工作室，专为手机制作益智游戏。"
-    },
     home: {
       title: "一定值得一玩。",
       description: "我们是 Kitto Studio，一家小小的家庭工作室，专为手机制作益智游戏。"
