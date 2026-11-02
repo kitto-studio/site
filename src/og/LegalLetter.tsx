@@ -21,6 +21,9 @@ import type { OgCardProps, OgLetterSpec } from "./types";
  */
 export const LETTER_TEXT = { x: 310, y: 78, width: 600 } as const;
 
+/** Most message lines on a letter: more would run under the postmark. */
+const LETTER_MESSAGE_LINES = 3;
+
 /** Margin line down the sheet, px. */
 const MARGIN_LINE = { x: 278, y: 24, width: 2, height: 582 } as const;
 
@@ -37,11 +40,14 @@ const FOLD = {
 /** The ruled lines, px. */
 const RULES = { x: 310, width: 830, height: 2, tops: [330, 388, 446, 504, 562] } as const;
 
-/** Places of the signature, the stamp and the postmark, px. */
+/**
+ * Places of the signature, the stamp and the postmark, px. The postmark sits beside the signature
+ * line, below the three message lines a letter allows.
+ */
 const PLACES = {
   signature: { x: 314, y: 512 },
   stamp: { x: 1010, y: 58 },
-  postmark: { x: 720, y: 378 }
+  postmark: { x: 720, y: 440 }
 } as const;
 
 /** Legal letter props: the card props with a letter row. */
@@ -137,6 +143,7 @@ export function LegalLetter({
           color={COLOR.letterText}
           family={families.message}
           isCjk={isCjk}
+          maxLines={LETTER_MESSAGE_LINES}
         />
       </div>
       <Stamp x={PLACES.stamp.x} y={PLACES.stamp.y} ground={card.stamp.ground} image={art.stamp} />
