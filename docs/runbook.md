@@ -3,7 +3,7 @@
 Plain steps for everything the site needs on Cloudflare. All of it lives in one Cloudflare account,
 on the zones `kitto.studio` and `kitto-studio.com`.
 
-Deploy only after Alex agrees.
+A merge to `main` deploys by itself (CI). A deploy from your machine is only for an emergency.
 
 ## State
 
@@ -11,12 +11,14 @@ Deploy only after Alex agrees.
 |---|---|
 | Pages project `kitto-studio`, production branch `main` | done |
 | Custom domains `kitto.studio` and `www.kitto.studio` on the project | done |
+| DNS: `kitto.studio` and `www` `CNAME kitto-studio.pages.dev`, Proxied | done |
 | Email Routing on `kitto.studio` (MX, SPF, DKIM records) | done |
-| Destination address: Hanna's mailbox | added, waits for verification |
-| Rules `support@kitto.studio` and `delete@kitto.studio` | to do, after verification |
+| Destination address: Hanna's mailbox | verified |
+| Rules `support@kitto.studio` and `delete@kitto.studio` | done |
+| Email Address Obfuscation on `kitto.studio` | off, see step 6 |
 | `kitto-studio.com` and `www.kitto-studio.com` → `https://kitto.studio` (301) | done |
 | `www.kitto.studio` → `https://kitto.studio` (301) | to do, if not done |
-| Secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` in GitHub | to do |
+| Secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` in GitHub | done, CI deploys on `main` |
 
 ---
 
@@ -196,6 +198,26 @@ A `301` with `location: https://kitto.studio/en/about/` means it is done. A `200
 
 Keep `www.kitto.studio` attached to the Pages project: its DNS record stays proxied and the rule
 answers before Pages does.
+
+---
+
+## 6. Email Address Obfuscation stays off
+
+Security → Settings → Email Address Obfuscation is **Off** on `kitto.studio`. Keep it off.
+
+Cloudflare rewrites each address in the HTML to `[email protected]` and decodes it with a script
+that runs once, on a full page load. The site loads the next page as HTML and swaps it in, so after
+any link inside the site the addresses stayed `[email protected]`, links went to a 404, and the copy
+button copied the placeholder. The Cloudflare docs give no way to decode swapped-in HTML: their
+advice for dynamic pages is to switch the feature off. The addresses are public anyway (the stores
+require them), and Email Routing filters the spam.
+
+Check after a change on the zone:
+
+```sh
+curl -s https://kitto.studio/en/support/ | grep -c "email-protection"
+# 0
+```
 
 ---
 
