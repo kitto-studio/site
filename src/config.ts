@@ -53,6 +53,8 @@ export const SPA = {
   viewTransitions: "none",
   /** The progress bar shows a tap was taken while the next page loads. */
   progressBar: true,
+  /** Pages are loaded before the tap: on touch or hover, and for links that come into view. */
+  prefetch: "visible",
   /** The element a navigation swaps. */
   swapSelector: "[data-page]"
 } as const;

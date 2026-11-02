@@ -56,7 +56,7 @@
     "vitest": "4.0.18"
   },
   "dependencies": {
-    "@moku-labs/web": "2.4.11",
+    "@moku-labs/web": "2.4.16",
     "preact": "10.29.8",
     "preact-render-to-string": "6.8.2"
   }
