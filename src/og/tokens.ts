@@ -1,7 +1,8 @@
 /**
- * @file The OG card's fixed measures and colours, read by the layouts, the parts and the postbuild
- * art step. Satori reads inline styles only, so the brand colours are written here as values
- * (brand-system §3, light theme, and the paper tones of the postcard design) instead of CSS tokens.
+ * @file The OG card's fixed measures and colours, read by the layouts, the parts and the assets
+ * plugin's art step. Satori reads inline styles only, so the brand colours are written here as
+ * values (brand-system §3, light theme, and the paper tones of the postcard design) instead of CSS
+ * tokens.
  */
 
 /** Card size, px. */

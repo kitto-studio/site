@@ -1,12 +1,10 @@
 /**
  * @file Shared types of the postbuild plugin: config, state, the public API, the context slice the
- * domain files read, and the shapes the sitemap and 404 steps pass around. The OG card types live
- * in the assets plugin, `src/plugins/assets/og/types.ts`.
+ * domain files read, and the shapes the sitemap and 404 steps pass around.
  */
 import type { Log } from "@moku-labs/web";
 import type { Locale } from "../../i18n/languages";
 import type { Alternate } from "../../lib/head";
-import type { CardCache } from "./og";
 
 /**
  * Postbuild config.
@@ -35,18 +33,13 @@ export type PostbuildResult = {
 };
 
 /**
- * Mutable plugin state, kept for the life of the process.
- *
- * - `runs` holds the run in progress per output directory, so the `build:complete` run and a
- *   caller's `run()` share one run instead of writing the same files at the same time.
- * - `cards` holds every OG card drawn so far, so a dev rebuild writes the cards again without
- *   drawing them again (some 9 s per rebuild).
+ * Mutable plugin state, kept for the life of the process: the run in progress per output
+ * directory, so the `build:complete` run and a caller's `run()` share one run instead of writing
+ * the same files at the same time.
  */
 export type State = {
   /** Runs in progress, keyed by absolute output directory. A finished run leaves the map. */
   runs: Map<string, Promise<PostbuildResult>>;
-  /** Drawn OG card PNGs, keyed `{card}/{locale}`. */
-  cards: CardCache;
 };
 
 /** The part of the plugin context the domain files read. */
@@ -63,7 +56,7 @@ export type PostbuildContext = {
 export type Api = {
   /**
    * Write the site's post-build files into a built output directory: `sitemap.xml` and
-   * `robots.txt`, `_redirects`, the root and per-locale `404.html`, and the OG cards. The build
+   * `robots.txt`, `_redirects`, and the root and per-locale `404.html`. The build
    * already runs it on `build:complete`; while that run is in progress for the same directory,
    * `run` returns it instead of starting a second one. Rejects when a step fails.
    *

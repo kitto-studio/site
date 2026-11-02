@@ -2,13 +2,11 @@
  * @file Writing the OG cards: per locale, one 1200 × 630 PNG per row of `OG_CARDS`
  * (`{ogDir}/{lang}/{card}.png`, served at the paths `pageHead` links). `writeOgCards` draws only
  * the cards whose inputs changed since the manifest and writes the manifest last.
- * `writeBuildCards` is the build's step until the data PR: it writes every card into a built
- * output directory, drawing each once per process.
  */
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { LOCALES, type Locale } from "../../../i18n/languages";
-import { OG_CARD_NAMES, ogImagePath } from "../../../lib/head";
+import { OG_CARD_NAMES } from "../../../lib/head";
 import { OG_CARDS, type OgCardName } from "../../../og/cards";
 import type { OgCardSpec } from "../../../og/types";
 import type { Config, OgResult } from "../types";
@@ -16,7 +14,7 @@ import { createArtStore } from "./art";
 import { createFontStore } from "./fonts";
 import { cardHash, ogInputs } from "./hash";
 import { cardText, renderOgCard } from "./render";
-import type { CardCache, CardRun, CardStores, OgManifest } from "./types";
+import type { CardStores, OgManifest } from "./types";
 
 /** One card of an `og()` run. */
 type CardJob = {
@@ -137,54 +135,4 @@ export async function writeOgCards(
   await writeFile(config.ogManifest, `${JSON.stringify(hashes, undefined, 2)}\n`);
 
   return { written: stale.map(job => job.output), upToDate: jobs.length - stale.length };
-}
-
-/**
- * Write one card into a built output directory. A card the cache holds is written as it is; a
- * card it lacks is drawn and added to it. Removed in the data PR.
- *
- * @param run - The output directory, the card cache and the run's stores.
- * @param name - The card.
- * @param locale - The card locale.
- * @returns The written file, relative to the output directory.
- */
-async function writeBuildCard(run: CardRun, name: OgCardName, locale: Locale): Promise<string> {
-  const key = `${name}/${locale}`;
-  const png = run.cards.get(key) ?? (await drawCard(name, locale, run));
-  run.cards.set(key, png);
-
-  const file = ogImagePath(name, locale).slice(1);
-  await writePng(path.join(run.outputDirectory, file), png);
-  return file;
-}
-
-/**
- * Write every card of every locale into a built output directory: the build's OG step until the
- * data PR commits the cards. Removed in the data PR.
- *
- * @param outputDirectory - The output directory.
- * @param cards - The drawn cards of the process; the cards drawn by this run are added.
- * @param mediaDirectory - The art folder.
- * @returns The written files, relative to `outputDirectory`.
- * @example
- * ```ts
- * const files = await writeBuildCards("dist", ctx.state.cards, "public/media"); // ["og/en/home.png", …]
- * ```
- */
-export async function writeBuildCards(
-  outputDirectory: string,
-  cards: CardCache,
-  mediaDirectory: string
-): Promise<string[]> {
-  const run: CardRun = {
-    outputDirectory,
-    cards,
-    fonts: createFontStore(),
-    art: createArtStore(mediaDirectory)
-  };
-  const files: string[] = [];
-  for (const locale of LOCALES) {
-    for (const name of OG_CARD_NAMES) files.push(await writeBuildCard(run, name, locale));
-  }
-  return files;
 }

@@ -1,7 +1,7 @@
 /**
  * @file Types of the OG cards: the card fonts read from the `@fontsource` packages, the art read
  * from the media folder, the words on a card, the inputs a card's hash is made of and the manifest
- * of drawn cards. The build's card cache stays until the data PR.
+ * of drawn cards.
  */
 import type { OgCardName } from "../../../og/cards";
 import type { OgArt } from "../../../og/types";
@@ -115,27 +115,12 @@ export type OgCardText = {
   email?: string;
 };
 
-/**
- * The drawn card PNGs, keyed `{card}/{locale}` (`home/ja`). The card words come from string tables
- * loaded once per process, so a card drawn once stays right until the process ends. Removed in the
- * data PR, with the build's OG step.
- */
-export type CardCache = Map<string, Buffer>;
-
 /** The stores one card is drawn from. */
 export type CardStores = {
   /** The run's font store. */
   fonts: FontStore;
   /** The run's art store. */
   art: ArtStore;
-};
-
-/** What writing one card into a build needs from its run. Removed in the data PR. */
-export type CardRun = CardStores & {
-  /** The built output directory. */
-  outputDirectory: string;
-  /** The drawn cards of the process; a card missing from it is drawn and added. */
-  cards: CardCache;
 };
 
 /**
