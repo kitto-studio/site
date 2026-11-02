@@ -1,0 +1,7 @@
+/* Screenshot-only style for the page goldens (baseline.spec.ts). The paper grain is random noise
+   that does not compress: it made each full-page golden 1-3 MB. Layout, type, colour, photos and
+   shadows are what these goldens guard; the grain keeps its own goldens (404 and root pages).
+   Every app style is in a cascade layer, so this unlayered rule wins without `!important`. */
+:root {
+  --grain: none;
+}

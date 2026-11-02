@@ -2,6 +2,8 @@
 
 Brandbook page: https://claude.ai/artifact/ABL7PM5jA4fbQqBnkB8zo8. This file is the source of truth for the site.
 
+The full brand system (type scale, space, paper and depth, components, motion, art library, voice) is in [STYLE.md](STYLE.md).
+
 ## Logo
 
 - Wordmark: lowercase `kitto` with an orange dot over the i.
@@ -9,7 +11,7 @@ Brandbook page: https://claude.ai/artifact/ABL7PM5jA4fbQqBnkB8zo8. This file is 
 - Never redraw the logo. Use this vector or images baked from it.
 - Clear space: one dot diameter on every side. Minimum width on screen: 96 px; smaller uses a mark.
 - Motion «Прыжок»: letters drop one by one (80 ms apart) with a small bounce, the dot drops last (at 700 ms) and squashes slightly on contact.
-- Small mark (avatar, favicon): still open. Candidates are crops of the same vector: k, ki with dot, i with dot.
+- Small mark (avatar, favicon): the «ki with dot» crop of the same vector, `public/favicon.svg`.
 
 ## Colours
 
@@ -35,6 +37,6 @@ Orange is an accent only: the dot, links, one button per screen.
 ## Addresses
 
 - Site: `kitto.studio`, spare `kitto-studio.com`
-- Mail: `hello@kitto.studio`
+- Mail: `support@kitto.studio` (support), `delete@kitto.studio` (data deletion)
 - GitHub: `github.com/kitto-studio`
 - App IDs: `studio.kitto.<game>`
