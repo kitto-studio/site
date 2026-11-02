@@ -15,7 +15,7 @@
  * deletes the fragment.
  */
 
-/** Route names that render a page: the keys of {@link UIStrings} `meta`. */
+/** Route names that render a page. Every one but `root` is a key of {@link UIStrings} `meta`. */
 export type PageId =
   | "root"
   | "home"
