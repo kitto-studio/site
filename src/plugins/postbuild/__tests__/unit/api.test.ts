@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LOCALES } from "../../../../i18n/languages";
+import { OG_CARDS } from "../../../../og/cards";
 import { createPostbuildApi, handleBuildComplete, joinRun } from "../../api";
 import { createPostbuildState } from "../../state";
 import type { PostbuildContext } from "../../types";
@@ -28,7 +29,7 @@ const createCtx = (pages: readonly string[] = []): PostbuildContext => ({
 const createDrawnCtx = (pages: readonly string[]): PostbuildContext => {
   const ctx = createCtx(pages);
   for (const locale of LOCALES) {
-    for (const kind of ["home", "game"]) {
+    for (const kind of Object.keys(OG_CARDS)) {
       ctx.state.cards.set(`${kind}/${locale}`, Buffer.from(`${kind} ${locale}`));
     }
   }
@@ -98,7 +99,7 @@ describe("a run over a built directory", () => {
     );
   });
 
-  // Catches: a later run in the same process drawing the 22 cards again (some 9 s per dev
+  // Catches: a later run in the same process drawing every card again (seconds per dev
   // rebuild) instead of writing the ones the state keeps.
   it("writes the cards an earlier run drew from the state", async () => {
     await createPostbuildApi(createDrawnCtx(["/{lang}/"])).run();
