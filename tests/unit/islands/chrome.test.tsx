@@ -296,5 +296,7 @@ describe("chrome island: phone menu", () => {
     find(header.el, "[data-menu-sheet] a").click();
     expect("menuOpen" in header.el.dataset).toBe(false);
     expect(find(document, "main").hasAttribute("inert")).toBe(false);
+    // Catches: the sheet sliding away over the new page (it blinked on a phone).
+    expect("menuInstant" in header.el.dataset).toBe(true);
   });
 });

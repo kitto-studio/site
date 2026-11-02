@@ -101,11 +101,17 @@ function openMenu(root: HTMLElement): void {
  *
  * @param root - The header.
  * @param returnFocus - Move focus back to the Menu button (Esc, the scrim, the button itself).
+ * @param instant - Close without the slide: a followed link swaps the page at the same moment,
+ *   and the sheet sliding away over the new page blinked.
  * @returns {void} Nothing; the menu is closed and the page is live again.
  */
-export function closeMenu(root: HTMLElement, returnFocus: boolean): void {
+export function closeMenu(root: HTMLElement, returnFocus: boolean, instant = false): void {
   const menu = menuOf(root);
   if (menu === undefined || !isMenuOpen(root)) return;
+  if (instant) {
+    root.dataset.menuInstant = "";
+    requestAnimationFrame(() => requestAnimationFrame(() => delete root.dataset.menuInstant));
+  }
   delete root.dataset.menuOpen;
   menu.toggle.setAttribute("aria-expanded", "false");
   menu.sheet.setAttribute("inert", "");

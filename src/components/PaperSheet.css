@@ -83,8 +83,9 @@
       0 24px 40px -18px rgb(var(--shadow-rgb) / 0.35);
   }
 
-  /* Sheets stack on each other only where the window is tall enough to hold them. */
-  @media (min-height: 620px) {
+  /* Sheets stack on each other only where the window is tall enough to hold them, and only with a
+     mouse: on a touch screen the stack jumped and left gaps, so a phone gets a plain list. */
+  @media (min-height: 620px) and (hover: hover) {
     :scope[data-stack] {
       position: sticky;
     }
@@ -198,6 +199,14 @@
       order: -1;
       width: 200px;
       margin: 0 auto calc(-1 * var(--space-12));
+    }
+  }
+
+  /* A touch screen: the sheets follow each other at an even gap. */
+  @media (hover: none) {
+    :scope[data-stack] {
+      top: auto;
+      margin-bottom: var(--space-24);
     }
   }
 

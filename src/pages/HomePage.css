@@ -173,6 +173,12 @@
     overflow-x: clip;
   }
 
+  @media (hover: none) {
+    [data-sheet-stack] {
+      padding-bottom: var(--space-48);
+    }
+  }
+
   /* A sheet's natural top, untouched by its own transform: the island measures the lift here. */
   [data-stack-mark] {
     display: block;
