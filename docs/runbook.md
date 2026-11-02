@@ -17,7 +17,7 @@ A merge to `main` deploys by itself (CI). A deploy from your machine is only for
 | Rules `support@kitto.studio` and `delete@kitto.studio` | done |
 | Email Address Obfuscation on `kitto.studio` | off, see step 6 |
 | `kitto-studio.com` and `www.kitto-studio.com` → `https://kitto.studio` (301) | done |
-| `www.kitto.studio` → `https://kitto.studio` (301) | to do, if not done |
+| `www.kitto.studio` → `https://kitto.studio` (301) | done |
 | Secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` in GitHub | done, CI deploys on `main` |
 
 ---
@@ -179,7 +179,7 @@ curl -sI https://kitto-studio.com/en/about/ | grep -iE "^HTTP|location"
 # location: https://kitto.studio/en/about/
 ```
 
-### 5.2 www.kitto.studio → kitto.studio (to do, if not done)
+### 5.2 www.kitto.studio → kitto.studio (done)
 
 First check:
 
