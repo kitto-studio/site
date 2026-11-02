@@ -21,9 +21,20 @@
     -webkit-backdrop-filter: blur(14px) saturate(1.15);
     backdrop-filter: blur(14px) saturate(1.15);
     border-bottom: 1px solid var(--line);
-    transition:
-      background-color var(--duration-crossfade) ease,
-      box-shadow 0.3s ease;
+  }
+
+  /* The scroll shadow under the plate: it fades in by opacity on its own layer, so the plate and
+     the page under it are not redrawn while it fades. */
+  [data-bar]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    box-shadow: 0 12px 24px -20px rgb(var(--shadow-rgb) / 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    will-change: opacity;
   }
 
   /* A touch screen gets the plate solid: the blur over moving content cost the phone's GPU every
@@ -36,8 +47,8 @@
     }
   }
 
-  :scope[data-scrolled] [data-bar] {
-    box-shadow: 0 12px 24px -20px rgb(var(--shadow-rgb) / 0.55);
+  :scope[data-scrolled] [data-bar]::after {
+    opacity: 1;
   }
 
   :scope[data-menu-open] [data-bar] {

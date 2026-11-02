@@ -91,14 +91,14 @@ export const FOLD_AT = 0.98;
 /** Seconds the hinge spring runs before the sticker rests upright. */
 export const SPRING_SECONDS = 1.4;
 
-/** Seconds a replay takes to fold the sticker flat before it springs up again. */
-export const FOLD_SECONDS = 0.23;
-
 /** The hinge spring: damping ratio and angular frequency (rad/s). A soft paper bounce. */
 const SPRING = { damping: 0.46, frequency: 12.5 };
 
 /** A sticker lying flat on its sheet, degrees of hinge rotation. */
 const FLAT = 90;
+
+/** How hard a tap pushes the paper, degrees: the dip peaks at about half of it. */
+const KICK = 110;
 
 /** How much brighter paper gets when tipped toward the light. */
 const TIP_LIGHT = 0.08;
@@ -461,19 +461,27 @@ export function hingeAngle(seconds: number): number {
 }
 
 /**
- * The hinge angle while a click folds the sticker back down, easing in.
+ * The hinge angle after a tap: the paper is pushed back from where it stands and springs upright
+ * on the same spring, starting the moment the finger lands.
  *
- * @param from - The angle it had when clicked.
- * @param seconds - Time since the click.
- * @returns Degrees, from `from` to 90 (flat) over {@link FOLD_SECONDS}.
+ * @param from - The angle it had when tapped.
+ * @param seconds - Time since the tap.
+ * @returns Degrees: `from` at the tap, a dip of about 55 toward flat at 0.1 s, a bounce past upright, 0 after {@link SPRING_SECONDS}.
  * @example
  * ```ts
- * foldAngle(0, FOLD_SECONDS); // 90
+ * kickAngle(0, 0.1); // about 55: pushed back toward flat
+ * kickAngle(0, SPRING_SECONDS); // 0: upright again
  * ```
  */
-export function foldAngle(from: number, seconds: number): number {
-  const done = clamp(seconds / FOLD_SECONDS);
-  return from + (FLAT - from) * done * done;
+export function kickAngle(from: number, seconds: number): number {
+  if (seconds >= SPRING_SECONDS) {
+    return 0;
+  }
+
+  const { damping, frequency } = SPRING;
+  const damped = frequency * Math.sqrt(1 - damping * damping);
+  const push = KICK * Math.exp(-damping * frequency * seconds) * Math.sin(damped * seconds);
+  return Math.min(FLAT, from * spring(seconds) + push);
 }
 
 /**

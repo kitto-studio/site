@@ -9,11 +9,13 @@
                      out): it trims the soft shadow baked into the image, so the die-cut edge hugs
                      the object and the piece ends exactly at the fold
    Every rig is shifted so its hinge lands on --sticker-floor: stickers share one floor.
-   The island writes --sticker-up (1 standing … 0 flat) and --sticker-light, and rotates the stand. */
+   The island rotates the stand and writes the opacity and transform of the cast, the fold shade and
+   the sheen straight onto them, never a custom property on the sticker: an inherited change would
+   restyle every part and redraw its grain. Each moving part sits on its own layer, so a moving
+   sticker never repaints the page under it, nor its own outline and blur. Without the island (and
+   with reduced motion) the parts keep the standing pose below. */
 @scope ([data-component="popup-sticker"]) {
   :scope {
-    --sticker-up: 1;
-    --sticker-light: 1;
     --sticker-floor: 0.86;
     position: relative;
     width: 100%;
@@ -124,12 +126,19 @@
     -webkit-user-drag: none;
   }
 
-  /* The cast shadow: the piece's own silhouette laid back on the sheet, growing as it stands. */
+  /* The cast shadow: the piece's own silhouette laid back on the sheet, growing as it stands. The
+     wrapper moves; the blurred silhouette inside it is drawn once. */
   [data-sticker-cast] {
-    opacity: calc(var(--sticker-up) * var(--cast-opacity));
-    filter: brightness(0) blur(5px);
+    position: absolute;
+    inset: 0;
     transform-origin: 50% calc(var(--hinge) * 100%);
-    transform: skewX(-42deg) scaleY(calc(0.04 + var(--sticker-up) * 0.3));
+    transform: skewX(-42deg) scaleY(0.34);
+    will-change: transform, opacity;
+  }
+
+  [data-sticker-cast] img {
+    opacity: var(--cast-opacity);
+    filter: brightness(0) blur(5px);
   }
 
   /* The glued tab lying on the sheet; its top edge is the fold. */
@@ -150,26 +159,29 @@
   }
 
   /* The fold's shade on the tab, as deep as the piece stands. */
-  [data-sticker-tab]::before {
-    content: "";
+  [data-sticker-fold] {
     position: absolute;
-    inset: 0 0 auto;
+    top: calc(var(--hinge) * 100%);
+    right: calc((1.015 - var(--tongue-right)) * 100%);
+    left: calc((var(--tongue-left) - 0.015) * 100%);
     height: 10px;
     background: linear-gradient(180deg, rgb(var(--shadow-rgb) / 0.28), rgb(var(--shadow-rgb) / 0));
-    opacity: var(--sticker-up);
+    will-change: opacity;
   }
 
   [data-sticker-stand] {
     position: absolute;
     inset: 0;
     transform-origin: 50% calc(var(--hinge) * 100%);
+    will-change: transform;
   }
 
-  /* One die-cut silhouette: the art and its tongue, outlined together in cut paper. */
+  /* One die-cut silhouette: the art and its tongue, outlined together in cut paper. It never
+     changes, so its outline is drawn once into the stand's layer. */
   [data-sticker-cutout] {
     position: absolute;
     inset: 0;
-    filter: brightness(var(--sticker-light)) drop-shadow(2px 0 0 var(--cut))
+    filter: drop-shadow(2px 0 0 var(--cut))
       drop-shadow(-2px 0 0 var(--cut)) drop-shadow(0 2px 0 var(--cut))
       drop-shadow(0 -2px 0 var(--cut)) drop-shadow(0 1px 1px rgb(var(--shadow-rgb) / 0.3))
       drop-shadow(0 8px 9px rgb(var(--shadow-rgb) / 0.16));
@@ -186,6 +198,34 @@
       var(--grain),
       var(--cut);
     transition: background-color var(--duration-crossfade) ease;
+  }
+
+  /* The paper catching the light as it tips: a white sheen over the art and the tongue, faded in by
+     opacity alone (none standing, at most 0.12 of white). */
+  [data-sticker-light] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity;
+  }
+
+  [data-sticker-light-art] {
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--white-rgb));
+    clip-path: var(--silhouette);
+    -webkit-mask: var(--art) center / 100% 100% no-repeat;
+    mask: var(--art) center / 100% 100% no-repeat;
+  }
+
+  [data-sticker-light-tongue] {
+    position: absolute;
+    top: calc(var(--tongue-top) * 100%);
+    right: calc((1 - var(--tongue-right)) * 100%);
+    bottom: calc((1 - var(--hinge)) * 100%);
+    left: calc(var(--tongue-left) * 100%);
+    background: rgb(var(--white-rgb));
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  FOLD_SECONDS,
-  foldAngle,
   framePlacement,
   HILLS_GAP,
   HILLS_TOP,
@@ -9,6 +7,7 @@ import {
   headlineSafeTop,
   heroProgress,
   hingeAngle,
+  kickAngle,
   PLANE_NAMES,
   type PlaneName,
   paperLight,
@@ -273,12 +272,18 @@ describe("pop-up hinge", () => {
     expect(Math.max(...path.slice(1))).toBeLessThan(90);
   });
 
-  // Catches: a click replay that jumps instead of folding, or never reaches flat before springing up.
-  it("folds back down from where it stands to flat in the fold time", () => {
-    expect(foldAngle(-12, 0)).toBe(-12);
-    expect(foldAngle(30, FOLD_SECONDS / 2)).toBeCloseTo(30 + 60 * 0.25);
-    expect(foldAngle(30, FOLD_SECONDS)).toBe(90);
-    expect(foldAngle(0, 1)).toBe(90);
+  // Catches: a tap that waits before the paper moves, jumps from where it stood, tips over flat or
+  // never settles upright again.
+  it("kicks from where it stands at once, bounces and settles upright", () => {
+    expect(kickAngle(0, 0)).toBe(0);
+    expect(kickAngle(-12, 0)).toBe(-12);
+    expect(kickAngle(0, 1 / 60)).toBeGreaterThan(5);
+    const path = Array.from({ length: 140 }, (_, step) => kickAngle(0, step / 100));
+    expect(Math.max(...path)).toBeGreaterThan(40);
+    expect(Math.max(...path)).toBeLessThan(90);
+    expect(Math.min(...path)).toBeLessThan(0);
+    expect(Math.abs(kickAngle(30, 0.6) - kickAngle(0, 0.6))).toBeLessThan(5);
+    expect(kickAngle(30, SPRING_SECONDS)).toBe(0);
   });
 
   // Catches: the cast shadow showing under a flat sticker, or the tipped paper not catching the light.

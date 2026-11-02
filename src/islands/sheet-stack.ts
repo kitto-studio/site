@@ -3,7 +3,7 @@
  *
  * On scroll it writes two custom properties per sheet: `--lift` (1 entering at the window bottom,
  * 0 landed in its sticky place) and `--cover` (how far the next sheet lies over it); the sheet's
- * CSS turns them into the slide, tilt and sink. A sheet's sticker springs up once the sheet is
+ * CSS turns them into the slide, tilt and sink, and the cover shade gets its opacity directly. A sheet's sticker springs up once the sheet is
  * nearly in place. Stickers stand until the reader scrolls; then a sticker whose sheet is back at
  * the window bottom lies flat, unseen. Reduced motion: only the cover shade follows the scroll.
  */
@@ -27,12 +27,17 @@ const PEEK_FLOOR = 0.25;
 /** Room kept under a sheet taller than the window when it sticks by its bottom, px. */
 const PIN_MARGIN = 16;
 
+/** Opacity of the shade on a sheet fully covered by the next one. */
+const SHADE_MAX = 0.5;
+
 /** One sheet of the stack and what moves with it. */
 type StackSheet = {
   /** The sheet root. */
   sheet: HTMLElement;
   /** Its zero-height marker: the sheet's natural top, untouched by its transform. */
   mark: HTMLElement | undefined;
+  /** The shade the next sheet casts on its face. */
+  shade: HTMLElement | undefined;
   /** Its pop-up sticker, if any. */
   sticker: HTMLElement | undefined;
   /** Whether the sticker stands (or is springing up). */
@@ -50,6 +55,7 @@ function collectSheets(root: Element): StackSheet[] {
   return [...root.querySelectorAll<HTMLElement>("[data-stack]")].map((sheet, index) => ({
     sheet,
     mark: marks[index],
+    shade: sheet.querySelector<HTMLElement>("[data-sheet-shade]") ?? undefined,
     sticker: sheet.querySelector<HTMLElement>('[data-component="popup-sticker"]') ?? undefined,
     standing: true
   }));
@@ -190,6 +196,7 @@ function startStack(root: Element): () => void {
     }));
     for (const { item, cover, lift } of measured) {
       item.sheet.style.setProperty("--cover", cover.toFixed(3));
+      if (item.shade) item.shade.style.opacity = (cover * SHADE_MAX).toFixed(3);
       if (lift !== undefined) {
         item.sheet.style.setProperty("--lift", lift.toFixed(3));
         updateSticker(item, lift, { armed, instant });

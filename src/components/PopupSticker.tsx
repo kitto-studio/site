@@ -1,6 +1,6 @@
 /**
  * @file PopupSticker (design-context §6 F9): a die-cut paper object on a glued paper tab. It folds
- * up from the sheet with a spring when it comes into view and replays on click (the
+ * up from the sheet with a spring when it comes into view and replays on a tap (the
  * `popup-sticker` island). It stands by default: without the island, with reduced motion, in print.
  *
  * Reusable on any page: it fills the width of its box and is square, so the parent sizes it. The
@@ -54,16 +54,18 @@ export function PopupSticker({ sticker, trigger = "view" }: PopupStickerProps): 
       aria-hidden="true"
     >
       <div data-sticker-rig>
-        <img
-          data-sticker-cast
-          src={src}
-          alt=""
-          width={ART_SIZE}
-          height={ART_SIZE}
-          loading="lazy"
-          decoding="async"
-        />
+        <span data-sticker-cast>
+          <img
+            src={src}
+            alt=""
+            width={ART_SIZE}
+            height={ART_SIZE}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
         <span data-sticker-tab />
+        <span data-sticker-fold />
         <div data-sticker-stand>
           <div data-sticker-cutout>
             <span data-sticker-tongue />
@@ -77,6 +79,10 @@ export function PopupSticker({ sticker, trigger = "view" }: PopupStickerProps): 
               decoding="async"
             />
           </div>
+          <span data-sticker-light style={`--art: url("${src}")`}>
+            <span data-sticker-light-art />
+            <span data-sticker-light-tongue />
+          </span>
         </div>
       </div>
     </div>
