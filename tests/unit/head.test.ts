@@ -61,6 +61,17 @@ describe("pageHead", () => {
     expect(xDefault).toEqual(hreflang("x-default", "https://kitto.studio/en/privacy/"));
   });
 
+  // Catches: link previews of kitto.studio (bots never run the redirect) titled "Choose your
+  // language" instead of the studio's own title and description.
+  it("gives the root page the home page's title and description", () => {
+    const root = headOf("root", "en");
+    const home = headOf("home", "en");
+
+    expect(root.title).toBe("Surely worth playing.");
+    expect(root.title).toBe(home.title);
+    expect(root.description).toBe(home.description);
+  });
+
   // Catches: the root language page listing "/" as every language, instead of the home pages.
   it("gives the root page the home page's alternates", () => {
     const hrefs = alternateHrefs("root", "en");

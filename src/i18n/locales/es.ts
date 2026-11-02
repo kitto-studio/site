@@ -4,11 +4,6 @@ import type { UIStrings } from "../types";
 /** Spanish strings. */
 export const es: UIStrings = {
   meta: {
-    root: {
-      title: "Elige tu idioma",
-      description:
-        "Kitto Studio es un pequeño estudio familiar. Hacemos juegos de puzles para móviles."
-    },
     home: {
       title: "Sin duda, vale la pena jugar.",
       description:

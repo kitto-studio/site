@@ -4,11 +4,6 @@ import type { UIStrings } from "../types";
 /** Japanese strings, translated from English. */
 export const ja: UIStrings = {
   meta: {
-    root: {
-      title: "言語を選択",
-      description:
-        "Kitto Studio は家族で営む小さなスタジオです。スマートフォン向けのパズルゲームを作っています。"
-    },
     home: {
       title: "きっと、遊ぶ価値がある。",
       description:

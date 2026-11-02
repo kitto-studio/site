@@ -4,11 +4,6 @@ import type { UIStrings } from "../types";
 /** Russian strings. */
 export const ru: UIStrings = {
   meta: {
-    root: {
-      title: "Выберите язык",
-      description:
-        "Kitto Studio — маленькая семейная студия. Мы делаем игры-головоломки для телефонов."
-    },
     home: {
       title: "Непременно стоит сыграть.",
       description:

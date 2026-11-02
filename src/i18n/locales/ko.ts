@@ -4,10 +4,6 @@ import type { UIStrings } from "../types";
 /** Korean strings, translated from English. */
 export const ko: UIStrings = {
   meta: {
-    root: {
-      title: "언어 선택",
-      description: "Kitto Studio는 작은 가족 스튜디오예요. 휴대폰용 퍼즐 게임을 만들어요."
-    },
     home: {
       title: "틀림없이 해 볼 만한 게임.",
       description: "저희는 작은 가족 스튜디오 Kitto Studio예요. 휴대폰용 퍼즐 게임을 만들어요."

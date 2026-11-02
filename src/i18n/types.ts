@@ -516,7 +516,7 @@ export type NotFoundStrings = {
 /** Every UI string of the site for one locale. */
 export type UIStrings = {
   /** Head copy per page. */
-  meta: Record<PageId, PageMeta>;
+  meta: Record<Exclude<PageId, "root">, PageMeta>;
   /** Header, menus, footer. */
   chrome: ChromeStrings;
   /** Root language page. */

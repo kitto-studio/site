@@ -96,6 +96,17 @@ function cjkFontLinks(locale: Locale): Head.HeadElement[] {
 }
 
 /**
+ * The page whose head copy and links a page carries. The root language page is only seen by bots
+ * (people are sent on by its script), so it speaks for the home page.
+ *
+ * @param page - The rendered page.
+ * @returns `home` for the root page, else the page itself.
+ */
+function headPage(page: RoutePage): Exclude<RoutePage, "root"> {
+  return page === "root" ? "home" : page;
+}
+
+/**
  * The `hreflang` links of a page, keyed like the framework's own so they replace them. The root
  * language page has no locale of its own: it carries the alternates of the home page.
  *
@@ -104,7 +115,7 @@ function cjkFontLinks(locale: Locale): Head.HeadElement[] {
  * @returns Eleven locale links and `x-default` on the English page.
  */
 function hreflangLinks(page: RoutePage, ctx: HeadContext): Head.HeadElement[] {
-  const route = page === "root" ? "home" : page;
+  const route = headPage(page);
   const alternates = languageAlternates(locale => ctx.url(route, { lang: locale }));
   return alternates.map(alternate => hreflang(alternate.hreflang, alternate.href));
 }
@@ -123,7 +134,7 @@ function hreflangLinks(page: RoutePage, ctx: HeadContext): Head.HeadElement[] {
 export function pageHead(page: RoutePage): (ctx: HeadContext) => Head.HeadConfig {
   return ctx => {
     const locale = asLocale(ctx.locale);
-    const { title, description } = t(locale).meta[page];
+    const { title, description } = t(locale).meta[headPage(page)];
     return {
       title,
       description,
