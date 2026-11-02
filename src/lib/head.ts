@@ -41,7 +41,7 @@ function isOgCardName(name: string): name is OgCardName {
 }
 
 /**
- * Every OG card, by name, in table order: the cards the postbuild plugin writes in each locale.
+ * Every OG card, by name, in table order: the cards `bun run og` draws in each locale.
  *
  * @example
  * ```ts
@@ -54,7 +54,7 @@ export const OG_CARD_NAMES: readonly OgCardName[] = Object.keys(OG_CARDS).filter
 
 /**
  * The OG card a page links: the card whose row names the page. The root page and a page without a
- * row link the home card, so no page links a PNG the build never wrote.
+ * row link the home card, so no page links a PNG `bun run og` never drew.
  *
  * @param page - The rendered page.
  * @returns The card's name.
@@ -69,7 +69,7 @@ export function ogCardOf(page: RoutePage): OgCardName {
 }
 
 /**
- * The URL path of an OG card, the same path the postbuild plugin writes the PNG to.
+ * The URL path of an OG card: `bun run og` draws the PNG to `public/og` at the same path.
  *
  * @param card - The card.
  * @param locale - The card's locale.
