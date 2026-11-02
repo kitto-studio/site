@@ -1,6 +1,7 @@
 import { createUrls, hreflang, type Router } from "@moku-labs/web/browser";
 import { describe, expect, it } from "vitest";
 import { pageHead, type RoutePage } from "../../src/lib/head";
+import { OG_CARDS } from "../../src/og/cards";
 import { routes } from "../../src/routes";
 
 const links = createUrls<Router.RouteMap>(routes);
@@ -40,11 +41,19 @@ describe("pageHead", () => {
     expect(stylesheetHrefs("ru")).toEqual([]);
   });
 
-  // Catches: a share preview in the wrong language, or the game page showing the studio card.
-  it("shows the locale's game card on the game page and its home card everywhere else", () => {
-    expect(headOf("memoryMissing", "ja").image).toBe("/og/ja/game.png");
-    expect(headOf("home", "ru").image).toBe("/og/ru/home.png");
-    expect(headOf("deleteData", "de").image).toBe("/og/de/home.png");
+  // Catches: a page linking another page's card, a share preview in the wrong language, and a page
+  // linking a PNG the build never wrote (a page without a row, the root page).
+  it("links each page's own card, and the home card where a page has none", () => {
+    for (const [name, card] of Object.entries(OG_CARDS)) {
+      expect(headOf(card.page, "de").image, name).toBe(`/og/de/${name}.png`);
+    }
+    expect(headOf("root", "en").image).toBe("/og/en/home.png");
+
+    const carded = new Set<string>(Object.values(OG_CARDS).map(card => card.page));
+    const uncarded = (Object.keys(routes) as RoutePage[]).filter(
+      page => page !== "root" && !carded.has(page)
+    );
+    for (const page of uncarded) expect(headOf(page, "ja").image, page).toBe("/og/ja/home.png");
   });
 
   // Catches: share previews without the site name or the object type the spec asks for.
