@@ -1,20 +1,18 @@
 /**
- * @file Route head builder: title and description from i18n, the locale's OG card, `og:type` and
- * `og:site_name`, the language alternates with `x-default` on the English page, and the CJK font
- * stylesheet. The framework composes canonical and `og:locale`; the keyed elements here replace
- * its alternates, they never add a second set.
+ * @file Route head builder: title and description from i18n, the page's own OG card in the locale,
+ * `og:type` and `og:site_name`, the language alternates with `x-default` on the English page, and
+ * the CJK font stylesheet. The framework composes canonical and `og:locale`; the keyed elements
+ * here replace its alternates, they never add a second set.
  */
 import { type Head, hreflang, og } from "@moku-labs/web/browser";
 import { SITE } from "../config";
 import { t } from "../i18n";
 import { asLocale, CJK, DEFAULT_LOCALE, LOCALES, type Locale } from "../i18n/languages";
 import type { PageId } from "../i18n/types";
+import { OG_CARDS, type OgCardName } from "../og/cards";
 
 /** A page that has a route (every page but the 404). */
 export type RoutePage = Exclude<PageId, "notFound">;
-
-/** The two OG cards per locale: `home` for every page, `game` for the game page. */
-export type OgCardKind = "home" | "game";
 
 /** One language alternate of a page. */
 export type Alternate = {
@@ -33,9 +31,47 @@ type HeadContext = {
 };
 
 /**
+ * Whether a string names a row of `OG_CARDS`.
+ *
+ * @param name - The string.
+ * @returns True for a card name.
+ */
+function isOgCardName(name: string): name is OgCardName {
+  return Object.hasOwn(OG_CARDS, name);
+}
+
+/**
+ * Every OG card, by name, in table order: the cards the postbuild plugin writes in each locale.
+ *
+ * @example
+ * ```ts
+ * OG_CARD_NAMES.includes("game"); // true
+ * ```
+ */
+export const OG_CARD_NAMES: readonly OgCardName[] = Object.keys(OG_CARDS).filter(name =>
+  isOgCardName(name)
+);
+
+/**
+ * The OG card a page links: the card whose row names the page. The root page and a page without a
+ * row link the home card, so no page links a PNG the build never wrote.
+ *
+ * @param page - The rendered page.
+ * @returns The card's name.
+ * @example
+ * ```ts
+ * ogCardOf("memoryMissing"); // "game"
+ * ogCardOf("root"); // "home"
+ * ```
+ */
+export function ogCardOf(page: RoutePage): OgCardName {
+  return OG_CARD_NAMES.find(name => OG_CARDS[name].page === page) ?? "home";
+}
+
+/**
  * The URL path of an OG card, the same path the postbuild plugin writes the PNG to.
  *
- * @param kind - The card.
+ * @param card - The card.
  * @param locale - The card's locale.
  * @returns The root-relative path of the PNG.
  * @example
@@ -43,8 +79,8 @@ type HeadContext = {
  * ogImagePath("game", "ja"); // "/og/ja/game.png"
  * ```
  */
-export function ogImagePath(kind: OgCardKind, locale: Locale): string {
-  return `/og/${locale}/${kind}.png`;
+export function ogImagePath(card: OgCardName, locale: Locale): string {
+  return `/og/${locale}/${card}.png`;
 }
 
 /**
@@ -138,7 +174,7 @@ export function pageHead(page: RoutePage): (ctx: HeadContext) => Head.HeadConfig
     return {
       title,
       description,
-      image: ogImagePath(page === "memoryMissing" ? "game" : "home", locale),
+      image: ogImagePath(ogCardOf(page), locale),
       elements: [
         og("og:type", "website"),
         og("og:site_name", SITE.name),

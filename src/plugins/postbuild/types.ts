@@ -45,7 +45,7 @@ export type PostbuildResult = {
 export type State = {
   /** Runs in progress, keyed by absolute output directory. A finished run leaves the map. */
   runs: Map<string, Promise<PostbuildResult>>;
-  /** Drawn OG card PNGs, keyed `{kind}/{locale}`. */
+  /** Drawn OG card PNGs, keyed `{card}/{locale}`. */
   cards: CardCache;
 };
 
