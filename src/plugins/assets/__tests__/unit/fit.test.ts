@@ -37,6 +37,11 @@ describe("fitHeadline", () => {
     expect(fitHeadline("ゲーム", "ja", 96, 2, 500)).toBe(58);
   });
 
+  // Catches: a ja or ko game card headline set at 58, above the row's own design size of 54.
+  it("starts a CJK headline at the row's size when the row is below 58", () => {
+    expect(fitHeadline("ゲーム", "ja", 54, 3, 540)).toBe(54);
+  });
+
   // Catches: a long headline kept at its base size, or shrunk below the readable floor.
   it("steps down by 2 px until the headline fits, never below the floor", () => {
     expect(fitHeadline("Surely worth playing.", "en", 76, 2, 500)).toBe(74);

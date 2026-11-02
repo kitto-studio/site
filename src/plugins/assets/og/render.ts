@@ -13,11 +13,11 @@ import { CJK, type Locale } from "../../../i18n/languages";
 import { typeset } from "../../../lib/typography";
 import { OgCard } from "../../../og/OgCard";
 import { OG_CARD_SIZE } from "../../../og/tokens";
-import type { OgCardSpec } from "../../../og/types";
+import type { OgCardSpec, OgCardText } from "../../../og/types";
 import { loadArt } from "./art";
 import { fitHeadline, headlineFrame, headlineLines } from "./fit";
 import { loadStack } from "./fonts";
-import type { CardFont, CardStacks, CardStores, FontFace, OgCardText } from "./types";
+import type { CardFont, CardStacks, CardStores, FontFace } from "./types";
 
 /** Headline face (brand-system §4). */
 const HEADING_FACE: FontFace = { family: "Nunito", pkg: "nunito", weight: 900 };
@@ -78,6 +78,25 @@ export function cardStacks(locale: Locale): CardStacks {
   };
 }
 
+/** Narrow no-break space: the French space before `; : ! ?` and inside « ». */
+const NARROW_NBSP = "\u{202F}";
+
+/** No-break space. */
+const NBSP = "\u{A0}";
+
+/**
+ * A string set in the locale's typography for a card. Nunito and Golos Text have no narrow no-break
+ * space and satori would draw a box, so the card takes a plain no-break space in its place: it
+ * still keeps the French `:` on the line of its word.
+ *
+ * @param text - The string.
+ * @param locale - The card locale.
+ * @returns The typeset string, with no narrow no-break space.
+ */
+function cardTypeset(text: string, locale: Locale): string {
+  return typeset(text, locale).replaceAll(NARROW_NBSP, NBSP);
+}
+
 /**
  * A headline as the design breaks it: a Japanese one after its first comma (`きっと、` /
  * `遊ぶ価値がある。`), so it never wraps mid-word.
@@ -107,12 +126,12 @@ export function cardText(card: OgCardSpec, locale: Locale): OgCardText {
   const strings = t(locale);
   const { title, description } = strings.meta[card.page];
   const text: OgCardText = {
-    headline: breakHeadline(typeset(title, locale), locale),
-    message: typeset(description, locale)
+    headline: breakHeadline(cardTypeset(title, locale), locale),
+    message: cardTypeset(description, locale)
   };
   if (card.layout === "letter") return text;
 
-  if (card.status === true) text.status = typeset(strings.game.tags.status, locale);
+  if (card.status === true) text.status = cardTypeset(strings.game.tags.status, locale);
   if (card.email === true) text.email = EMAILS.support;
   return text;
 }

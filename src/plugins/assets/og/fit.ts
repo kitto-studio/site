@@ -9,7 +9,7 @@ import { CJK, type Locale } from "../../../i18n/languages";
 import { headlineWidth } from "../../../og/OgCard";
 import type { OgCardSpec } from "../../../og/types";
 
-/** Headline size of every CJK card, px (design A8). */
+/** Headline size of a CJK card, px (design A8); a row with a smaller design size keeps its own. */
 const CJK_BASE = 58;
 
 /** Smallest headline, px, by script. */
@@ -123,7 +123,7 @@ export function headlineLines(text: string, size: number, width: number): number
 }
 
 /**
- * The headline size that fits a column: the base size (58 for every CJK card), stepped down by
+ * The headline size that fits a column: the base size (a CJK card at most 58), stepped down by
  * 2 px until the headline takes at most `maxLines`, but never below 48 px (44 px CJK).
  *
  * @param text - The headline.
@@ -146,7 +146,7 @@ export function fitHeadline(
 ): number {
   const isCjk = CJK.has(locale);
   const floor = isCjk ? FLOOR.cjk : FLOOR.latin;
-  let size = isCjk ? CJK_BASE : base;
+  let size = isCjk ? Math.min(CJK_BASE, base) : base;
   while (size > floor && headlineLines(text, size, width) > maxLines) size -= STEP;
   return Math.max(size, floor);
 }

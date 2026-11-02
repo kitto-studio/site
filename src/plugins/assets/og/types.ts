@@ -6,6 +6,8 @@
 import type { OgCardName } from "../../../og/cards";
 import type { OgArt } from "../../../og/types";
 
+export type { OgCardText } from "../../../og/types";
+
 /** Font weights the OG cards use. */
 export type OgFontWeight = 400 | 500 | 600 | 800 | 900;
 
@@ -101,18 +103,6 @@ export type ArtStore = {
   art(art: OgArt): Promise<string>;
   /** A sticker decoded at `size × size`. */
   sticker(image: string, size: number): Promise<string>;
-};
-
-/** The words on one OG card. */
-export type OgCardText = {
-  /** The big line: the page title. A ja title breaks after its first `、`. */
-  headline: string;
-  /** The line under it: the page description. */
-  message: string;
-  /** The store status in a chip, on the game card. */
-  status?: string;
-  /** The support address on the address line, on the support card. */
-  email?: string;
 };
 
 /** The stores one card is drawn from. */
