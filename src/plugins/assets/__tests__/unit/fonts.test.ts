@@ -28,9 +28,11 @@ describe("pickSlices", () => {
     expect(japanese.filter(slice => slice.startsWith("M PLUS"))).toHaveLength(1);
   });
 
+  // Also catches: an error that names another plugin or sends the reader to a file without the
+  // font stacks.
   it("stops on a character no face of the stack covers", async () => {
     await expect(picked([nunito], "분명히")).rejects.toThrow(
-      /no OG card font covers "분" \(U\+BD84\)/
+      /^\[kitto\] assets: no OG card font covers "분" \(U\+BD84\).*\n.*src\/plugins\/assets\/og\/render\.ts\.$/
     );
   });
 });

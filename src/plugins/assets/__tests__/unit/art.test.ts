@@ -4,7 +4,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { OgCardSpec } from "../../../../og/types";
-import { createArtStore, cropWindow, loadArt } from "../../og/art";
+import { artImages, createArtStore, cropWindow, loadArt } from "../../og/art";
 
 type Colour = { r: number; g: number; b: number; alpha: number };
 
@@ -147,5 +147,37 @@ describe("loadArt", () => {
       store
     );
     expect(letter).toEqual({ stamp: art.stamp });
+  });
+});
+
+// Catches: a picture a card shows left out of its hash, so an edit of that picture never redraws
+// the card.
+describe("artImages", () => {
+  it("lists the stamp, every print layer and the card's sticker", () => {
+    const games: OgCardSpec = {
+      page: "games",
+      layout: "postcard",
+      side: "left",
+      headline: 96,
+      print: { rotate: -2.8, ground: "#fff8ec" },
+      art: { kind: "layers", images: ["far", "near"], width: 600, height: 450, x: 0, y: 0 },
+      stamp: { image: "stamp", ground: "#d3dddd" },
+      sticker: { image: "piece", size: 130, x: 20, y: 440, rotate: -14 }
+    };
+    const home: OgCardSpec = {
+      page: "home",
+      layout: "postcard",
+      side: "left",
+      headline: 74,
+      print: games.print,
+      art: { kind: "crop", image: "scene", width: 820, height: 547, x: 0, y: 0 },
+      stamp: games.stamp
+    };
+
+    expect(artImages(games)).toEqual(["stamp", "far", "near", "piece"]);
+    expect(artImages(home)).toEqual(["stamp", "scene"]);
+    expect(
+      artImages({ page: "terms", layout: "letter", headline: 84, stamp: games.stamp })
+    ).toEqual(["stamp"]);
   });
 });

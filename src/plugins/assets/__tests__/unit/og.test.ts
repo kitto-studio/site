@@ -1,20 +1,26 @@
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { EMAILS } from "../../../../config";
 import { t } from "../../../../i18n";
 import { LOCALES, type Locale } from "../../../../i18n/languages";
+import { OG_CARD_NAMES } from "../../../../lib/head";
 import { typeset } from "../../../../lib/typography";
 import { OG_CARDS } from "../../../../og/cards";
 import { LegalLetter } from "../../../../og/LegalLetter";
 import { Postcard } from "../../../../og/Postcard";
 import { Message } from "../../../../og/parts/Words";
 import type { OgCardSpec } from "../../../../og/types";
-import { cardText, renderOgCard, writeOgCards } from "../../og";
 import { createArtStore } from "../../og/art";
 import { createFontStore } from "../../og/fonts";
-import type { CardCache, CardStores } from "../../og/types";
+import { cardHash, ogInputs } from "../../og/hash";
+import { cardText, renderOgCard } from "../../og/render";
+import type { CardCache, CardStores, OgManifest } from "../../og/types";
+import { readManifest, writeBuildCards, writeOgCards } from "../../og/write";
+
+/** The site's art, the assets plugin's `outDir`; tests run from the project root. */
+const MEDIA = "public/media";
 
 /** Width and height from the PNG header (IHDR). */
 const pngSize = (png: Buffer) => ({ width: png.readUInt32BE(16), height: png.readUInt32BE(20) });
@@ -32,7 +38,7 @@ const LETTER: OgCardSpec = {
 /** A postcard with the support address, drawn before the data PR adds the support row. */
 const SUPPORT: OgCardSpec = { ...OG_CARDS.home, page: "support", email: true };
 
-const stores: CardStores = { fonts: createFontStore(), art: createArtStore() };
+const stores: CardStores = { fonts: createFontStore(), art: createArtStore(MEDIA) };
 
 const hasStatus = (card: OgCardSpec): boolean => card.layout === "postcard" && card.status === true;
 const hasEmail = (card: OgCardSpec): boolean => card.layout === "postcard" && card.email === true;
@@ -142,7 +148,7 @@ describe("cardText", () => {
   });
 });
 
-describe("writeOgCards", () => {
+describe("writeBuildCards", () => {
   let outDir = "";
 
   beforeEach(async () => {
@@ -168,7 +174,7 @@ describe("writeOgCards", () => {
     const [cachedName = "", drawnName = ""] = names;
     cards.delete(`${drawnName}/zh`);
 
-    const files = await writeOgCards(outDir, cards);
+    const files = await writeBuildCards(outDir, cards, MEDIA);
 
     expect(files).toHaveLength(names.length * LOCALES.length);
     expect(await readFile(path.join(outDir, "og", "ru", `${cachedName}.png`), "utf8")).toBe(
@@ -177,5 +183,78 @@ describe("writeOgCards", () => {
     const drawn = await readFile(path.join(outDir, "og", "zh", `${drawnName}.png`));
     expect(drawn.subarray(0, 8).toString("hex")).toBe(PNG_SIGNATURE);
     expect(cards.get(`${drawnName}/zh`)).toEqual(drawn);
+  });
+});
+
+describe("writeOgCards", () => {
+  let root = "";
+  let config = { outDir: MEDIA, ogDir: "", ogManifest: "" };
+
+  beforeEach(async () => {
+    root = await mkdtemp(path.join(tmpdir(), "kitto-og-"));
+    config = {
+      outDir: MEDIA,
+      ogDir: path.join(root, "og"),
+      ogManifest: path.join(root, "og.json")
+    };
+  });
+
+  afterEach(async () => {
+    await rm(root, { recursive: true, force: true });
+  });
+
+  /** The PNG file of a card in the temporary card folder. */
+  const cardFile = (name: string, locale: string): string =>
+    path.join(config.ogDir, locale, `${name}.png`);
+
+  /** A manifest with every card's current hash, and a placeholder PNG for every card. */
+  const writeUpToDate = async (): Promise<OgManifest> => {
+    const inputs = await ogInputs(MEDIA);
+    const manifest: OgManifest = {};
+    for (const name of OG_CARD_NAMES) {
+      for (const locale of LOCALES) {
+        manifest[`${name}/${locale}`] = cardHash(name, locale, inputs);
+        await mkdir(path.dirname(cardFile(name, locale)), { recursive: true });
+        await writeFile(cardFile(name, locale), `${name} ${locale}`);
+      }
+    }
+    return manifest;
+  };
+
+  const cardCount = OG_CARD_NAMES.length * LOCALES.length;
+
+  // Catches: a run that redraws every card (a minute each time), a card whose inputs changed left
+  // as it was, a card drawn under another card's file, and a new hash the manifest never records
+  // (the card drawn again on every run).
+  it("draws exactly the card whose hash changed and records its new hash", async () => {
+    const manifest = await writeUpToDate();
+    const fresh = manifest["game/zh"];
+    await writeFile(config.ogManifest, JSON.stringify({ ...manifest, "game/zh": "stale" }));
+
+    const result = await writeOgCards(config);
+
+    expect(result).toEqual({ written: [cardFile("game", "zh")], upToDate: cardCount - 1 });
+    const drawn = await readFile(cardFile("game", "zh"));
+    expect(drawn.subarray(0, 8).toString("hex")).toBe(PNG_SIGNATURE);
+    expect(await readFile(cardFile("game", "ja"), "utf8")).toBe("game ja");
+    expect(await readManifest(config.ogManifest)).toEqual({ ...manifest, "game/zh": fresh });
+  });
+
+  // Catches: a card whose PNG was deleted never coming back while its hash still matches.
+  it("draws a card whose PNG is missing", async () => {
+    const manifest = await writeUpToDate();
+    await writeFile(config.ogManifest, JSON.stringify(manifest));
+    await rm(cardFile("home", "en"));
+
+    const result = await writeOgCards(config);
+
+    expect(result).toEqual({ written: [cardFile("home", "en")], upToDate: cardCount - 1 });
+  });
+});
+
+// Catches: the first `bun run og`, with no manifest yet, failing instead of drawing every card.
+describe("readManifest", () => {
+  it("reads a missing manifest as an empty one", async () => {
+    expect(await readManifest(path.join(tmpdir(), "kitto-no-such-manifest.json"))).toEqual({});
   });
 });

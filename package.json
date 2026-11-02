@@ -18,6 +18,7 @@
     "deploy": "bun scripts/deploy.ts",
     "images": "bun scripts/images.ts",
     "icons": "bun scripts/icons.ts",
+    "og": "bun scripts/og.ts",
     "lint": "biome check . && oxlint",
     "lint:fix": "biome check --write . && oxlint --fix",
     "format": "biome format --write .",

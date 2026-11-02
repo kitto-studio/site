@@ -1,19 +1,15 @@
 /**
- * @file OG card art: the webp pictures of `public/media`, cut to what a card shows and handed to
+ * @file OG card art: the webp pictures of the media folder (`public/media`), cut to what a card shows and handed to
  * satori as PNG `data:` URLs (satori and resvg read no webp). A print's crop is stated the way the
  * design states it: the picture drawn at `width × height`, offset `x, y` inside the 300 × 390 photo
  * window. A sticker is decoded at the size the card draws it; satori places and turns it. Every
  * locale's card shows the same art, so each piece is read once per run.
  */
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { PHOTO_SIZE, STAMP_ART_SIZE } from "../../../og/tokens";
 import type { OgArtImages, OgCardSpec } from "../../../og/types";
 import type { ArtStore, CropWindow } from "./types";
-
-/** The site's served art, the folder the image pipeline writes. */
-const MEDIA_DIRECTORY = fileURLToPath(new URL("../../../../public/media/", import.meta.url));
 
 /** Fully transparent, the background of a contained sticker and of stacked layers. */
 const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 };
@@ -127,14 +123,14 @@ function readSticker(mediaDirectory: string, image: string, size: number): Promi
 /**
  * Create an art store: each piece is read once per store and kept as a PNG `data:` URL.
  *
- * @param mediaDirectory - The art folder; the site's `public/media` by default.
+ * @param mediaDirectory - The art folder: the assets plugin's `outDir`, `public/media`.
  * @returns A store for one run.
  * @example
  * ```ts
- * const art = await loadArt(OG_CARDS.home, createArtStore());
+ * const art = await loadArt(OG_CARDS.home, createArtStore("public/media"));
  * ```
  */
-export function createArtStore(mediaDirectory: string = MEDIA_DIRECTORY): ArtStore {
+export function createArtStore(mediaDirectory: string): ArtStore {
   const pieces = new Map<string, Promise<string>>();
 
   /**
@@ -184,4 +180,23 @@ export async function loadArt(card: OgCardSpec, store: ArtStore): Promise<OgArtI
     images.sticker = await store.sticker(card.sticker.image, card.sticker.size);
   }
   return images;
+}
+
+/**
+ * The art files one card shows: its stamp's sticker and, on a postcard, the print's pictures and
+ * the card's own sticker. A change to any of them redraws the card.
+ *
+ * @param card - The card's row.
+ * @returns The art files under the media folder, without `.webp`, in drawing order.
+ * @example
+ * ```ts
+ * artImages(OG_CARDS.home); // ["stickers/phone", "scenes/diorama-day"]
+ * ```
+ */
+export function artImages(card: OgCardSpec): string[] {
+  if (card.layout === "letter") return [card.stamp.image];
+
+  const print = card.art.kind === "layers" ? card.art.images : [card.art.image];
+  const sticker = card.sticker === undefined ? [] : [card.sticker.image];
+  return [card.stamp.image, ...print, ...sticker];
 }

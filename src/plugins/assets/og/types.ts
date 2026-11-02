@@ -1,8 +1,9 @@
 /**
- * @file Types of the OG card step: the card fonts read from the `@fontsource` packages, the art
- * read from `public/media`, the words on a card, and the cache that keeps the drawn cards for the
- * life of the process.
+ * @file Types of the OG cards: the card fonts read from the `@fontsource` packages, the art read
+ * from the media folder, the words on a card, the inputs a card's hash is made of and the manifest
+ * of drawn cards. The build's card cache stays until the data PR.
  */
+import type { OgCardName } from "../../../og/cards";
 import type { OgArt } from "../../../og/types";
 
 /** Font weights the OG cards use. */
@@ -116,7 +117,8 @@ export type OgCardText = {
 
 /**
  * The drawn card PNGs, keyed `{card}/{locale}` (`home/ja`). The card words come from string tables
- * loaded once per process, so a card drawn once stays right until the process ends.
+ * loaded once per process, so a card drawn once stays right until the process ends. Removed in the
+ * data PR, with the build's OG step.
  */
 export type CardCache = Map<string, Buffer>;
 
@@ -128,10 +130,27 @@ export type CardStores = {
   art: ArtStore;
 };
 
-/** What writing one card needs from its run. */
+/** What writing one card into a build needs from its run. Removed in the data PR. */
 export type CardRun = CardStores & {
   /** The built output directory. */
   outputDirectory: string;
   /** The drawn cards of the process; a card missing from it is drawn and added. */
   cards: CardCache;
 };
+
+/**
+ * What every card is drawn from, hashed once per run: the drawing code and the installed drawing
+ * packages, and the art of each row.
+ */
+export type OgInputs = {
+  /** Hash of the card sources and the installed versions of the drawing packages. */
+  code: string;
+  /** Hash of the art bytes each row shows, by card. */
+  art: ReadonlyMap<OgCardName, string>;
+};
+
+/**
+ * The input hash of every drawn card, keyed `{card}/{locale}` (`game/zh`): the content of
+ * `assets/og-manifest.json`.
+ */
+export type OgManifest = Record<string, string>;

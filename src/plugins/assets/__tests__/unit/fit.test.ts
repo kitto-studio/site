@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { LOCALES } from "../../../../i18n/languages";
 import { OG_CARDS } from "../../../../og/cards";
-import { cardText } from "../../og";
 import { fitHeadline, headlineFrame, headlineLines } from "../../og/fit";
+import { cardText } from "../../og/render";
 
 // Catches: a line count that never wraps (every headline "fits" at its base size), CJK text read
 // as one unbreakable word, the ja line break ignored, and a word wider than the column counted as

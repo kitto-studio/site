@@ -99,7 +99,7 @@ export function pickSlices(stack: readonly FaceRanges[], text: string): PickedSl
   if (first !== undefined) {
     const faces = stack.map(entry => entry.face.family).join(", ");
     throw new Error(
-      `[kitto] postbuild: no OG card font covers ${describeCodePoint(first)} (faces: ${faces}).\n  Add a face that has it to the card's font stack in src/plugins/postbuild/og/index.ts.`
+      `[kitto] assets: no OG card font covers ${describeCodePoint(first)} (faces: ${faces}).\n  Add a face that has it to the card's font stack in src/plugins/assets/og/render.ts.`
     );
   }
 
@@ -144,7 +144,7 @@ async function readSliceRanges(pkg: string): Promise<FaceRanges["slices"]> {
   const table: unknown = JSON.parse(await readFile(file, "utf8"));
   if (typeof table !== "object" || table === null) {
     throw new Error(
-      `[kitto] postbuild: ${file} is not a unicode-range table.\n  Reinstall @fontsource/${pkg}.`
+      `[kitto] assets: ${file} is not a unicode-range table.\n  Reinstall @fontsource/${pkg}.`
     );
   }
   const entries = Object.entries(table).filter(

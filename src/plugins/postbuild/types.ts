@@ -1,12 +1,12 @@
 /**
  * @file Shared types of the postbuild plugin: config, state, the public API, the context slice the
  * domain files read, and the shapes the sitemap and 404 steps pass around. The OG card types live
- * in `og/types.ts`.
+ * in the assets plugin, `src/plugins/assets/og/types.ts`.
  */
 import type { Log } from "@moku-labs/web";
 import type { Locale } from "../../i18n/languages";
 import type { Alternate } from "../../lib/head";
-import type { CardCache } from "./og/types";
+import type { CardCache } from "./og";
 
 /**
  * Postbuild config.

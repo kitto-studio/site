@@ -3,7 +3,7 @@
  * photo print, and the props the layouts take. Every number of a row is card px (1200 × 630).
  */
 import type { PageId } from "../i18n/types";
-import type { OgCardText } from "../plugins/postbuild/og/types";
+import type { OgCardText } from "../plugins/assets/og/types";
 
 /** A page whose head copy a card shows: every page with a `meta` entry. */
 export type OgCardPage = Exclude<PageId, "root" | "notFound">;
