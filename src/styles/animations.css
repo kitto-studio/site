@@ -8,6 +8,17 @@
   display: none;
 }
 
+/* A theme choice (chrome island): the whole window crossfades once on the compositor, so the
+   per-element colour fades are off until it ends. */
+:root[data-theme-fade] :is(*, *::before, *::after) {
+  transition: none;
+}
+
+:root[data-theme-fade]::view-transition-old(root),
+:root[data-theme-fade]::view-transition-new(root) {
+  animation-duration: var(--duration-crossfade);
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-crossfade: 0s;

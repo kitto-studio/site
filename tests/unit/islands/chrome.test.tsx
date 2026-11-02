@@ -253,6 +253,55 @@ describe("chrome island: theme switch", () => {
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(checkedThemes(header.el)).toEqual(["light", "light"]);
   });
+
+  // Catches: a theme change applied outside the window crossfade (the per-element fades redraw
+  // the whole page every frame), or the fades left off after the crossfade ends.
+  it("with view transitions, swaps the theme inside one crossfade with the element fades off", async () => {
+    const { promise: finished, resolve: finish } = Promise.withResolvers<void>();
+    let swap: (() => void) | undefined;
+    const startViewTransition = vi.fn((update: () => void) => {
+      swap = update;
+      return { finished };
+    });
+    Object.assign(document, { startViewTransition });
+    const html = document.documentElement;
+    try {
+      const header = mountHeader("about", "/en/about/");
+      find(header.el, '[data-variant="disc"] [data-theme-choice="dark"]').click();
+
+      expect(startViewTransition).toHaveBeenCalledOnce();
+      expect("themeFade" in html.dataset).toBe(true);
+      expect(html.dataset.theme).toBeUndefined();
+      swap?.();
+      expect(html.dataset.theme).toBe("dark");
+      expect(localStorage.getItem("kitto-theme")).toBe("dark");
+      finish();
+      await vi.waitFor(() => expect("themeFade" in html.dataset).toBe(false));
+    } finally {
+      Reflect.deleteProperty(document, "startViewTransition");
+      delete html.dataset.themeFade;
+    }
+  });
+
+  // Catches: a reader who asked for less motion still getting the window crossfade.
+  it("under reduced motion, swaps the theme at once even with view transitions", () => {
+    const startViewTransition = vi.fn();
+    Object.assign(document, { startViewTransition });
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("reduce"),
+      addEventListener: () => {},
+      removeEventListener: () => {}
+    }));
+    try {
+      const header = mountHeader("about", "/en/about/");
+      find(header.el, '[data-variant="disc"] [data-theme-choice="dark"]').click();
+
+      expect(startViewTransition).not.toHaveBeenCalled();
+      expect(document.documentElement.dataset.theme).toBe("dark");
+    } finally {
+      Reflect.deleteProperty(document, "startViewTransition");
+    }
+  });
 });
 
 describe("chrome island: phone menu", () => {

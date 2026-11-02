@@ -5,13 +5,13 @@
  * beat of the entrance when it is in view at load; once the reader scrolls, a sticker still below
  * the fold lies flat, unseen, and springs up when it comes into view. With `data-trigger="sheet"`
  * (the home stack) the `sheet-stack` island calls {@link popUp} and {@link foldFlat} as its sheet
- * lands and leaves. A click folds it down and springs it up again. Reduced motion: it just stands.
+ * lands and leaves. A tap pushes it back and it springs upright at once. Reduced motion: it just stands.
  *
  * The motion functions are exported for the `sheet-stack` island: shared module functions, not
  * events, coordinate the two islands.
  */
 import { createIsland } from "@moku-labs/web/browser";
-import { FOLD_SECONDS, foldAngle, hingeAngle, paperLight, SPRING_SECONDS } from "../lib/parallax";
+import { hingeAngle, kickAngle, paperLight, SPRING_SECONDS } from "../lib/parallax";
 import { prefersReducedMotion } from "./motion-pref";
 import { isBelowFold, revealOnView } from "./reveal";
 
@@ -24,17 +24,34 @@ const ENTRANCE_DELAY = 650;
 /** Delay before a sticker that scrolled into view springs up, ms. */
 const VIEW_DELAY = 120;
 
-/** Delay between the fold-down and the spring-up of a replay, ms. */
-const REPLAY_DELAY = 40;
-
 /** If frames are throttled (a background tab), land the upright pose this long after the start, ms. */
 const SAFETY_DELAY = 2600;
 
 /** Part of the sticker that must be in view before it springs up. */
 const VIEW_THRESHOLD = 0.55;
 
+/** How much white the sheen lays over the paper per unit of extra light. */
+const SHEEN = 1.5;
+
+/** The cast shadow laid back on the sheet: its slant (degrees) and its height flat and standing. */
+const CAST = { skew: -42, flat: 0.04, grow: 0.3 };
+
+/** The parts of a sticker that move. */
+type StickerParts = {
+  /** The piece rotating on its hinge. */
+  stand: HTMLElement | null;
+  /** The silhouette laid back on the sheet. */
+  cast: HTMLElement | null;
+  /** The fold's shade on the tab. */
+  fold: HTMLElement | null;
+  /** The white sheen of the tipped paper. */
+  light: HTMLElement | null;
+};
+
 /** Motion state of one sticker. */
 type StickerMotion = {
+  /** Its moving parts, found once. */
+  parts: StickerParts;
   /** Current hinge angle, degrees. */
   angle: number;
   /** Pending animation frame, 0 when none. */
@@ -57,7 +74,15 @@ function motionOf(sticker: HTMLElement): StickerMotion {
   if (known) {
     return known;
   }
-  const created: StickerMotion = { angle: 0, frame: 0, safety: undefined };
+  const find = (selector: string): HTMLElement | null =>
+    sticker.querySelector<HTMLElement>(selector);
+  const parts: StickerParts = {
+    stand: find("[data-sticker-stand]"),
+    cast: find("[data-sticker-cast]"),
+    fold: find("[data-sticker-fold]"),
+    light: find("[data-sticker-light]")
+  };
+  const created: StickerMotion = { parts, angle: 0, frame: 0, safety: undefined };
   motions.set(sticker, created);
   return created;
 }
@@ -76,22 +101,25 @@ function halt(motion: StickerMotion): void {
 }
 
 /**
- * Pose a sticker at a hinge angle: rotate the stand, shade the tab, light the paper.
+ * Pose a sticker at a hinge angle: rotate the stand, grow the cast, shade the tab, light the paper.
+ * Only opacity and transform change, each on the part itself.
  *
- * @param sticker - The sticker root element.
- * @param motion - Its motion state.
+ * @param motion - The sticker's motion state.
  * @param angle - Hinge angle, degrees: 0 upright, 90 flat.
  * @returns {void} Nothing; the sticker shows the angle.
  */
-function pose(sticker: HTMLElement, motion: StickerMotion, angle: number): void {
+function pose(motion: StickerMotion, angle: number): void {
   motion.angle = angle;
-  const stand = sticker.querySelector<HTMLElement>("[data-sticker-stand]");
-  if (stand) {
-    stand.style.transform = `rotateX(${angle.toFixed(2)}deg)`;
+  const { stand, cast, fold, light } = motion.parts;
+  const paper = paperLight(angle);
+
+  if (stand) stand.style.transform = `rotateX(${angle.toFixed(2)}deg)`;
+  if (cast) {
+    cast.style.opacity = paper.up.toFixed(3);
+    cast.style.transform = `skewX(${CAST.skew}deg) scaleY(${(CAST.flat + paper.up * CAST.grow).toFixed(4)})`;
   }
-  const light = paperLight(angle);
-  sticker.style.setProperty("--sticker-up", light.up.toFixed(3));
-  sticker.style.setProperty("--sticker-light", light.light.toFixed(3));
+  if (fold) fold.style.opacity = paper.up.toFixed(3);
+  if (light) light.style.opacity = ((paper.light - 1) * SHEEN).toFixed(3);
 }
 
 /**
@@ -106,7 +134,7 @@ export function foldFlat(sticker: HTMLElement): void {
   }
   const motion = motionOf(sticker);
   halt(motion);
-  pose(sticker, motion, FLAT);
+  pose(motion, FLAT);
 }
 
 /**
@@ -118,7 +146,7 @@ export function foldFlat(sticker: HTMLElement): void {
 export function standUp(sticker: HTMLElement): void {
   const motion = motionOf(sticker);
   halt(motion);
-  pose(sticker, motion, 0);
+  pose(motion, 0);
 }
 
 /**
@@ -142,7 +170,7 @@ export function popUp(sticker: HTMLElement, delay: number): void {
   const start = performance.now() + delay;
   const step = (now: number): void => {
     const seconds = (now - start) / 1000;
-    pose(sticker, motion, hingeAngle(seconds));
+    pose(motion, hingeAngle(seconds));
     motion.frame = seconds < SPRING_SECONDS ? requestAnimationFrame(step) : 0;
   };
   motion.frame = requestAnimationFrame(step);
@@ -150,10 +178,10 @@ export function popUp(sticker: HTMLElement, delay: number): void {
 }
 
 /**
- * Replay a sticker: fold it down fast from where it stands, then spring it up again.
+ * Replay a sticker: push it back from where it stands and spring it upright, from this frame on.
  *
  * @param sticker - The sticker root element.
- * @returns {void} Nothing; the sticker folds down and springs up again.
+ * @returns {void} Nothing; the sticker bounces and settles upright.
  */
 export function replay(sticker: HTMLElement): void {
   // Guard: under reduced motion the sticker just stands.
@@ -165,19 +193,15 @@ export function replay(sticker: HTMLElement): void {
   const motion = motionOf(sticker);
   halt(motion);
 
-  // Fold down from the angle it has now, frame by frame, then spring up again.
+  // Move now, then frame by frame until the spring settles.
   const from = motion.angle;
   const start = performance.now();
   const step = (now: number): void => {
     const seconds = (now - start) / 1000;
-    pose(sticker, motion, foldAngle(from, seconds));
-    if (seconds < FOLD_SECONDS) {
-      motion.frame = requestAnimationFrame(step);
-    } else {
-      popUp(sticker, REPLAY_DELAY);
-    }
+    pose(motion, kickAngle(from, seconds));
+    motion.frame = seconds < SPRING_SECONDS ? requestAnimationFrame(step) : 0;
   };
-  motion.frame = requestAnimationFrame(step);
+  step(start);
 }
 
 /**
@@ -221,24 +245,25 @@ function watchView(sticker: HTMLElement): () => void {
   };
 }
 
-/** Pop-up sticker folding up on its paper tab when it comes into view; a click replays it. */
+/** Pop-up sticker folding up on its paper tab when it comes into view; a tap replays it. */
 export const popupStickerIsland = createIsland("popup-sticker", {
   /**
-   * Wire the click replay and, outside the home stack, the view trigger.
+   * Wire the tap replay and, outside the home stack, the view trigger.
    *
    * @param ctx - The island context: the sticker element.
-   * @returns {void} Nothing; the sticker replays on a click until the page leaves.
+   * @returns {void} Nothing; the sticker replays on a tap until the page leaves.
    */
   onMount(ctx) {
     const sticker = ctx.el;
     if (!(sticker instanceof HTMLElement) || prefersReducedMotion()) {
       return;
     }
-    const onClick = (): void => replay(sticker);
-    sticker.addEventListener("click", onClick);
+    // The finger landing, not the click after it lifts: the paper moves under the touch.
+    const onPress = (): void => replay(sticker);
+    sticker.addEventListener("pointerdown", onPress);
     const stopWatching = sticker.dataset.trigger === "sheet" ? undefined : watchView(sticker);
     ctx.cleanup(() => {
-      sticker.removeEventListener("click", onClick);
+      sticker.removeEventListener("pointerdown", onPress);
       stopWatching?.();
       halt(motionOf(sticker));
     });

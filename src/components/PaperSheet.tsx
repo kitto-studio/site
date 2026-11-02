@@ -53,6 +53,7 @@ export function PaperSheet({
       <div data-sheet-face data-split={hasArt ? "" : undefined} data-flip={flip ? "" : undefined}>
         <div data-sheet-copy>{children}</div>
         {hasArt ? <div data-sheet-art>{art}</div> : undefined}
+        {stack === undefined ? undefined : <span data-sheet-shade aria-hidden="true" />}
       </div>
     </section>
   );

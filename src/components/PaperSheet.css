@@ -2,9 +2,25 @@
    inner-page sheets): surface + sheen + grain, radius 16, a lift shadow and a second sheet under it.
    Stacked sheets ([data-stack], the home) are moved by the sheet-stack island through:
      --lift   1 entering at the window bottom … 0 landed in its place
-     --cover  0 … 1, how far the next sheet lies over it
+     --cover  0 … 1, how far the next sheet lies over it (its shade, [data-sheet-shade], gets the
+              opacity directly)
      --stick-top  the sticky top of a sheet taller than the window, so it sticks by its bottom
-   A parent may set --sheet-columns to change the split face's columns. */
+   A parent may set --sheet-columns to change the split face's columns.
+   --lift and --cover do not inherit: the island writes them every scrolled frame, and an inherited
+   change would restyle the whole sheet and redraw every grain and gradient on it. Only the parts
+   that move take them, by an explicit `inherit`. */
+@property --lift {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --cover {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
 @scope ([data-component="paper-sheet"]) {
   :scope {
     --sheet-angle: -0.25deg;
@@ -77,6 +93,7 @@
     inset: 6% 4% -1%;
     z-index: -2;
     border-radius: 28px;
+    --lift: inherit;
     opacity: var(--lift);
     box-shadow:
       0 60px 90px -24px rgb(var(--shadow-rgb) / 0.5),
@@ -86,8 +103,16 @@
   /* Sheets stack on each other only where the window is tall enough to hold them, and only with a
      mouse: on a touch screen the stack jumped and left gaps, so a phone gets a plain list. */
   @media (min-height: 620px) and (hover: hover) {
+    /* The island moves a stacked sheet every scrolled frame: on its own layer that is a compositor
+       move, not a repaint of the whole page under it. */
     :scope[data-stack] {
       position: sticky;
+      will-change: transform;
+    }
+
+    :scope[data-stack]::after,
+    [data-sheet-shade] {
+      will-change: opacity;
     }
 
     /* The last sheet has nothing to land on it, so it scrolls away with the page instead of
@@ -123,13 +148,14 @@
   }
 
   /* The shade of the next sheet lying over this one. */
-  :scope[data-stack] [data-sheet-face]::after {
-    content: "";
+  /* The island writes its opacity straight onto it: a --cover on the face would restyle the face
+     and redraw its grain every frame. */
+  [data-sheet-shade] {
     position: absolute;
     inset: 0;
     border-radius: inherit;
     background: rgb(var(--shadow-rgb) / 0.35);
-    opacity: calc(var(--cover) * 0.5);
+    opacity: 0;
     pointer-events: none;
   }
 

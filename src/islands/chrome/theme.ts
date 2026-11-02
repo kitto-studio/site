@@ -2,7 +2,12 @@
  * @file Theme switch: light, system or dark. Light and dark set `data-theme` on `<html>`; system
  * removes it, so the colours follow `prefers-color-scheme` live through CSS. A choice is saved as
  * `kitto-theme`; `?theme=` previews a theme without saving it.
+ *
+ * A choice crossfades the whole window in one view transition where the browser has them: the two
+ * snapshots fade on the compositor, while `data-theme-fade` turns the per-element colour fades off.
+ * Those fades redrew the whole page every frame for their 0.9 s. Elsewhere the colour fades run.
  */
+import { prefersReducedMotion } from "../motion-pref";
 import { readChoice, saveChoice } from "./storage";
 
 /** One theme choice. */
@@ -59,16 +64,28 @@ export function applyTheme(root: Element, theme: Theme): void {
 }
 
 /**
- * Choose the theme of the stop the reader checked (click, tap or arrow key): show it in both
- * switches and save it.
+ * Choose the theme of the stop the reader checked (click, tap or arrow key): save it and show it in
+ * both switches, in one window crossfade where the browser has view transitions.
  *
  * @param root - The header.
  * @param radio - The radio input that changed.
  * @returns {void} Nothing; the theme is shown and saved.
  */
 export function chooseTheme(root: Element, radio: Element): void {
+  // Ignore anything that is not a theme stop, then remember the choice.
   const theme = radio instanceof HTMLInputElement ? asTheme(radio.value) : undefined;
   if (theme === undefined) return;
-  applyTheme(root, theme);
   saveChoice(STORAGE_KEY, theme);
+
+  // Show it: at once without view transitions, else inside one window crossfade.
+  const canCrossfade =
+    typeof document.startViewTransition === "function" && !prefersReducedMotion();
+  if (!canCrossfade) {
+    applyTheme(root, theme);
+    return;
+  }
+  const html = document.documentElement;
+  html.dataset.themeFade = "";
+  const fade = document.startViewTransition(() => applyTheme(root, theme));
+  void fade.finished.finally(() => delete html.dataset.themeFade);
 }
