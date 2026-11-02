@@ -2,8 +2,6 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { LOCALES } from "../../../../i18n/languages";
-import { OG_CARDS } from "../../../../og/cards";
 import { createPostbuildApi, handleBuildComplete, joinRun } from "../../api";
 import { createPostbuildState } from "../../state";
 import type { PostbuildContext } from "../../types";
@@ -24,17 +22,6 @@ const createCtx = (pages: readonly string[] = []): PostbuildContext => ({
   state: createPostbuildState(),
   log: { info: vi.fn(), error: vi.fn() }
 });
-
-/** A context whose state holds all 22 cards, as a dev rebuild finds it after the first build. */
-const createDrawnCtx = (pages: readonly string[]): PostbuildContext => {
-  const ctx = createCtx(pages);
-  for (const locale of LOCALES) {
-    for (const kind of Object.keys(OG_CARDS)) {
-      ctx.state.cards.set(`${kind}/${locale}`, Buffer.from(`${kind} ${locale}`));
-    }
-  }
-  return ctx;
-};
 
 // Catches: two runs writing the same files at once (the build's and a caller's), and a finished or
 // failed run that blocks every later one.
@@ -92,18 +79,10 @@ describe("a run over a built directory", () => {
 
   // Catches: _redirects and the sitemap built from something else than the configured pages.
   it("lists the configured pages", async () => {
-    await createPostbuildApi(createDrawnCtx(["/{lang}/", "/{lang}/about/"])).run();
+    await createPostbuildApi(createCtx(["/{lang}/", "/{lang}/about/"])).run();
 
     expect(await readFile(path.join(outDir, "_redirects"), "utf8")).toBe(
       "/about/ /en/about/ 302\n/about /en/about/ 302\n"
     );
-  });
-
-  // Catches: a later run in the same process drawing every card again (seconds per dev
-  // rebuild) instead of writing the ones the state keeps.
-  it("writes the cards an earlier run drew from the state", async () => {
-    await createPostbuildApi(createDrawnCtx(["/{lang}/"])).run();
-
-    expect(await readFile(path.join(outDir, "og/ja/home.png"), "utf8")).toBe("home ja");
   });
 });

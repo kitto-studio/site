@@ -16,8 +16,8 @@ import { createArtStore } from "../../og/art";
 import { createFontStore } from "../../og/fonts";
 import { cardHash, ogInputs } from "../../og/hash";
 import { cardText, renderOgCard } from "../../og/render";
-import type { CardCache, CardStores, OgManifest } from "../../og/types";
-import { readManifest, writeBuildCards, writeOgCards } from "../../og/write";
+import type { CardStores, OgManifest } from "../../og/types";
+import { readManifest, writeOgCards } from "../../og/write";
 
 /** The site's art, the assets plugin's `outDir`; tests run from the project root. */
 const MEDIA = "public/media";
@@ -145,44 +145,6 @@ describe("cardText", () => {
   it("breaks the ja headline after the first 、", () => {
     expect(cardText(OG_CARDS.home, "ja").headline).toBe("きっと、\n遊ぶ価値がある。");
     expect(cardText(OG_CARDS.home, "ko").headline).not.toContain("\n");
-  });
-});
-
-describe("writeBuildCards", () => {
-  let outDir = "";
-
-  beforeEach(async () => {
-    outDir = await mkdtemp(path.join(tmpdir(), "kitto-og-"));
-  });
-
-  afterEach(async () => {
-    await rm(outDir, { recursive: true, force: true });
-  });
-
-  // Catches: a card dropped from the loop, every dev rebuild drawing all cards again, a cached card
-  // written under another card's name, and a drawn card the cache never keeps.
-  it("writes a cached card as it is and draws, then keeps, a card the cache lacks", async () => {
-    const names = Object.keys(OG_CARDS);
-    const cards: CardCache = new Map(
-      LOCALES.flatMap(locale =>
-        names.map((name): [string, Buffer] => [
-          `${name}/${locale}`,
-          Buffer.from(`${name} ${locale}`)
-        ])
-      )
-    );
-    const [cachedName = "", drawnName = ""] = names;
-    cards.delete(`${drawnName}/zh`);
-
-    const files = await writeBuildCards(outDir, cards, MEDIA);
-
-    expect(files).toHaveLength(names.length * LOCALES.length);
-    expect(await readFile(path.join(outDir, "og", "ru", `${cachedName}.png`), "utf8")).toBe(
-      `${cachedName} ru`
-    );
-    const drawn = await readFile(path.join(outDir, "og", "zh", `${drawnName}.png`));
-    expect(drawn.subarray(0, 8).toString("hex")).toBe(PNG_SIGNATURE);
-    expect(cards.get(`${drawnName}/zh`)).toEqual(drawn);
   });
 });
 

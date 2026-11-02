@@ -71,3 +71,11 @@ Emits none, listens to none.
 
 None. `sharp` (dev dependency) does the encoding. The OG cards also use `satori`,
 `@resvg/resvg-js` and the `@fontsource` packages (dev dependencies).
+
+## OG card fonts
+
+The card fonts come from the pinned `@fontsource` dev dependencies: Nunito 900 (headline), Golos
+Text 500 (text), and behind them on ja / ko / zh cards M PLUS Rounded 1c, Gothic A1 or Noto Sans SC
+(800 headline, 500 text). Each package splits a face into woff slices by `unicode-range`; a card
+loads only the slices its text needs. A character no slice of the card's faces covers stops
+`bun run og` with the character and its code point.
