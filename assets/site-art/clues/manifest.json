@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "note-1-torn-paper-scrap.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: a small blank torn paper scrap with softly irregular torn edges and a subtle curl, simple first tier of the paper clue chain. Occupies about 55% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "note-2-folded-note-paper-clip.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: a blank folded cream note with a single rounded cocoa metal paper clip, a richer and larger second tier of the paper clue chain. Clear folded layers. Occupies about 65% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "note-3-letter-orange-wax-seal.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: a cream sealed letter envelope with a generous plain orange wax seal, no emblem on seal, visible folded flap and rich paper edges, the largest and richest third tier of the paper clue chain. Occupies about 75% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "key-1-plain-key.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: one small plain warm sand brass key, rounded bow and simple blunt teeth, angled diagonally, simple first tier of the key clue chain. Occupies about 55% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "key-2-key-ring-tag.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: two warm sand brass keys on one rounded cocoa metal ring with a small blank cream paper tag, clearly visible separate keys, a richer and larger second tier of the key clue chain. Occupies about 65% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "key-3-locked-wooden-box.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: a small closed locked wooden box with rounded edges, cocoa warm wood, sand brass lock plate and a brass key inserted into its lock, modest rich wood grain and fittings, the largest and richest third tier of the key clue chain. Occupies about 75% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "photo-1-torn-photo-corner.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: one torn corner fragment of an old cream-bordered photograph showing only a small soft blurred sepia landscape fragment, irregular torn edges, simple first tier of the photo clue chain. No people. Occupies about 55% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "photo-2-half-photo-tape.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: half of an old cream-bordered photograph with a single paper tape strip across its top edge, soft blurred sepia landscape with hills, visibly torn missing half, a richer and larger second tier of the photo clue chain. No people. Occupies about 65% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "photo-3-framed-landscape-photo.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: one complete old photograph in a simple rounded cocoa wooden frame, cream inner mat and soft blurred warm sepia landscape with hills, the largest and richest third tier of the photo clue chain. No people. Occupies about 75% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "memory-glowing-orb.png",
+      "prompt": "Create one isolated merge-game item for a cosy detective puzzle website demo board. Output a 1024x1024 transparent PNG with genuine alpha, no background plane. Style: polished warm painterly illustration, soft rounded shapes, subtle shading, simplified bold silhouette readable at 64 px. Consistent soft light from upper left, delicate small soft shadow directly beneath the item, slightly elevated front view. Palette: cream #FFFDF8, paper #F6F2EA, cocoa #553C2F, deep brown #3B2C24, muted #8A7D72, sand #E3DACC, orange accent #D9653A; a little muted teal #2f8f87 only for glow. Centre the item with generous transparent padding. No text, letters, numbers, logos, faces, people, watermark, border, or extra props. Subject: a softly glowing round memory orb, a small sphere of warm cream light with a little muted teal glow and a few cream and orange paper confetti pieces floating within the sphere, the precious final reward. Clear rounded silhouette with soft translucent glow fading into genuine transparency. Occupies about 70% of canvas width.",
+      "size": "1024x1024",
+      "transparent": true
+    }
+  ]
+}

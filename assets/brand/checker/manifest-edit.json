@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "light-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "dark-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-black-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-white-on-accent-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-indigo-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-matcha-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "github-avatar-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "favicon-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "splash-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "1024x2048",
+      "transparent": false
+    },
+    {
+      "file": "motion-storyboard-v2.png",
+      "prompt": "See manifest-v2.json for exact generation prompt.",
+      "size": "2048x512",
+      "transparent": false
+    }
+  ]
+}

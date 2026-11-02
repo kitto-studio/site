@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "swiss-grid-kitto-wordmark.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Swiss-grid minimal wordmark. Exact and only text: 'KITTO', uppercase K I T T O, generous but balanced tracking, bold clean Swiss grotesk typography aligned on a precise invisible grid. Warm charcoal #40372F letters with the final O in vermilion #C95138. No accompanying symbol.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "bauhaus-geometric-k.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Bauhaus geometric K monogram built from a circle, square, and triangle, assembled into one unmistakable bold K. Use warm charcoal #40372F and ochre #CB963A. Geometrically clear, compact, balanced. Only letter K, no wordmark.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "five-in-a-row-pips.png",
+      "prompt": "Create a minimalist European modernist logo symbol: exactly five solid circular pips in one straight horizontal row, evenly spaced. First four circles warm charcoal #40372F, last circle vermilion #C95138. The entire image contains ONLY those five circles. Absolutely no letters, no wordmark, no text, no numbers, no extra shapes. Flat vector look with crisp edges and solid fills, no gradients or shadows. Cozy wooden-board-game identity, nod to dice and gomoku five-in-a-row. Center the row horizontally and vertically on a genuinely transparent 1024x1024 PNG canvas with generous margins. Strong simple geometry legible at 32px. No backdrop, mockup or watermark.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "letterpress-serif-kitto.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Classic European letterpress serif wordmark. Exact and only text: 'Kitto', capital K and lowercase i t t o. Bold old-style book serif with sturdy thick strokes, graceful restrained brackets and excellent legibility. Single warm dark walnut ink #514134. Very subtle ink wear restricted inside the letters, preserving solid contours and small-size readability. No symbol.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "scandinavian-wooden-blocks.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Scandinavian wooden-toy symbol: exactly three chunky rounded rectangular toy blocks stacked into one compact balanced playful sculpture, two blocks forming a sturdy base and one atop. Flat front elevation, no perspective. Warm walnut #79563C and muted confident forest green #397261. Transparent gaps between blocks. No grain lines and no text.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "playful-puzzle-crest.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. A small playful European heraldic crest reduced to one chunky shield shaped like an interlocking puzzle piece: a broad simple shield with a single rounded puzzle socket cut from its upper edge and a rounded puzzle tab at one side. Warm charcoal #40372F outline and confident cobalt #3D61A5 flat inner field. Bold compact geometry, friendly rounded corners. No crown, ribbons, animals, ornament, or text.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "art-deco-ks-monogram.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Art-deco KS monogram. Exact and only letters: 'KS'. Interlock a geometric K and angular curved S into a compact, clearly legible symmetrical-feeling emblem. Broad strokes, elegant stepped geometry and generous negative spaces, minimal detail for favicon readability. One solid warm antique brass ink #A77A35. No surrounding frame or additional wordmark.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "roman-mosaic-tessera.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. Roman mosaic tessera square symbol: a compact square made of nine chunky square stone tesserae in a precise three-by-three arrangement, separated by broad transparent grout gaps. Slightly softened irregular tile corners, still crisp flat vector appearance. Eight tiles warm walnut #79563C and the center tile terracotta #C95138. No texture, no enclosing background, no text.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "checkerboard-kitto-wordmark.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. A bold clean lowercase/capitalized wordmark with exact and only text 'Kitto'. A compact two-by-two checkerboard corner motif at its left dissolves directly into the stem of the K, forming a unified puzzle-like logo rather than a separate floating icon. Sturdy modern sans-serif lettering. Warm charcoal #40372F and confident forest green #397261 for checker squares. Broad simple shapes, no other decoration.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "hanko-latin-k.png",
+      "prompt": "Use case: logo-brand. Create one logo concept for Kitto Studio, a cozy 2D puzzle-game studio (kitto means 'surely'; sibling engine moku means wood). Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined European modernist identity, warm wood/paper-inspired palette, flat vector-like solid shapes, clean contours, restrained playful geometry. One or two solid ink colors only. Center the single logo with generous clear margins, approximately 20% on every side. Strong simple silhouette and sturdy details that remain recognizable at 32px favicon size. No mockup, lighting, shadows, gradients, backdrop, border around the canvas, presentation labels, slogans, numbers, or watermark. Only the specified logo lettering is allowed. East-meets-West hybrid: one bold red hanko stamp square with a Latin capital K cut out of its center as transparent negative space. Vermilion #C95138 only. Compact nearly square stamp, subtly softened imperfect outer edges, strong clean geometric K with wide negative-space strokes, flat vector appearance with only minimal stamp character. No Japanese characters, no extra letters, no wordmark.",
+      "size": "1024x1024",
+      "transparent": true
+    }
+  ]
+}

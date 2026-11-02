@@ -1,0 +1,543 @@
+/* A legal page (A6–A8): one calm paper sheet with a back sheet peeking out. Wide screens: the
+   contents rail on the left (sticky, the orange dot slides to the current section), the document on
+   the right. Compact: one column under a sticky contents bar. Print: the document only.
+   Numbers from the legal pages of the prototype. */
+
+/* Keyframe names are global, so the keyframes sit outside @scope with a legal-prefixed name. */
+@keyframes legal-sheet-lay {
+  from {
+    opacity: 0;
+    transform: translateY(22px) rotate(-0.4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The paper band of inner pages, placed right before the sheet, tucks under it. Outside @scope:
+   the selector starts at the band, a sibling before the sheet, which the scope cannot see. */
+[data-component="paper-band"] + [data-component="legal-document"] {
+  margin-top: -30px;
+
+  @media (max-width: 760px) {
+    margin-top: -18px;
+  }
+}
+
+/* The back sheet is turned, so on a long phone page its lower corner swings past the screen edge.
+   Clip it at the page region; `clip` (not `hidden`) keeps the sticky contents working. Outside
+   @scope: it styles the page region, the sheet's parent. */
+[data-page]:has(> [data-component="legal-document"]) {
+  overflow-x: clip;
+}
+
+/* Print the document only: no site header, footer or band. Outside @scope: it hides the page's
+   other parts, which sit outside the sheet. */
+@media print {
+  body:has([data-component="legal-document"])
+    :is(header, footer, [data-skip-link]):not([data-component="legal-document"] *),
+  [data-page]:has(> [data-component="legal-document"]) > :not([data-component="legal-document"]) {
+    display: none;
+  }
+}
+
+@scope ([data-component="legal-document"]) {
+  :scope {
+    position: relative;
+    z-index: 1;
+    width: var(--grid);
+    margin: var(--space-40) auto 72px;
+  }
+
+  /* The back sheet, offset and turned a little. */
+  :scope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: var(--radius-16);
+    background: color-mix(in srgb, var(--surface) 82%, var(--line));
+    box-shadow:
+      0 2px 3px rgb(var(--shadow-rgb) / 0.08),
+      0 14px 30px -12px rgb(var(--shadow-rgb) / 0.22);
+    transform: translate(6px, 8px) rotate(0.35deg);
+  }
+
+  [data-sheet] {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 72px;
+    padding: var(--space-64) var(--space-64) 72px;
+    border-radius: var(--radius-16);
+    background-color: var(--surface);
+    background-image: var(--sheen), var(--grain);
+    color: var(--text);
+    font: 400 18px / 1.62 var(--font-text);
+    font-kerning: normal;
+    box-shadow:
+      inset 0 1px 0 var(--highlight),
+      0 1px 1px rgb(var(--shadow-rgb) / 0.1),
+      0 6px 12px -4px rgb(var(--shadow-rgb) / 0.12),
+      0 26px 50px -18px rgb(var(--shadow-rgb) / 0.26);
+  }
+
+  [data-legal-head] {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: 68ch;
+  }
+
+  [data-legal-body] {
+    grid-column: 2;
+    grid-row: 2;
+    max-width: 68ch;
+    padding-top: var(--space-20);
+
+    > * + * {
+      margin-top: 52px;
+    }
+  }
+
+  /* — Head — */
+  h1 {
+    margin: 0;
+    font: 900 clamp(28px, 7.2vw, 50px) / 1.06 var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  [data-legal-meta] {
+    margin: 14px 0 0;
+    color: var(--quiet);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* F5: the draft line, while placeholders are open. */
+  [data-legal-draft] {
+    margin: var(--space-20) 0 0;
+    padding-left: 14px;
+    border-left: 3px solid var(--line);
+    color: var(--quiet);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* F6: the English text is shown in another locale. */
+  [data-legal-fallback] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    margin: 0 0 var(--space-20);
+    padding: var(--space-8) 14px var(--space-8) 10px;
+    border-radius: 999px;
+    background: var(--well);
+    color: var(--text);
+    font: 500 15px / 1.35 var(--font-text);
+  }
+
+  [data-legal-globe] {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--ink);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+  }
+
+  [data-legal-lead] {
+    margin: 28px 0 0;
+    color: var(--text);
+    font-size: 20px;
+    line-height: 1.55;
+  }
+
+  /* — Delete page: who and what — */
+  [data-legal-facts] {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-8) var(--space-24);
+    margin: 28px 0 0;
+    padding: var(--space-20) var(--space-24);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-12);
+
+    dt {
+      padding-top: 1px;
+      color: var(--quiet);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--ink);
+      font-weight: 500;
+    }
+  }
+
+  /* — Contents: a sticky rail beside the document — */
+  [data-island="legal-toc"] {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-32));
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 var(--space-12);
+    color: var(--ink);
+    font: 800 15px / 1.3 var(--font-heading);
+    list-style: none;
+    cursor: default;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  [data-toc-now],
+  [data-toc-chevron] {
+    display: none;
+  }
+
+  [data-toc-chevron] path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  [data-toc-rail] {
+    position: relative;
+    padding-left: 22px;
+    border-left: 1.5px solid var(--line);
+
+    ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    a {
+      display: flex;
+      gap: var(--space-8);
+      padding: 7px 0;
+      color: var(--quiet);
+      font: 500 15px / 1.35 var(--font-text);
+      text-decoration: none;
+      transition: color 0.25s;
+
+      &:hover {
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 0.2em;
+      }
+
+      &[aria-current="true"] {
+        color: var(--ink);
+        font-weight: 600;
+      }
+    }
+  }
+
+  [data-toc-number] {
+    flex: none;
+    min-width: 1.4em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The kitto dot on the rail line, centred on the current entry's first line (set by the island). */
+  [data-toc-dot] {
+    position: absolute;
+    top: 0;
+    left: -6.25px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--dot);
+    box-shadow: 0 0 0 4px var(--surface);
+    opacity: 0;
+    translate: 0 -50%;
+    transform: translateY(var(--toc-dot-y, 12px));
+    transition:
+      transform 0.5s var(--ease-spring),
+      opacity 0.3s;
+
+    &[data-visible] {
+      opacity: 1;
+    }
+  }
+
+  /* Wide screens show the list as a rail even while the panel is closed (before the island runs). */
+  @media (min-width: 901px) {
+    [data-toc]::details-content {
+      content-visibility: visible;
+    }
+  }
+
+  /* — Sections: the delete page's ledger and button, the address — */
+  [data-legal-ledger] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    margin-top: var(--space-20);
+
+    > div {
+      padding: var(--space-20) 22px 22px;
+      border-radius: var(--radius-12);
+      background: var(--well) var(--grain);
+    }
+
+    h3 {
+      margin: 0;
+      font: 800 18px / 1.3 var(--font-heading);
+    }
+
+    ul {
+      margin-top: 10px;
+    }
+  }
+
+  [data-ledger-none] {
+    margin: var(--space-8) 0 0;
+    color: var(--ink);
+    font: 900 36px / 1.1 var(--font-heading);
+    letter-spacing: -0.01em;
+
+    + p {
+      margin-top: var(--space-8);
+      color: var(--quiet);
+      font-size: 16px;
+    }
+  }
+
+  /* The one filled button of the page. */
+  [data-legal-action] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    margin-top: 22px;
+    padding: 0 28px;
+    border-radius: var(--radius-12);
+    background: var(--link);
+    color: var(--paper);
+    font: 800 17px / 1.2 var(--font-heading);
+    text-align: center;
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgb(var(--white-rgb) / 0.18),
+      0 1px 0 rgb(var(--shadow-rgb) / 0.25),
+      0 10px 20px -8px rgb(var(--shadow-rgb) / 0.45);
+    transition: transform 0.15s;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  [data-legal-address] {
+    margin-top: 14px;
+    padding: var(--space-16) var(--space-20);
+    border-radius: var(--radius-12);
+    background: var(--well);
+    font-style: normal;
+    line-height: 1.55;
+  }
+
+  /* The sheet is laid down once. */
+  @media (prefers-reduced-motion: no-preference) {
+    :scope {
+      animation: legal-sheet-lay 0.8s var(--ease-out) 0.15s both;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    [data-sheet] {
+      grid-template-columns: 200px minmax(0, 1fr);
+      column-gap: 52px;
+      padding: 52px 48px 60px;
+    }
+  }
+
+  /* Compact: one column; the contents become a sticky bar that opens the list. */
+  @media (max-width: 900px) {
+    :scope {
+      width: calc(100% - 48px);
+    }
+
+    [data-sheet] {
+      display: block;
+      padding: var(--space-40) var(--space-40) 52px;
+    }
+
+    [data-legal-head],
+    [data-legal-body] {
+      margin-inline: auto;
+    }
+
+    [data-island="legal-toc"] {
+      z-index: 5;
+      top: var(--header-height);
+      margin: 28px calc(-1 * var(--space-40)) 0;
+      padding: 0 var(--space-40);
+      border-block: 1px solid var(--line);
+      background: var(--surface) var(--grain);
+      box-shadow: 0 10px 16px -14px rgb(var(--shadow-rgb) / 0.5);
+    }
+
+    summary {
+      max-width: 68ch;
+      min-height: 54px;
+      margin-inline: auto;
+      padding: 0;
+      gap: var(--space-12);
+      cursor: pointer;
+    }
+
+    [data-toc-now] {
+      display: block;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      color: var(--quiet);
+      font: 500 15px / 1.3 var(--font-text);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    [data-toc-chevron] {
+      display: block;
+      flex: none;
+      width: 12px;
+      height: 12px;
+      margin-left: auto;
+      transition: transform 0.25s;
+    }
+
+    [data-toc][open] [data-toc-chevron] {
+      transform: rotate(180deg);
+    }
+
+    [data-toc-rail] {
+      max-width: 68ch;
+      max-height: min(60vh, 520px);
+      margin: 0 auto 14px;
+      padding: 0;
+      overflow: auto;
+      border-left: 0;
+
+      a {
+        align-items: center;
+        min-height: 44px;
+        padding: 6px 0;
+      }
+    }
+
+    [data-toc-dot] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      width: calc(100% - 16px);
+      margin-top: var(--space-24);
+    }
+
+    :scope::before {
+      transform: translate(3px, 6px) rotate(0.5deg);
+    }
+
+    [data-sheet] {
+      padding: 30px 22px var(--space-40);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    [data-island="legal-toc"] {
+      margin-inline: -22px;
+      padding-inline: 22px;
+    }
+
+    [data-legal-lead] {
+      margin-top: 22px;
+      font-size: 18px;
+    }
+
+    [data-legal-body] > * + * {
+      margin-top: 44px;
+    }
+
+    [data-legal-action] {
+      width: 100%;
+    }
+
+    [data-legal-facts] {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: var(--space-16) 18px;
+
+      dd + dt {
+        margin-top: 10px;
+      }
+    }
+
+    [data-legal-ledger] {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media print {
+    :scope {
+      width: auto;
+      margin: 0;
+      animation: none;
+    }
+
+    :scope::before {
+      display: none;
+    }
+
+    [data-sheet] {
+      display: block;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      color: black;
+      font-size: 11.5pt;
+    }
+
+    h1,
+    a {
+      color: black;
+    }
+
+    [data-island="legal-toc"],
+    [data-legal-draft],
+    [data-legal-fallback] {
+      display: none;
+    }
+
+    [data-legal-address],
+    [data-legal-ledger] > div {
+      border: 1px solid var(--muted);
+      background: none;
+    }
+  }
+}

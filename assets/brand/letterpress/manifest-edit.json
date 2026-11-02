@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "light-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Original logo unchanged on solid warm paper #F6F2EA background. Preserve original gold tiles and teal center tile and all original geometry, size and placement.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "dark-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Same full logo at original size and placement on solid deep charcoal #211C19 background. Invert dark letter ink to warm off-white #EFE7DA; retain original gold and teal accent tile colors.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-black-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Same full logo at original size and placement in single solid near-black #1E1916 on white. Recolor all five tile silhouettes near-black with the existing letter cutouts white. Preserve shapes exactly.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-white-on-accent-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Same full logo at original size and placement in solid white on solid original teal accent background (match the center tile's teal). All five tiles white, exact existing letter cutouts show teal background.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-indigo-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Same full logo at original size and placement recolored: four formerly gold tiles ink #202B39; center taller t tile accent #3C5D93. Background #E8EDF4, showing through the exact letter cutouts. Preserve geometry.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-matcha-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Same full logo at original size and placement recolored: four formerly gold tiles ink #2C332A; center taller t tile accent #6B8F4E. Background #EDF0E2, showing through the exact letter cutouts. Preserve geometry.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "github-avatar-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Isolate only the existing tall central teal t tile and its exact existing t letter, unchanged silhouette and proportions. Center it on solid warm paper brand background #F6F2EA. Uniformly enlarge this isolated tile to 660px tall, fully inside a centered circular safe area; readable circle crop at 40px. Preserve teal tile and dark t shape. No other letters or tiles.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "favicon-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x1024. Isolate only the existing tall central teal t tile and exact existing t letter, identical to the avatar mark. Center on solid warm paper #F6F2EA; uniformly enlarge isolated tile to 880px tall for bold framing at 16-32px. Flat teal tile and dark t shape, no fine texture. Preserve exact original proportions and silhouette. No other letters or tiles.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "splash-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 1024x2048. Portrait phone splash canvas exactly 1024x2048. Solid warm paper brand background #F6F2EA. Existing full original gold and teal logo unchanged in shape, proportions and spacing, 816px wide, centered horizontally with its center at y=900 slightly above middle. Nothing else.",
+      "size": "1024x2048",
+      "transparent": false
+    },
+    {
+      "file": "motion-storyboard-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Use case: precise-object-edit. HARD RULE: preserve the exact existing five tiles, letter cutouts spelling kitto, silhouettes, proportions, spacing and arrangement. Do not redraw, restyle, reinterpret, typeset or invent any mark. Only perform the specified recolor/background/framing. No text except original logo letters, no labels, no hex codes, no extra elements. Output PNG 2048x512. Horizontal strip exactly 2048x512 of four equal 512x512 frames, seamless warm paper #F6F2EA background. Show only this exact logo's own original gold and teal pieces arriving and settling. At common uniform scale full settled logo is 408px wide per frame. Frame 1: original five tiles separated with small vertical offsets as they arrive. Frame 2: original tiles closer with smaller offsets. Frame 3: original tiles almost settled with tiny offsets. Frame 4: exact original full logo, all original spacing and composition, centered in frame. Translate existing pieces only; no reshaping, rotation, stretching, added motion lines, labels, borders or text.",
+      "size": "2048x512",
+      "transparent": false
+    }
+  ]
+}

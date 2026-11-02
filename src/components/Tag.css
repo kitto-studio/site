@@ -1,0 +1,37 @@
+/* Tag (design-context §6 G; numbers from the prototype game page tags and platform rows).
+   well: a recess pressed into the paper. line: a hairline outline on the page.
+   compact: the smaller size at the end of a list row. A status leads with the orange dot. */
+@scope ([data-component="tag"]) {
+  :scope {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: var(--space-4) var(--space-12);
+    border-radius: var(--radius-8);
+    background: var(--well);
+    box-shadow: inset 0 1px 2px rgb(var(--shadow-rgb) / 0.14);
+    color: var(--ink);
+    font: 600 15px / 1.25 var(--font-text);
+  }
+
+  :scope[data-tone="line"] {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--text);
+  }
+
+  :scope[data-compact] {
+    min-height: 30px;
+    font-size: 14px;
+  }
+
+  /* A margin, not flex gap, between the dot and its label (a Safari flex-gap quirk). */
+  [data-tag-dot] {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-inline-end: var(--space-8);
+    border-radius: 50%;
+    background: var(--dot);
+  }
+}

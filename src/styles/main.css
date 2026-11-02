@@ -1,0 +1,13 @@
+/* CSS bundle entry. The framework build bundles src/styles/main.css by convention
+   (@moku-labs/web CSS_ENTRY_CANDIDATES) into a fingerprinted assets/main-<hash>.css.
+   The layer order below is the cascade priority, lowest first. */
+
+@layer reset, tokens, base, components, animations, utilities;
+
+@import "./fonts.css";
+@import "./reset.css" layer(reset);
+@import "./tokens.css" layer(tokens);
+@import "./base.css" layer(base);
+@import "./components.css" layer(components);
+@import "./animations.css" layer(animations);
+@import "./utilities.css" layer(utilities);

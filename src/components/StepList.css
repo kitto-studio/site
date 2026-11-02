@@ -1,0 +1,53 @@
+/* Step tokens: a numbered paper disc per step (34px, cut into the sheet's light), a dashed line
+   between discs. Numbers from the legal pages of the prototype. */
+@scope ([data-component="step-list"]) {
+  :scope {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  li {
+    position: relative;
+    min-height: 34px;
+    margin-top: 14px;
+    padding: 3px 0 0 52px;
+    counter-increment: step;
+  }
+
+  li::before {
+    content: counter(step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface) var(--grain);
+    color: var(--ink);
+    font: 800 16px / 1 var(--font-heading);
+    box-shadow:
+      0 1px 0 var(--highlight),
+      0 1px 2px light-dark(rgb(var(--shadow-rgb) / 0.16), rgb(var(--shadow-rgb) / 0.35)),
+      0 4px 10px light-dark(rgb(var(--shadow-rgb) / 0.12), rgb(var(--shadow-rgb) / 0.3));
+  }
+
+  li + li::after {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 16.5px;
+    height: 14px;
+    border-left: 1.5px dashed var(--line);
+  }
+
+  @media print {
+    li::before {
+      box-shadow: none;
+      border: 1px solid var(--muted);
+    }
+  }
+}

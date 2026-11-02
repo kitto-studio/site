@@ -1,0 +1,21 @@
+/* Site frame: the skip link (B3), visible only on focus. The header and the footer style
+   themselves (Header.css, Footer.css). Donut scope: nothing inside the page region or a component
+   is styled from here. */
+@scope ([data-layout="site"]) to ([data-page], [data-component]) {
+  [data-skip-link] {
+    position: absolute;
+    top: -120px;
+    left: var(--space-16);
+    z-index: 60;
+    padding: var(--space-12) var(--space-16);
+    border-radius: var(--radius-8);
+    background: var(--ink);
+    color: var(--paper);
+    font: 600 15px / 1 var(--font-text);
+    text-decoration: none;
+
+    &:focus {
+      top: var(--space-12);
+    }
+  }
+}

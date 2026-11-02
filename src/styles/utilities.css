@@ -1,0 +1,17 @@
+/* Utilities: the highest layer, small shared helpers set by data attributes. */
+
+/* The one grid: header, page content and footer share this width and left edge. */
+[data-container] {
+  width: var(--grid);
+  margin-inline: auto;
+}
+
+/* Text for assistive technology only. */
+[data-visually-hidden] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

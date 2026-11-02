@@ -1,0 +1,266 @@
+/* About page (design-context §6 A2; numbers from the prototype About page). The page head on the
+   paper sky with the band under it, three still sheets (the first tucked 48px into the band, the
+   second on the other paper angle, the third lower to leave room for the mug standing on its edge),
+   then the contact line. The sheets are PaperSheet components, found here by their labels; rules
+   that reach into them start with :scope so they outrank the component's own scope.
+   Day art in light, night art in dark: the night diorama lies over the day one and crossfades. */
+@scope ([data-component="about-page"]) {
+  :scope {
+    padding-bottom: 96px;
+    overflow-x: clip;
+  }
+
+  /* — Page head — */
+  [data-page-head] {
+    position: relative;
+    padding-top: var(--space-64);
+  }
+
+  [data-page-head] [data-container] {
+    position: relative;
+    z-index: 2;
+  }
+
+  [data-page-head] h1 {
+    max-width: 15em;
+    text-shadow: var(--cut-shadow);
+  }
+
+  [data-page-head] [data-lead] {
+    max-width: 36em;
+    font-size: var(--text-lead-page);
+    margin-top: var(--space-20);
+  }
+
+  /* — Sheets — */
+  :scope [data-page-head] + [data-component="paper-sheet"] {
+    margin-top: calc(-1 * var(--space-48));
+  }
+
+  :scope [data-component="paper-sheet"] + [data-component="paper-sheet"] {
+    margin-top: var(--space-48);
+  }
+
+  :scope [data-component="paper-sheet"][aria-labelledby="about-name"] {
+    --sheet-angle: 0.22deg;
+  }
+
+  :scope [data-component="paper-sheet"][aria-labelledby="about-name"]::before {
+    transform: translate(-8px, 9px) rotate(-0.8deg);
+  }
+
+  :scope [data-component="paper-sheet"][aria-labelledby="about-how"] {
+    margin-top: calc(96px + var(--space-24));
+  }
+
+  /* The mug stands on the edge of the sheet, so the face does not clip it. */
+  :scope [aria-labelledby="about-how"] [data-sheet-face] {
+    overflow: visible;
+    padding-top: var(--space-40);
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    max-width: 38em;
+    margin: var(--space-16) 0 0;
+  }
+
+  [data-about-text="big"] {
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.55;
+  }
+
+  /* — Who we are: the diorama print beside the copy — */
+  [data-about-who] {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--space-48);
+    align-items: center;
+  }
+
+  [data-about-print] {
+    position: relative;
+    padding: 10px;
+    border-radius: var(--radius-4);
+    background: color-mix(in srgb, var(--surface) 94%, var(--paper));
+    transform: rotate(-1.1deg);
+    box-shadow:
+      0 1px 1px rgb(var(--shadow-rgb) / 0.16),
+      0 8px 16px -6px rgb(var(--shadow-rgb) / 0.26),
+      0 26px 40px -22px rgb(var(--shadow-rgb) / 0.36);
+    transition: background-color var(--duration-crossfade) ease;
+  }
+
+  [data-print-photo] {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--well);
+  }
+
+  [data-print-photo] img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 84% 60%;
+  }
+
+  /* Paper tape holding the print to the sheet. */
+  [data-print-tape] {
+    position: absolute;
+    z-index: 2;
+    width: 92px;
+    height: 26px;
+    background: color-mix(in srgb, var(--line) 72%, transparent) var(--grain);
+    opacity: 0.92;
+    box-shadow: 0 1px 2px rgb(var(--shadow-rgb) / 0.12);
+  }
+
+  [data-print-tape="left"] {
+    top: -11px;
+    left: 22px;
+    transform: rotate(-7deg);
+  }
+
+  [data-print-tape="right"] {
+    top: -10px;
+    right: 26px;
+    transform: rotate(5deg);
+  }
+
+  [data-art="day"] {
+    opacity: 1;
+    transition: opacity 0s;
+  }
+
+  [data-art="night"] {
+    opacity: 0;
+    transition: opacity var(--duration-crossfade) ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) :scope [data-art="day"] {
+      opacity: 0;
+      transition: opacity 0s var(--duration-crossfade);
+    }
+
+    :root:not([data-theme="light"]) :scope [data-art="night"] {
+      opacity: 1;
+    }
+  }
+
+  :root[data-theme="dark"] :scope [data-art="day"] {
+    opacity: 0;
+    transition: opacity 0s var(--duration-crossfade);
+  }
+
+  :root[data-theme="dark"] :scope [data-art="night"] {
+    opacity: 1;
+  }
+
+  /* — How we work: the mug on the sheet's top corner, half above the paper edge — */
+  [data-about-mug] {
+    position: absolute;
+    top: calc(-1 * (96px + var(--space-24)));
+    right: var(--space-64);
+    width: 220px;
+  }
+
+  [data-about-ways] {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-40);
+    margin: var(--space-32) 0 0;
+    padding: var(--space-32) 0 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  [data-about-ways] p {
+    margin-top: var(--space-8);
+  }
+
+  /* — Say hello — */
+  [data-about-hello] {
+    width: var(--grid);
+    margin: var(--space-64) auto 0;
+  }
+
+  [data-about-hello] p {
+    margin-top: var(--space-12);
+  }
+
+  @media (max-width: 900px) {
+    [data-about-ways] {
+      grid-template-columns: 1fr;
+      gap: var(--space-24);
+    }
+  }
+
+  @media (max-width: 760px) {
+    :scope {
+      padding-bottom: var(--space-64);
+    }
+
+    [data-page-head] {
+      padding-top: var(--space-40);
+    }
+
+    [data-page-head] [data-lead] {
+      margin-top: var(--space-16);
+      font-size: 17px;
+    }
+
+    :scope [data-page-head] + [data-component="paper-sheet"] {
+      margin-top: calc(-1 * var(--space-24));
+    }
+
+    :scope [data-component="paper-sheet"] + [data-component="paper-sheet"] {
+      margin-top: var(--space-32);
+    }
+
+    :scope [data-component="paper-sheet"][aria-labelledby="about-name"] {
+      --sheet-angle: 0.35deg;
+    }
+
+    :scope [data-component="paper-sheet"][aria-labelledby="about-how"] {
+      margin-top: calc(var(--space-64) + var(--space-24));
+    }
+
+    [data-about-who] {
+      grid-template-columns: 1fr;
+      gap: var(--space-24);
+    }
+
+    [data-about-print] {
+      padding: 7px;
+    }
+
+    [data-print-tape] {
+      width: 70px;
+      height: 22px;
+    }
+
+    [data-about-mug] {
+      top: calc(-1 * (var(--space-64) + var(--space-32)));
+      right: var(--space-16);
+      width: 150px;
+    }
+
+    [data-about-ways] {
+      margin-top: var(--space-24);
+      padding-top: var(--space-24);
+    }
+
+    [data-about-hello] {
+      margin-top: var(--space-48);
+    }
+  }
+}

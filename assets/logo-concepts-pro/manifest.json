@@ -1,0 +1,39 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "assets/logo-concepts-pro/kitto-interlocking-ligature.png",
+      "prompt": "Use case: logo-brand. Create one professional, culture-neutral logo concept for Kitto Studio, a 2D puzzle game software studio. Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined geometric sans, precise optical balance, softly rounded geometric construction, flat vector-like solid ink charcoal #24282B only. Timeless software-studio identity, confident medium-bold shapes, crisp edges, no texture, no gradients, no shadows, no 3D, no mockup. Center the complete logo with generous empty margins. Simple silhouette and generous negative spaces that remain clear at 32px favicon scale. No Japanese, European, national, regional or other cultural motifs. Only permitted lettering is the lowercase wordmark \"kitto\" (k-i-t-t-o); no studio text, slogans, labels, numbers, or watermarks. Generate exactly one logo, not a sheet of alternatives. Concept: custom lowercase wordmark \"kitto\" alone, in a refined geometric sans. The adjacent double-t letters form one subtle interlocking ligature like a precise mechanical joint, while both t letters remain readable. No separate emblem. Wordmark centered horizontally and vertically, approximately 650px wide.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "assets/logo-concepts-pro/kitto-interlocking-rounded-squares.png",
+      "prompt": "Use case: logo-brand. Create one professional, culture-neutral logo concept for Kitto Studio, a 2D puzzle game software studio. Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined geometric sans, precise optical balance, softly rounded geometric construction, flat vector-like solid ink charcoal #24282B only. Timeless software-studio identity, confident medium-bold shapes, crisp edges, no texture, no gradients, no shadows, no 3D, no mockup. Center the complete logo with generous empty margins. Simple silhouette and generous negative spaces that remain clear at 32px favicon scale. No Japanese, European, national, regional or other cultural motifs. Only permitted lettering is the lowercase wordmark \"kitto\" (k-i-t-t-o); no studio text, slogans, labels, numbers, or watermarks. Generate exactly one logo, not a sheet of alternatives. Concept: abstract emblem of exactly two interlocking rounded squares, forming a clean mechanical joint, beside the lowercase geometric sans wordmark \"kitto\". Use substantial uniform strokes and clear open counters; the joint must look intentional and physically interlocked. Emblem on the left, wordmark on the right, balanced horizontal lockup approximately 740px wide, centered.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "assets/logo-concepts-pro/kitto-negative-space-k-coin.png",
+      "prompt": "Use case: logo-brand. Create one professional, culture-neutral logo concept for Kitto Studio, a 2D puzzle game software studio. Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined geometric sans, precise optical balance, softly rounded geometric construction, flat vector-like solid ink charcoal #24282B only. Timeless software-studio identity, confident medium-bold shapes, crisp edges, no texture, no gradients, no shadows, no 3D, no mockup. Center the complete logo with generous empty margins. Simple silhouette and generous negative spaces that remain clear at 32px favicon scale. No Japanese, European, national, regional or other cultural motifs. Only permitted lettering is the lowercase wordmark \"kitto\" (k-i-t-t-o); no studio text, slogans, labels, numbers, or watermarks. Generate exactly one logo, not a sheet of alternatives. Concept: a bold uppercase K silhouette cut out as transparent negative space from a solid charcoal circular coin emblem. The circle is flat, with no rim or dimensional effects. The K is an abstract monogram shape, not extra typeset text. Place the lowercase geometric sans wordmark \"kitto\" below the emblem. Centered vertical lockup, emblem approximately 380px diameter, ample separation and generous margins. Keep the K cutout wide and unmistakably legible at favicon scale.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "assets/logo-concepts-pro/kitto-modular-sliding-tile-k.png",
+      "prompt": "Use case: logo-brand. Create one professional, culture-neutral logo concept for Kitto Studio, a 2D puzzle game software studio. Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined geometric sans, precise optical balance, softly rounded geometric construction, flat vector-like solid ink charcoal #24282B only. Timeless software-studio identity, confident medium-bold shapes, crisp edges, no texture, no gradients, no shadows, no 3D, no mockup. Center the complete logo with generous empty margins. Simple silhouette and generous negative spaces that remain clear at 32px favicon scale. No Japanese, European, national, regional or other cultural motifs. Only permitted lettering is the lowercase wordmark \"kitto\" (k-i-t-t-o); no studio text, slogans, labels, numbers, or watermarks. Generate exactly one logo, not a sheet of alternatives. Concept: modular abstract K emblem assembled from exactly four solid square tiles with clean narrow transparent gaps; one tile is offset to suggest a sliding puzzle. Arrange and orient the four square modules to give a recognizable K silhouette, with a clear vertical spine and two diagonal arms. No extra tiles, grid, frame or connector strokes. Place the lowercase geometric sans wordmark \"kitto\" beneath the emblem. Centered vertical lockup, emblem approximately 400px across, generous margins.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "assets/logo-concepts-pro/kitto-continuous-line-k.png",
+      "prompt": "Use case: logo-brand. Create one professional, culture-neutral logo concept for Kitto Studio, a 2D puzzle game software studio. Output a 1024x1024 PNG with genuine transparent background. Consistent series style: refined geometric sans, precise optical balance, softly rounded geometric construction, flat vector-like solid ink charcoal #24282B only. Timeless software-studio identity, confident medium-bold shapes, crisp edges, no texture, no gradients, no shadows, no 3D, no mockup. Center the complete logo with generous empty margins. Simple silhouette and generous negative spaces that remain clear at 32px favicon scale. No Japanese, European, national, regional or other cultural motifs. Only permitted lettering is the lowercase wordmark \"kitto\" (k-i-t-t-o); no studio text, slogans, labels, numbers, or watermarks. Generate exactly one logo, not a sheet of alternatives. Concept: one continuous single-line charcoal stroke traces a recognizable lowercase k emblem like a puzzle path drawn without lifting the pen. Uniform substantial monoline weight with rounded caps and joins; a simple continuous path with no decorative loops, arrows, dots or breaks. Place the clean lowercase geometric sans wordmark \"kitto\" underneath. Centered vertical lockup, emblem approximately 360px tall, generous margins. The path must remain legible at 32px.",
+      "size": "1024x1024",
+      "transparent": true
+    }
+  ]
+}

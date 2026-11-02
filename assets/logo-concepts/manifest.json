@@ -1,0 +1,99 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "lowercase-kitto-wordmark.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: a custom lowercase wordmark reading exactly 'kitto', with stout rounded geometric letters, tight friendly rhythm, and the two t crossbars joining into one confident wooden bridge. Only lettering is kitto. No separate symbol. Colors: warm dark walnut #49392E for letters and confident persimmon #D9653B for the i dot.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "kitto-katakana-wordmark.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: compact bilingual wordmark, exactly 'kitto' in bold rounded lowercase with exactly 'キット' as a clear integrated katakana accent above it. Two tightly composed lines, no other lettering and no symbol. Give the katakana substantial weight, avoiding tiny annotation. Colors: warm dark walnut #49392E and confident indigo #465CA8.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "masu-wooden-cube.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A masu wooden measuring cup seen in a simple isometric view, an open square wooden cube with a broad square negative-space opening and one bold corner joint. Extremely reduced, chunky planar geometry, iconic silhouette rather than a detailed illustration. Colors: warm oak #B88A59 and confident burnt orange #C75732.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "go-stone-goban.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A compact goban mark built from a bold three-by-three grid with rounded line ends, and one large go stone at an off-center intersection. Distinctive square game-board silhouette with generous open gaps, no enclosure or small details. Colors: warm dark walnut #49392E for grid and confident jade #267766 for stone.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "negative-space-puzzle.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A single solid rounded square wooden tile, with one oversized classic puzzle-piece silhouette cut completely through its center as transparent negative space. The cutout should be unmistakable with one round tab and opposing socket, broad proportions and no thin details. Color: confident terracotta #BD6046.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "hanko-kitto-stamp.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: a compact Japanese hanko-inspired square seal containing only the lowercase wordmark 'kitto', arranged as a custom compact stacked 'ki' above 'tto'. Thick interlocking letterforms with open counters, softly rounded square perimeter as part of the seal. Clean flat solid edges, no weathering. Color: confident cinnabar #B64938.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "wooden-block-letterpress.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: a lowercase 'kitto' wordmark built from five chunky individual wooden letterpress blocks in one snug horizontal row, each block carrying one transparent cutout lowercase letter, spelling exactly kitto. Slight playful height offsets but a disciplined bold composition, no perspective or woodgrain. Colors: warm oak #B88A59 for four blocks and confident petrol #276D79 for the central t block.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "geometric-ki-tree.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only. A bold geometric interpretation of the Japanese character 木 as a tree and wooden construction: one vertical trunk, one crossbeam, two diagonal roots, joined with softly rounded woodblock ends. Preserve the recognizable 木 structure. No additional lettering. Colors: warm dark walnut #49392E with confident moss #627A3D on the crossbeam.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "rounded-play-blocks.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: playful rounded mascot-free abstract symbol, no lettering, no faces. Three chunky rounded capsule-like toy pieces form a compact pinwheel with a broad triangular transparent center; gentle rotational motion and a satisfying puzzle fit. Minimal and friendly, asymmetrical color balance. Colors: warm oak #B88A59 and confident coral #D75C49.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "dovetail-joinery.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. Two broad rectangular woodcraft pieces lock together vertically through one unmistakable central dovetail joint. The outer silhouette is a softly rounded square; the joint is a bold stepped trapezoid, with a narrow but robust transparent separation. Emphasize precision and satisfying fit. Colors: warm oak #B88A59 and confident indigo #465CA8.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "shogi-forward-tile.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. One bold shogi tile silhouette, a wide pentagon with a shallow pointed top and softly softened corners. Within it a single transparent upward chevron cutout expresses surely winning and quiet forward progress. No character, no illustration. Color: confident ochre #B67D24.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "wood-shaving-spiral.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A single thick ribbon curling into a compact square spiral, inspired by a curled Japanese wood-plane shaving and a gentle puzzle path. Use just one open turn, broad negative-space channel, softly squared corners and a clean diagonal terminal. Color: confident deep teal #286F69.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "kumiki-interlocking-cross.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A Japanese kumiki wooden assembly puzzle abstracted into two chunky notched bars crossing into a compact four-armed plus silhouette. Flat top-down geometry with a large simple central locking detail and broad transparent separation; avoid isometric drawing. Colors: warm oak #B88A59 and confident brick #A94F3D.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "surely-stepping-tiles.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. Three chunky rounded square game tiles rise from lower left to upper right in a compact stair-step arrangement, with small equal transparent gaps. A quiet symbol of progress and surely solving a puzzle. The final upper tile is accent colored; the other two are walnut. Colors: warm dark walnut #49392E and confident golden amber #C58B2A.",
+      "size": "1024x1024",
+      "transparent": true
+    },
+    {
+      "file": "wooden-arch-keystone.png",
+      "prompt": "Use case: logo-brand. Create exactly one logo concept for Kitto Studio, an indie maker of cozy 2D puzzle games. Heritage: kitto means surely, and its moku engine evokes Japanese woodcraft and wooden games. Output 1024x1024 PNG with genuine transparent background. Consistent set style: flat vector-like geometry, bold simple silhouettes, softly rounded precise edges, warm crafted minimalism, generous negative space, no gradients, shadows, texture, mockups, border, watermark, slogans, labels or numbers. Center one logo with generous margin, occupying about 65% of the canvas. Use only the specified one or two solid ink colors; transparent areas are unprinted. Keep shapes and gaps robust enough to remain recognizable at 32px favicon size. Direction: symbol only, no lettering. A small wooden toy arch made from two broad softly rounded upright blocks and one distinctive trapezoid keystone fitting above the center, enclosing one large doorway-shaped transparent negative space. A compact balanced silhouette suggesting a solved construction puzzle. Colors: warm oak #B88A59 and confident blue #417CA0 for the keystone.",
+      "size": "1024x1024",
+      "transparent": true
+    }
+  ]
+}

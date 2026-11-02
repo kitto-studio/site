@@ -1,0 +1,54 @@
+/* Components layer aggregator: one @import per component or layout sheet (each @scope'd). */
+
+/* Layout */
+@import "../layouts/SiteLayout.css";
+
+/* Brand */
+@import "../components/Logo.css";
+
+/* Home (U3): shared paper pieces, then the page */
+@import "../components/Button.css";
+@import "../components/PaperSheet.css";
+@import "../components/PaperPhoto.css";
+@import "../components/ComingSoonSlot.css";
+@import "../components/PopupSticker.css";
+@import "../pages/HomePage.css";
+
+/* Legal pages (U8): the document sheet, then its parts */
+@import "../components/LegalDocument.css";
+@import "../components/LegalSection.css";
+@import "../components/InShort.css";
+@import "../components/StepList.css";
+@import "../components/Placeholder.css";
+
+/* Chrome (U2): header and its menus, footer, 404 page */
+@import "../components/Header.css";
+@import "../components/LangPicker.css";
+@import "../components/ThemeSwitch.css";
+@import "../components/MenuSheet.css";
+@import "../components/Footer.css";
+@import "../pages/NotFoundPage.css";
+
+/* Root language page (U1) */
+@import "../pages/RootPage.css";
+
+/* Support page (U7): the email card, the answers, then the page */
+@import "../components/EmailCard.css";
+@import "../components/Faq.css";
+@import "../pages/SupportPage.css";
+
+/* Game page (U6): the merge board */
+@import "../components/MergeBoard.css";
+
+/* About and Games (U4): the paper band, the game card, the kana, then the pages */
+@import "../components/PaperBand.css";
+@import "../components/GameCard.css";
+@import "../components/KittoMeaning.css";
+@import "../pages/AboutPage.css";
+@import "../pages/GamesPage.css";
+
+/* Game page (U5): the breadcrumb, the tags, the gallery, then the page */
+@import "../components/Breadcrumb.css";
+@import "../components/Tag.css";
+@import "../components/Gallery.css";
+@import "../pages/MemoryMissingPage.css";

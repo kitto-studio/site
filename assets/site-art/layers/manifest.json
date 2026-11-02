@@ -1,0 +1,57 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "day-far.png",
+      "prompt": "Use case: stylized-concept. Create one isolated parallax layer for Kitto Studio's website hero, an original landscape unrelated to any game. Output a FULL 1536x1024 landscape transparent RGBA PNG. Fixed registration for every layer: top-left (0,0), horizon y=530, no cropping, no automatic centering or resizing of objects. Premium real cut-paper and felt craft photographed straight on, visible paper thickness, delicate fibers and gentle grain, soft short shadows underneath paper edges, simple flowing organic shapes. Day palette: paper #F6F2EA, cream #FFFDF8, sand #E3DACC, muted #8A7D72, cocoa #553C2F, deep brown #3B2C24, orange #D9653A. Genuine alpha transparency everywhere without paper, no opaque background, no checkerboard drawn into artwork. No text, letters, numbers, logos, border or watermark. Asset: day-far. ONLY distant pale layered hills in a narrow horizontal band, upper contours around y=490-590 and lower edge at y=730, spanning full width and cropped at both side edges; pale cream and sand, low rolling peaks. A single round orange paper sun centered at (1190,245), radius 82 pixels. Everything above and below the hill band is transparent except the sun. No house, river, trees, plants, near hills or foreground.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "day-mid.png",
+      "prompt": "Use case: stylized-concept. Create one isolated parallax layer for Kitto Studio's website hero, an original landscape unrelated to any game. Output a FULL 1536x1024 landscape transparent RGBA PNG. Fixed registration for every layer: top-left (0,0), horizon y=530, no cropping, no automatic centering or resizing of objects. Premium real cut-paper and felt craft photographed straight on, visible paper thickness, delicate fibers and gentle grain, soft short shadows underneath paper edges, simple flowing organic shapes. Day palette: paper #F6F2EA, cream #FFFDF8, sand #E3DACC, muted #8A7D72, cocoa #553C2F, deep brown #3B2C24, orange #D9653A. Genuine alpha transparency everywhere without paper, no opaque background, no checkerboard drawn into artwork. No text, letters, numbers, logos, border or watermark. Asset: day-mid. ONLY the middle rolling hills, filling the bottom from their upper silhouette at y=620 to the bottom edge y=1024. Sand and muted taupe layered paper hills. A winding cream paper river begins near (870,650), bends left through (650,800), and broadens to (850,1024). A small cream house with terracotta red roof occupies x=1010-1110, y=570-675, with three slender cocoa cypress trees nearby. The entire sky above the hill and house silhouettes is transparent. No sun, far hill band, near dark corner hills or foreground leaves. Cut edges with tight short shadows only, no ambient glow or haze. Keep horizon y=530 registration and the full canvas.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "day-near.png",
+      "prompt": "Use case: stylized-concept. Create one isolated parallax layer for Kitto Studio's website hero, an original landscape unrelated to any game. Output a FULL 1536x1024 landscape transparent RGBA PNG. Fixed registration for every layer: top-left (0,0), horizon y=530, no cropping, no automatic centering or resizing of objects. Premium real cut-paper and felt craft photographed straight on, visible paper thickness, delicate fibers and gentle grain, soft short shadows underneath paper edges, simple flowing organic shapes. Day palette: paper #F6F2EA, cream #FFFDF8, sand #E3DACC, muted #8A7D72, cocoa #553C2F, deep brown #3B2C24, orange #D9653A. Genuine alpha transparency everywhere without paper, no opaque background, no checkerboard drawn into artwork. No text, letters, numbers, logos, border or watermark. Asset: day-near. ONLY two large dark cocoa paper hill curves anchored to the bottom corners. Left hill occupies x=0-570 below a curve rising from (0,780) through (220,810) to (570,1024); right hill occupies x=1100-1536 below a curve from (1100,1024) through (1340,810) to (1536,750). The entire central gap and all area above the silhouettes are transparent. Small paper plants and restrained orange berry sprigs grow from these corner hills. Cocoa #553C2F and deep brown #3B2C24 felt and paper. No sky, sun, house, river, middle hills, distant hills or big foreground leaves. Keep shadows very short at paper edges with no haze.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "day-front.png",
+      "prompt": "Use case: stylized-concept. Create one isolated parallax layer for Kitto Studio's website hero, an original landscape unrelated to any game. Output a FULL 1536x1024 landscape transparent RGBA PNG. Fixed registration for every layer: top-left (0,0), horizon y=530, no cropping, no automatic centering or resizing of objects. Premium real cut-paper and felt craft photographed straight on, visible paper thickness, delicate fibers and gentle grain, soft short shadows underneath paper edges, simple flowing organic shapes. Day palette: paper #F6F2EA, cream #FFFDF8, sand #E3DACC, muted #8A7D72, cocoa #553C2F, deep brown #3B2C24, orange #D9653A. Genuine alpha transparency everywhere without paper, no opaque background, no checkerboard drawn into artwork. No text, letters, numbers, logos, border or watermark. Asset: day-front. ONLY a few large foreground cut-paper leaves and pointed grass blades in the extreme bottom left and bottom right corners. Left cluster contained within x=0-320, y=850-1024; right cluster within x=1280-1536, y=830-1024. Cluster stems continue beyond the bottom corners. Deep brown #3B2C24, cocoa #553C2F and restrained muted #8A7D72 paper with visible folded veins. Everything else, including the entire central 900 pixels and all upper frame, is fully transparent. No hills, ground, horizon line, sun, house, river or berries. Tight soft shadows only directly under individual leaf edges, no haze or luminous halo. Preserve full frame and large transparent negative space.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "night-far.png",
+      "prompt": "Use case: lighting-weather. Asset: night-far transparent parallax layer. Edit the referenced day-far layer into its NIGHT counterpart. Output FULL 1536x1024 RGBA PNG. Preserve exactly the same hill silhouettes, paper edges, object coordinates, round celestial disc size and position, full canvas registration and transparent regions. Change only the palette and lighting: distant hills in layered #2A2420 and muted #A39486 night tones with #211B18 accents; replace orange sun color with cream #EDE3D3 to make a round paper moon in the identical position. Real cut paper and felt, visible thickness and fine grain, soft short edge shadows, premium craft. No sky fill, no additional objects, no stars, no house, no plants, no text, letters, numbers or logos. Background above and below hills must be genuinely transparent, not black. Preserve alpha and isolate the paper elements cleanly.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "night-mid.png",
+      "prompt": "Use case: lighting-weather. Asset: night-mid transparent parallax layer. Edit the referenced day-mid layer into its NIGHT counterpart. Output FULL 1536x1024 RGBA PNG. Preserve exactly the same hill silhouettes, winding river path, small house and red roof geometry, cypress trees, every object's position and size, full canvas registration and transparent sky. Change only palette and lighting: hills and trees in #211B18, #2A2420 and muted #A39486; house softly shaded warm taupe, roof deep muted terracotta; existing windows glow warm #E2703F. River becomes muted cream #EDE3D3 with subtle cut-paper moonlight reflections within its existing shape. Real cut paper and felt, visible thickness and fine grain, soft short edge shadows, premium craft. No moon, sun, stars, additional hills or foreground plants. No text, letters, numbers or logos. Background above the silhouettes must be genuinely transparent, not black. Preserve alpha and isolate paper elements cleanly.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "night-near.png",
+      "prompt": "Use case: lighting-weather. Asset: night-near transparent parallax layer. Edit the referenced day-near layer into its NIGHT counterpart. Output FULL 1536x1024 RGBA PNG. Preserve exactly both corner hill silhouettes, all paper plants and berry sprigs, each stem and leaf position, the open central gap, full canvas registration and transparent regions. Change only colors and lighting: hills in deep #211B18 and #2A2420, leaves in subdued #A39486 and deep warm brown, berries subdued warm #E2703F. Retain real cut paper and felt, visible paper thickness, fine grain and soft short edge shadows. No new objects, no sky, moon, house, river or background fill. No text, letters, numbers or logos. Everything beyond the existing corner paper elements must be genuinely transparent, not black. Preserve alpha and isolate paper elements cleanly.",
+      "size": "1536x1024",
+      "transparent": true
+    },
+    {
+      "file": "night-front.png",
+      "prompt": "Use case: lighting-weather. Asset: night-front transparent parallax layer. Edit the referenced day-front layer into its NIGHT counterpart. Output FULL 1536x1024 RGBA PNG. Preserve exactly every foreground leaf and grass blade silhouette, folded veins, their sizes and bottom-corner positions, full canvas registration, large empty central area and all transparent regions. Change only palette and lighting: deep #211B18 and #2A2420 paper with subtle muted #A39486 edge accents. Real cut paper and felt, visible thickness and fine grain, soft short shadows under paper edges, premium craft. No ground, hills, berries, sky, moon, house, river or new objects. No text, letters, numbers or logos. Everything except the corner leaves and grass must be genuinely transparent, not black. Preserve alpha and isolate paper elements cleanly.",
+      "size": "1536x1024",
+      "transparent": true
+    }
+  ]
+}

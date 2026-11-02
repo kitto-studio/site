@@ -1,0 +1,26 @@
+/* F4: a field still to be filled. An orange dashed underline on a light dot tint, so an unfinished
+   legal page looks unfinished. Used as a component and inside trusted legal HTML. */
+@scope ([data-component="placeholder"]) {
+  :scope {
+    padding: 0 0.14em;
+    border-radius: 3px;
+    background: light-dark(
+      color-mix(in srgb, var(--dot) 13%, transparent),
+      color-mix(in srgb, var(--dot) 18%, transparent)
+    );
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: underline dashed var(--dot) 2px;
+    text-underline-offset: 0.24em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  @media print {
+    :scope {
+      background: none;
+      color: black;
+    }
+  }
+}

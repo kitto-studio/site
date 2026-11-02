@@ -1,0 +1,103 @@
+/* A numbered legal section: heading with the number hanging in the column gap on wide screens,
+   generous print-like text. Numbers from the legal pages of the prototype. */
+@scope ([data-component="legal-section"]) {
+  /* The root already pads anchors below the sticky header; a little air on top of that. */
+  :scope {
+    scroll-margin-top: var(--space-12);
+  }
+
+  h2 {
+    position: relative;
+    margin: 0 0 var(--space-4);
+    font: 800 26px / 1.2 var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+
+  [data-number] {
+    position: absolute;
+    right: 100%;
+    margin-right: 0.75em;
+    color: var(--quiet);
+    font-variant-numeric: tabular-nums;
+  }
+
+  p {
+    margin: 14px 0 0;
+  }
+
+  ul {
+    margin: 14px 0 0;
+    padding-left: 1.2em;
+  }
+
+  ul > li {
+    margin-top: var(--space-8);
+    padding-left: var(--space-4);
+  }
+
+  ul > li::marker {
+    color: var(--quiet);
+  }
+
+  /* Dot bullets: the kitto dot, as in the «In short» box. */
+  :scope[data-bullets="dot"] ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  :scope[data-bullets="dot"] ul > li {
+    position: relative;
+    padding-left: 26px;
+  }
+
+  :scope[data-bullets="dot"] ul > li::before {
+    content: "";
+    position: absolute;
+    top: 0.62em;
+    left: 3px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--dot);
+    box-shadow: 0 1px 1px rgb(var(--shadow-rgb) / 0.25);
+  }
+
+  :is(strong, b) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Compact: one column under a sticky contents bar, the number leads the heading. */
+  @media (max-width: 900px) {
+    :scope {
+      scroll-margin-top: 66px;
+    }
+
+    [data-number] {
+      position: static;
+      margin-right: 0.2em;
+    }
+  }
+
+  @media (max-width: 760px) {
+    h2 {
+      font-size: 23px;
+    }
+  }
+
+  @media print {
+    :scope {
+      break-inside: avoid-page;
+    }
+
+    h2,
+    :is(strong, b) {
+      color: black;
+    }
+
+    [data-number] {
+      position: static;
+      margin-right: 0.2em;
+    }
+  }
+}

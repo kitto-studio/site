@@ -1,0 +1,68 @@
+{
+  "output_directory": "assets/brand/checker",
+  "tool": "built-in image_gen",
+  "status": "Generated variants; exact-preservation requirement not fully met. Outputs contain contour and color differences from the approved original.",
+  "original_unchanged": true,
+  "assets": [
+    {
+      "file": "light-v2.png",
+      "prompt": "Edit target: the attached approved Kitto logo. Produce light.png variant, exactly 1024x1024 PNG. Composite the original logo onto solid warm paper #F6F2EA. HARD RULE: retain the exact existing pixel silhouette of every letter and tile, every proportion, spacing, position and composition. Do not redraw, restyle, retype or reinterpret anything. Keep the original brown ink and green accent colors. Change only the background. Only lettering is the existing Kitto wordmark; no other text, labels, codes or decorations.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "dark-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for dark-v2.png. Keep the full logo at its original position and scale. Background solid deep charcoal #211C19. Replace all brown ink with solid warm off-white #EFE7DA, keep the original green accent colors. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-black-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for mono-black-v2.png. Keep full logo original position and scale. Make every logo pixel a single solid near-black #1E1916, on pure white #FFFFFF. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-white-on-accent-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for mono-white-on-accent-v2.png. Keep full logo original position and scale. Make the entire logo solid pure white #FFFFFF. Background solid green sampled from the original logo's main green accent. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-indigo-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for palette-indigo-v2.png. Keep full logo original position and scale. Recolor brown ink #202B39, green accent #3C5D93. Background solid #E8EDF4. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-matcha-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for palette-matcha-v2.png. Keep full logo original position and scale. Recolor brown ink #2C332A, green accent #6B8F4E. Background solid #EDF0E2. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "github-avatar-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for github-avatar-v2.png. Isolate the existing recognizable K plus its attached checker tile symbol from the original logo, removing only itto. Keep every contour, proportion and tile of that exact existing K/checker element. Enlarge this unchanged element proportionally and center it with generous circle-safe padding, maximum extent 650px, on solid warm paper brand color #F6F2EA. Original brown ink and green accents. No newly invented symbol. Must read in circular crop at 40px. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "favicon-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x1024 PNG for favicon-v2.png. Isolate the existing recognizable K plus its attached checker tile symbol from the original logo, removing only itto. Same mark as avatar: exactly the existing K/checker element. Enlarge unchanged element proportionally, centered, 880px maximum extent for bolder framing at 16-32px. Background solid warm paper brand color #F6F2EA. Original brown ink and green accent in flat solid colors, no fine detail. Do not alter any contours or invent a symbol. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "splash-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 1024x2048 PNG for splash-v2.png. Portrait phone splash, exact 1024 pixels wide by 2048 high. Solid warm paper brand background #F6F2EA. Original full logo with original brown ink and green accent, centered horizontally and slightly above middle, logo center at y=900, width 856px. Nothing else. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "1024x2048",
+      "transparent": false
+    },
+    {
+      "file": "motion-storyboard-v2.png",
+      "prompt": "Use case: precise-object-edit. Edit target: attached APPROVED Kitto Studio logo. Output one 2048x512 PNG for motion-storyboard-v2.png. Horizontal strip exactly 2048 pixels wide and 512 high, four equal 512x512 frames left to right, no visible borders or labels, solid warm paper #F6F2EA throughout. Show the original logo's own pieces arriving and settling for app startup, using only separated pieces cut from the original unchanged silhouettes. Frame 1 checker tiles arrive from left while original letters are offset to the right. Frame 2 original K joins checker while itto pieces approach. Frame 3 all original pieces nearly settled with slight vertical offsets. Frame 4 exactly the original complete final logo, centered within its square frame scaled proportionally to 428px wide, original brown ink and green accents. No arrows, no motion lines, no new shapes, no added text. HARD RULE: use the existing logo artwork directly; never redraw, restyle, retype or reinterpret. Keep every original letter shape, every tile shape, proportion, spacing and internal composition IDENTICAL. Only change colors, background or framing explicitly requested above. The only allowed lettering is the logo's own existing Kitto wordmark (or its original K for mark-only variants). No slogans, labels, hex codes, captions, watermark, texture, shadows, gradients or extra artwork. Background must be perfectly flat.",
+      "size": "2048x512",
+      "transparent": false
+    }
+  ]
+}

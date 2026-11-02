@@ -1,0 +1,132 @@
+/* Element defaults: paper page, the type scale (brand-system §4), links and the focus ring. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Anchors land below the sticky header. Root scrolling stays instant for SPA scroll resets. */
+  scroll-padding-top: calc(var(--header-height) + var(--space-16));
+}
+
+body {
+  background: var(--paper) var(--grain);
+  color: var(--text);
+  font: 400 var(--text-body) / var(--leading-body) var(--font-text);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color var(--duration-crossfade) ease,
+    color 0.6s ease;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: var(--font-heading);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-h1);
+}
+
+h2 {
+  font-weight: 800;
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-h2);
+}
+
+h3 {
+  font-weight: 800;
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+/* Home hero slogan. */
+[data-display] {
+  font-weight: 900;
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+[data-lead] {
+  font-size: var(--text-lead);
+  line-height: var(--leading-lead);
+}
+
+small,
+[data-small] {
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: var(--leading-small);
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
+}
+
+a:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+/* A link that stands alone (a heading, a row, the way home) is a 44 px target on a phone. Padding
+   on an inline box grows the hit area but not the line, so the text does not move. Links inside a
+   sentence do not carry the mark and keep their line. */
+@media (max-width: 760px) {
+  a[data-link-alone] {
+    padding-block: var(--space-12);
+  }
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: var(--radius-8);
+}
+
+/* CJK line breaking and headings without negative tracking. */
+:root:lang(ja),
+:root:lang(zh) {
+  line-break: strict;
+}
+
+:root:lang(ja) {
+  word-break: auto-phrase;
+}
+
+/* A Japanese phrase never breaks, so a long one in a heading is wider than a 320px sheet
+   (「メールに書いていただきたいこと」 on Support). `anywhere` breaks it only when it does not fit. */
+:root:lang(ja) :is(h1, h2, h3) {
+  overflow-wrap: anywhere;
+}
+
+:root:lang(ko) {
+  word-break: keep-all;
+}
+
+:root:is(:lang(ja), :lang(ko), :lang(zh)) :is(h1, h2, h3, [data-display]) {
+  letter-spacing: 0;
+}
+
+:root:is(:lang(ja), :lang(ko), :lang(zh)) h1 {
+  line-height: 1.2;
+}
+
+:where(:root:lang(de)) :is(p, li) {
+  hyphens: auto;
+}

@@ -1,0 +1,28 @@
+# Appended after the cache rules the build generates (the catch-all `/*` always revalidates).
+# `! Cache-Control` detaches the generated header first: Cloudflare comma-joins duplicates.
+
+# Security headers on every response: no MIME sniffing, the origin only on cross-origin
+# requests, never framed.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+
+# Vendored fonts and the art: long-lived, never revalidated.
+/fonts/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/media/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+# The game's art changes under the same names: cached for a day, then revalidated.
+/media/game/*
+  ! Cache-Control
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# CJK font stylesheets keep stable names: always revalidated, so a change is seen at once.
+/css/*
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate

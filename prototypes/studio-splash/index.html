@@ -1,0 +1,252 @@
+<title>Kitto Splash</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600;700&family=Golos+Text:wght@400;600;800&display=swap">
+<style>
+/* Layout: concept tabs, then a 390×844 phone playing the Kitto studio splash and its handoff to the game's real splash. */
+:root{
+  --bg:#f4e6ca; --fg:#2a3a3b; --muted:#7d7466; --line:#e2d3b4; --chipbg:#ecdcbc; --panel:#fbf4e6;
+  --accent:#2f8f87; --accent-fg:#fff;
+  --ui:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --game:"Montserrat Alternates","Golos Text",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1a1714; --fg:#ece5dc; --muted:#a39886; --line:#3a332b; --chipbg:#2b2621; --panel:#24201b;
+  --accent:#6fc2b9; --accent-fg:#10201e; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1a1714; --fg:#ece5dc; --muted:#a39886; --line:#3a332b; --chipbg:#2b2621; --panel:#24201b;
+  --accent:#6fc2b9; --accent-fg:#10201e; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--ui);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 56px;}
+.wrap{max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px;padding-top:20px;align-items:start}
+@media (max-width:760px){ .wrap{grid-template-columns:minmax(0,1fr)} }
+.wrap>*{min-width:0}
+h1{font:800 22px/1.15 var(--ui);margin:0 0 6px}
+.sub{margin:0 0 18px;font-size:13.5px;color:var(--muted);max-width:60ch;line-height:1.5}
+.concepts{display:flex;flex-direction:column;gap:10px}
+.concept{display:flex;flex-direction:column;gap:4px;text-align:left;border:1px solid var(--line);background:var(--panel);
+  color:var(--fg);border-radius:14px;padding:14px 16px;font:inherit;cursor:pointer}
+.concept b{font-size:15px}
+.concept span{font-size:13px;color:var(--muted);line-height:1.45}
+.concept[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--chipbg);color:var(--fg);border-radius:999px;padding:8px 16px;font:600 13px var(--ui);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+
+.phoneWrap{display:flex;justify-content:center}
+.phone{width:min(100%,340px);aspect-ratio:390/844;border-radius:42px;border:9px solid #191512;overflow:hidden;position:relative;background:#F4E6CA;
+  box-shadow:0 24px 50px -24px rgba(40,25,10,.45)}
+.screen{position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;overflow:hidden;background:#F4E6CA}
+.L{position:absolute;pointer-events:none}
+.fill{left:0;top:0;width:390px;height:844px}
+.wardBox{left:-632px;top:-116px;width:1294px;height:971px}
+.veil{background:url(a/veil.png) 0 0/100% 100% no-repeat}
+.paperDisc{border-radius:50%;background:radial-gradient(circle at 50% 40%,#fbf6ec,#f3e7d0)}
+.ring{border-radius:50%;border:1.5px solid rgba(150,214,206,.7)}
+.logo{width:100%;height:auto;display:block;overflow:visible}
+.ink{fill:#553C2F} .acc{fill:#D9653A}
+.tag{font:700 13px/1 var(--game);letter-spacing:.32em;text-transform:uppercase;color:#2b5b58;text-align:center;width:390px;left:0}
+.mist{width:96px;height:96px;background-size:100% 100%}
+.photo{overflow:hidden;background:#f7efdf}
+</style>
+
+<div class="wrap">
+  <div>
+    <h1>Заставка Kitto перед Memory Missing</h1>
+    <p class="sub">Каждый вариант собран из материалов самой игры: размытая палата, бирюзовая линза, запотевшие плитки, полароид. Сначала заставка студии, потом плавный переход в настоящий сплеш игры.</p>
+    <div class="concepts" id="concepts"></div>
+    <div class="row">
+      <button class="btn primary" id="replay" type="button">↻ Проиграть ещё раз</button>
+    </div>
+    <p class="note">В конце показан текущий сплеш игры, снятый с её визуального теста. Логотип в светлой версии, буквы двигаются по отдельности.</p>
+  </div>
+  <div class="phoneWrap"><div class="phone" id="phone"><div class="screen" id="screen"></div></div></div>
+</div>
+
+<template id="tplLogo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="93 372 850 340" class="logo logo-word" role="img" aria-label="kitto"> <g class="part" style="--i:0"><g transform="translate(0,1024) scale(0.1,-0.1)"><path class="ink" d="M1393 6305 c-101 -28 -183 -100 -230 -200 l-28 -60 0 -1215 0 -1215 26 -56 c36 -76 86 -129 161 -170 60 -33 68 -34 168 -34 128 0 188 24 267 108 79 84 93 132 94 340 1 95 4 183 8 195 6 22 35 -5 309 -275 205 -201 321 -308 359 -329 276 -157 597 80 519 383 -24 95 -41 115 -370 442 -169 167 -305 308 -304 312 2 5 26 28 54 51 28 24 173 153 322 287 251 225 274 248 304 309 116 234 -47 497 -307 496 -118 0 -179 -32 -330 -170 -66 -60 -165 -150 -220 -199 -55 -49 -149 -134 -208 -190 -59 -55 -111 -101 -116 -103 -17 -6 -21 103 -21 553 0 530 0 527 -80 624 -91 109 -239 155 -377 116z"/></g></g> <g class="part" style="--i:1"><g transform="translate(0,1024) scale(0.1,-0.1)"><path class="ink" d="M3460 5441 c-117 -38 -201 -122 -239 -241 -14 -46 -24 -1481 -10 -1553 23 -121 90 -211 195 -263 133 -66 337 -28 429 78 96 113 97 120 93 990 l-3 723 -32 67 c-63 134 -167 202 -318 205 -49 1 -101 -1 -115 -6z"/></g></g> <g class="part" style="--i:2"><g transform="translate(0,1024) scale(0.1,-0.1)"><path class="ink" d="M4680 6218 c-54 -17 -74 -30 -130 -86 -91 -93 -102 -126 -109 -327 l-6 -160 -110 -6 c-163 -9 -253 -58 -313 -173 -35 -66 -39 -218 -8 -276 67 -125 141 -169 311 -184 l120 -11 6 -545 c4 -452 8 -554 20 -595 71 -229 226 -387 460 -466 122 -42 368 -54 460 -24 123 41 205 173 197 315 -9 157 -100 255 -258 281 -163 26 -160 13 -160 582 l0 457 285 0 285 0 0 -502 c0 -570 6 -625 75 -765 91 -183 280 -324 499 -370 50 -10 114 -14 216 -11 160 3 219 23 276 91 165 197 72 474 -174 517 -82 14 -118 32 -142 73 -19 31 -20 53 -20 498 l0 466 198 5 c186 4 202 6 253 30 132 62 195 158 193 298 -1 133 -47 212 -157 272 l-62 33 -212 3 -213 3 0 123 c0 68 -5 148 -10 177 -53 280 -379 391 -597 204 -90 -77 -118 -186 -122 -467 l-1 -38 -285 0 -285 0 0 138 c0 82 -6 157 -14 187 -56 211 -256 320 -466 253z"/></g></g> <g class="part" style="--i:3"><g transform="translate(0,1024) scale(0.1,-0.1)"><path class="ink" d="M7975 5584 c-679 -100 -1124 -693 -1010 -1345 102 -587 681 -998 1278 -908 481 72 867 435 958 902 133 682 -382 1335 -1066 1352 -71 2 -143 1 -160 -1z m317 -696 c269 -133 360 -471 194 -721 -167 -252 -522 -293 -736 -86 -239 233 -185 642 106 796 85 45 122 53 251 49 105 -2 116 -4 185 -38z"/></g></g> <g class="part dot" style="--i:4"><g transform="translate(0,1024) scale(0.1,-0.1)"><path class="acc" d="M3455 6307 c-213 -70 -317 -317 -217 -519 145 -295 587 -258 687 58 53 168 -40 374 -202 446 -59 27 -207 35 -268 15z"/></g></g> </svg></template>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const easeOut=p=>1-Math.pow(1-p,3);
+const easeInOut=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const prog=(t,a,b)=>clamp((t-a)/(b-a));
+function springOut(sec,freq,damp){ return sec<=0?1:Math.exp(-damp*sec)*Math.cos(2*Math.PI*freq*sec); }
+function dropBounce(t,h,fall){
+  const g=2*h/(fall*fall);
+  if(t<fall) return {y:h-0.5*g*t*t,c:0};
+  let tt=t-fall, v=g*fall; const v0=v;
+  for(let k=0;k<3;k++){ const hit=v/v0; v*=0.38; const dur=2*v/g;
+    if(tt<dur) return {y:v*tt-0.5*g*tt*tt,c:hit*clamp(1-tt/90)}; tt-=dur; }
+  return {y:0,c:0};
+}
+
+/* The wordmark's five parts (k, i stem, tt, o, dot) and their bounds in the logo's 1024 grid. */
+const BOX=[[113,392,197,299],[320,479,74,211],[398,400,313,290],[695,465,228,228],[320,392,75,74]];
+function setPart(el,i,st){
+  const [x,y,w,h]=BOX[i], ox=x+w/2, oy=st.center?y+h/2:y+h;
+  el.setAttribute("transform","translate("+(st.dx||0).toFixed(2)+" "+(st.dy||0).toFixed(2)+") translate("+ox+" "+oy+") scale("+(st.sx??1).toFixed(4)+" "+(st.sy??1).toFixed(4)+") translate("+(-ox)+" "+(-oy)+")");
+  el.style.opacity=(st.op??1).toFixed(3);
+}
+function dotState(t,h,fall,squash){
+  if(t<0) return {op:0};
+  const d=dropBounce(t,h,fall);
+  return {dy:-d.y,sx:1+squash*d.c,sy:1-squash*d.c,op:clamp(t/80)};
+}
+/* Letters drop in one by one and the dot lands last: the approved "Прыжок". */
+function logoDrop(parts,t){
+  parts.forEach((el,i)=> setPart(el,i, i<4 ? dotState(t-80*i,420,430,.05) : dotState(t-700,560,470,.14)));
+}
+/* Letters stand still and only the dot falls in: for concepts where the letters are revealed. */
+function logoDotOnly(parts,t){
+  parts.forEach((el,i)=> setPart(el,i, i<4 ? {} : dotState(t,560,470,.14)));
+}
+/* Letters spring up from their baseline, then the dot drops. */
+function logoSpring(parts,t){
+  parts.forEach((el,i)=>{
+    if(i===4) return setPart(el,i,dotState(t-480,520,460,.14));
+    const tt=t-85*i; if(tt<0) return setPart(el,i,{op:0});
+    setPart(el,i,{sy:Math.max(0,1-springOut(tt/1000,1.7,5.5))});
+  });
+}
+
+function el(cls,style,html){ const d=document.createElement("div"); d.className="L "+cls; if(style) Object.assign(d.style,style); if(html) d.innerHTML=html; return d; }
+function img(cls,src,style){ const i=document.createElement("img"); i.className="L "+cls; i.src=src; i.alt=""; if(style) Object.assign(i.style,style); return i; }
+function logoEl(width,left,top){
+  const box=el("",{left:left+"px",top:top+"px",width:width+"px"},$("tplLogo").innerHTML);
+  box.querySelector("svg").setAttribute("class","logo");
+  return {box,parts:[...box.querySelectorAll(".part")]};
+}
+function gameSplash(){ return img("fill","a/game-splash.webp",{opacity:0}); }
+
+/* ---------- 1. Линза: the studio splash is the game's own lens, the logo inside it, then it refocuses on Daniel. ---------- */
+function buildLens(S){
+  const C={x:195,y:296};
+  const blur=img("wardBox","a/ward-blur.webp");
+  const veil=el("fill veil");
+  const R0=124;
+  const disc=el("paperDisc",{left:(C.x-R0)+"px",top:(C.y-R0)+"px",width:2*R0+"px",height:2*R0+"px",overflow:"hidden"});
+  const lg=logoEl(196,R0-98,R0-40); disc.appendChild(lg.box);
+  const sharp=img("wardBox","a/ward.webp",{clipPath:"circle(0px at 827px 412px)"});
+  /* The ring in lens.png sits at 0.734 of the picture's half-size. */
+  const RS=2*(R0+6)/0.734;
+  const ring1=img("",'a/lens.png',{left:(C.x-RS/2)+"px",top:(C.y-RS/2)+"px",width:RS+"px",height:RS+"px"});
+  const ring2=el("ring",{left:(C.x-160)+"px",top:(C.y-160)+"px",width:"320px",height:"320px"});
+  const ring3=el("ring",{left:(C.x-188)+"px",top:(C.y-188)+"px",width:"376px",height:"376px",borderColor:"rgba(150,214,206,.42)"});
+  const tag=el("tag",{top:"470px"},"studio");
+  const end=gameSplash();
+  S.append(blur,veil,disc,sharp,ring3,ring2,ring1,tag,end);
+  return {total:4300, frame(t){
+    const inP=easeOut(prog(t,0,450));
+    S.style.opacity=inP;
+    [ring1,ring2,ring3].forEach((r,k)=>{ const p=easeOut(prog(t,120+k*90,700+k*90)); r.style.opacity=p; r.style.transform="scale("+lerp(.82,1,p)+")"; });
+    logoDrop(lg.parts,t-380);
+    tag.style.opacity=prog(t,1500,1900)*(1-prog(t,2500,2750));
+    /* Refocus: the paper disc shrinks to the game's lens and gives way to the sharp ward. */
+    const f=easeInOut(prog(t,2500,3300)), R=lerp(R0,92,f);
+    disc.style.transform="scale("+(R/R0)+")"; disc.style.opacity=1-prog(t,2650,3200);
+    sharp.style.clipPath="circle("+(R*prog(t,2600,3200)).toFixed(1)+"px at 827px 412px)";
+    const rs=R/R0; [ring1].forEach(r=>{ r.style.transform="scale("+rs+")"; });
+    ring2.style.transform="scale("+lerp(1,.86,f)+")"; ring3.style.transform="scale("+lerp(1,.9,f)+")";
+    end.style.opacity=prog(t,3250,3700);
+  }};
+}
+
+/* ---------- 2. Запотевшее стекло: mist tiles clear like a memory, the missing dot lands last. ---------- */
+function buildFog(S){
+  S.style.background="#F4E6CA";
+  const glow=img("","a/bloom.png",{left:"15px",top:"242px",width:"360px",height:"360px",opacity:".55"});
+  const lg=logoEl(300,45,362);
+  const tiles=[]; const cols=4, rows=2, size=96, gx=(390-cols*size)/2, gy=326;
+  const pics=["a/mist-a.png","a/mist-b.png","a/mist-c.png"];
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const t=img("mist",pics[(r*cols+c)%3],{left:(gx+c*size)+"px",top:(gy+r*size)+"px"});
+    t.dataset.d=String(Math.hypot(c-(cols-1)/2,(r-(rows-1)/2)*1.4));
+    tiles.push(t);
+  }
+  const tag=el("tag",{top:"568px"},"studio");
+  const end=gameSplash();
+  S.append(glow,lg.box,...tiles,tag,end);
+  return {total:4200, frame(t){
+    S.style.opacity=easeOut(prog(t,0,400));
+    tiles.forEach(tile=>{
+      const d=+tile.dataset.d, a=500+d*170, p=easeInOut(prog(t,a,a+520));
+      tile.style.opacity=1-p; tile.style.transform="scale("+lerp(1,1.18,p)+")"; tile.style.filter="blur("+(p*6).toFixed(1)+"px)";
+    });
+    logoDotOnly(lg.parts,t-1700);
+    tag.style.opacity=prog(t,2300,2700)*(1-prog(t,3100,3400));
+    glow.style.opacity=(.55+.25*prog(t,1700,2300)).toFixed(3);
+    lg.box.style.opacity=1-prog(t,3150,3500);
+    end.style.opacity=prog(t,3300,3800);
+  }};
+}
+
+/* ---------- 3. Проявка: a polaroid drops in, flashes, and develops the logo like a recovered photo. ---------- */
+function buildPrint(S){
+  S.style.background="#F4E6CA";
+  const scale=1.55, fw=260*scale, fh=276*scale, fx=(390-fw)/2, fy=200;
+  const card=el("",{left:fx+"px",top:fy+"px",width:fw+"px",height:fh+"px",transformOrigin:"50% 30%"});
+  const frame=img("","a/print-frame.png",{left:0,top:0,width:"100%",height:"100%"});
+  const ph={l:46*scale,t:22*scale,w:168*scale,h:168*scale};
+  const photo=el("photo",{left:ph.l+"px",top:ph.t+"px",width:ph.w+"px",height:ph.h+"px"});
+  const lg=logoEl(ph.w*.82,ph.w*.09,ph.h*.34); photo.appendChild(lg.box);
+  const film=img("","a/print-film.png",{left:ph.l+"px",top:ph.t+"px",width:ph.w+"px",height:ph.h+"px"});
+  const flash=img("","a/print-flash.png",{left:(ph.l-ph.w*.25)+"px",top:(ph.t-ph.h*.25)+"px",width:(ph.w*1.5)+"px",height:(ph.h*1.5)+"px",opacity:0});
+  card.append(frame,photo,film,flash);
+  const tag=el("tag",{top:(fy+fh+10)+"px"},"studio");
+  const end=gameSplash();
+  S.append(card,tag,end);
+  return {total:4600, frame(t){
+    S.style.opacity=easeOut(prog(t,0,350));
+    const tt=t-150, k=springOut(Math.max(0,tt)/1000,1.3,5.2);
+    card.style.opacity=clamp(tt/160);
+    card.style.transform="translateY("+(-420*k).toFixed(1)+"px) rotate("+(-9*k-1.5).toFixed(2)+"deg)";
+    flash.style.opacity=(prog(t,1150,1250)*(1-prog(t,1300,1650))).toFixed(3);
+    film.style.opacity=(1-easeInOut(prog(t,1250,2300))).toFixed(3);
+    photo.style.filter="sepia("+(1-prog(t,1400,2600)).toFixed(2)+") blur("+(3*(1-prog(t,1250,2200))).toFixed(1)+"px)";
+    logoSpring(lg.parts,t-1500);
+    tag.style.opacity=prog(t,2500,2900)*(1-prog(t,3400,3700));
+    card.style.opacity=(clamp(tt/160)*(1-prog(t,3500,3900))).toFixed(3);
+    end.style.opacity=prog(t,3650,4150);
+  }};
+}
+
+const CONCEPTS=[
+  {id:"lens", name:"Линза", text:"Заставка — это линза игры. Внутри неё на бумаге собирается kitto, точка падает последней. Потом линза наводится на пациента, и это уже сплеш игры.", build:buildLens},
+  {id:"fog", name:"Запотевшее стекло", text:"Логотип спрятан под плитками тумана из игры. Туман сходит, как с воспоминания, и последней падает точка над i: пропавшая деталь встаёт на место.", build:buildFog},
+  {id:"print", name:"Проявка", text:"На бумагу падает полароид, вспышка, и на плёнке проявляется kitto. Восстановленное фото, как память в игре.", build:buildPrint}
+];
+
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let cur=0, raf=0, scene=null;
+function fit(){ const s=$("phone").clientWidth/390; $("screen").style.transform="scale("+s+")"; }
+function drawConcepts(){
+  const box=$("concepts"); box.textContent="";
+  CONCEPTS.forEach((c,i)=>{
+    const b=document.createElement("button"); b.type="button"; b.className="concept";
+    b.setAttribute("aria-pressed",String(i===cur));
+    const n=document.createElement("b"); n.textContent=(i+1)+". "+c.name;
+    const s=document.createElement("span"); s.textContent=c.text;
+    b.append(n,s); b.onclick=()=>{ cur=i; drawConcepts(); start(); };
+    box.appendChild(b);
+  });
+}
+function start(){
+  cancelAnimationFrame(raf);
+  const S=$("screen"); S.textContent=""; S.style.background="#F4E6CA"; S.style.opacity="1";
+  scene=CONCEPTS[cur].build(S);
+  if(reduced){ scene.frame(scene.total); return; }
+  const t0=performance.now();
+  const step=now=>{ const t=now-t0; scene.frame(Math.min(t,scene.total)); if(t<scene.total) raf=requestAnimationFrame(step); };
+  scene.frame(0);
+  raf=requestAnimationFrame(step);
+}
+$("replay").onclick=start;
+addEventListener("resize",fit);
+fit(); drawConcepts(); start();
+</script>

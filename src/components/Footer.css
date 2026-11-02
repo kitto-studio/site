@@ -1,0 +1,89 @@
+/* Site footer (B2): a quiet row on the paper, the small wordmark and the copyright on the left, the
+   four store-page links on the right; the current page is ink with the dot. Stacks on phone. */
+@scope ([data-component="footer"]) to ([data-component]) {
+  :scope {
+    position: relative;
+    z-index: 3;
+    display: block;
+    min-height: 120px;
+    border-top: 1px solid var(--line);
+    background: var(--paper) var(--grain);
+    transition: background-color var(--duration-crossfade) ease;
+  }
+
+  [data-row] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-20) var(--space-40);
+    padding: var(--space-40) 0;
+  }
+
+  [data-mark] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-20);
+    color: var(--quiet);
+    font-size: var(--text-small);
+  }
+
+  [data-mini] {
+    display: block;
+    width: 96px;
+    line-height: 0;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: var(--text-small);
+    font-weight: 500;
+
+    &[aria-current] {
+      color: var(--ink);
+      text-decoration: none;
+    }
+  }
+
+  /* The dot before the current link; margin, not flex gap (Safari gap quirk on dot/label pairs). */
+  [data-dot-mark] {
+    display: none;
+    flex: none;
+    width: 6px;
+    height: 6px;
+    margin-inline-end: var(--space-8);
+    overflow: visible;
+
+    path {
+      fill: var(--dot);
+    }
+  }
+
+  a[aria-current] [data-dot-mark] {
+    display: block;
+  }
+
+  @media (max-width: 760px) {
+    [data-row] {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-16);
+      padding: var(--space-32) 0 var(--space-40);
+    }
+
+    ul {
+      flex-direction: column;
+    }
+  }
+}

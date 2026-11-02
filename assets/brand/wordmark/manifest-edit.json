@@ -1,0 +1,69 @@
+{
+  "generated": {
+    "model": "gpt-6-astra",
+    "backend": "codex",
+    "date": "2026-11-01"
+  },
+  "assets": [
+    {
+      "file": "light-v2.png",
+      "prompt": "Edit target: the attached approved Kitto Studio logo. Produce light-v2.png, exactly 1024x1024. Composite the EXACT original logo on solid warm paper #F6F2EA. Keep original brown ink and orange accent. HARD RULE: never redraw, restyle or reinterpret the logo. Preserve every letter shape, proportion, spacing, edge, texture and original position IDENTICALLY. Only replace background. Only lettering is original 'kitto'; no other text.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "dark-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024. Same full logo at original position on solid #211C19 background, replace brown ink with warm off-white #EFE7DA, preserve orange accent dot.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-black-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024. Same full logo at original position, all logo elements including dot in single solid near-black #1E1916 on pure white background.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "mono-white-on-accent-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024. Same full logo at original position, all elements including dot solid white, on solid orange sampled from original logo's accent dot.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-indigo-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024. Same full logo at original position, ink #202B39 and accent dot #3C5D93, solid background #E8EDF4.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "palette-matcha-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024. Same full logo at original position, ink #2C332A and accent dot #6B8F4E, solid background #EDF0E2.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "github-avatar-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024 organization avatar. Isolate only the existing lowercase k from the original logo, unchanged silhouette and brown color. Enlarge proportionally and center within a circle-safe area, height about 600px. Solid original orange accent background. No other elements or lettering.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "favicon-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x1024 favicon. Isolate only existing lowercase k from original logo, exact same mark as avatar, unchanged silhouette and brown color. Enlarge proportionally to height 800px, centered, bolder close framing for 16-32px legibility. Solid original orange accent background. Flat no fine detail. No other elements or lettering.",
+      "size": "1024x1024",
+      "transparent": false
+    },
+    {
+      "file": "splash-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 1024x2048 portrait phone splash. Solid warm paper #F6F2EA brand background. Place exact original full brown wordmark and orange dot centered horizontally and slightly above middle, logo center at y=900px, width 814px. Preserve exact relative shapes spacing and proportions. Nothing else.",
+      "size": "1024x2048",
+      "transparent": false
+    },
+    {
+      "file": "motion-storyboard-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image is the edit target, the APPROVED Kitto Studio logo. HARD RULE: never redraw, restyle or reinterpret it. Preserve every original letter silhouette, proportions, spacing and composition identically; use the actual existing elements. Only perform the specified color/background/framing change. No added graphics, slogans, labels, hex codes or other text. Only original wordmark lettering 'kitto' when full logo requested. 2048x512 horizontal strip of four equal 512x512 frames edge to edge, no borders or labels, solid warm paper #F6F2EA. Show THIS exact original brown logo and orange dot animating into place with its own unchanged pieces arriving and settling. Full final logo width 407px in each frame. Frame 1 k in place, i stem and connected tt piece and o offset down and dot offset up. Frame 2 same pieces approaching final positions. Frame 3 all letters settled with dot just above final position. Frame 4 equals exact complete original logo uniformly scaled to half original size, original composition in square. Preserve exact silhouettes throughout, only translations, no rotations or deformation. No arrows or other marks.",
+      "size": "2048x512",
+      "transparent": false
+    }
+  ]
+}

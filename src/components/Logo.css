@@ -1,0 +1,19 @@
+/* The wordmark: colored only by CSS (brand-system §2). `overflow: visible` lets the Jump drop the
+   letters in from above the viewBox. */
+@scope ([data-component="logo"]) {
+  :scope {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  [data-fill="ink"] {
+    fill: var(--ink);
+    transition: fill 0.6s;
+  }
+
+  [data-fill="dot"] {
+    fill: var(--dot);
+  }
+}
