@@ -32,7 +32,7 @@ export function headlineWidth(card: OgCardSpec): number {
  * @returns The card tree for satori.
  * @example
  * ```tsx
- * <OgCard card={OG_CARDS.home} text={text} site="kitto.studio" art={art} families={families} headlineSize={74} isCjk={false} />
+ * <OgCard card={OG_CARDS.home} text={text} site="kitto.studio" art={art} families={families} headlineSize={74} headlineLines={2} isCjk={false} />
  * ```
  */
 export function OgCard(props: OgCardProps): VNode {

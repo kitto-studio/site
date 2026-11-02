@@ -111,8 +111,9 @@ export type OgPostcardSpec = {
   /** Most lines the headline may take; 2 when absent, so the message keeps its room. */
   headlineLines?: number;
   /**
-   * Space between the headline and the message, px. The prototype lets a short headline fill the
-   * free height, which satori cannot do safely, so a card with free height states the gap.
+   * Most space between the headline and the message, px. The prototype lets a short headline fill
+   * the free height, which satori cannot do safely: the gap takes a share of the free height up to
+   * this, and none when a long headline or message leaves no room.
    */
   messageGap?: number;
   /** The photo print. */
@@ -190,6 +191,8 @@ export type OgCardProps = {
   families: OgFamilies;
   /** Headline size that fits the column, px. */
   headlineSize: number;
+  /** Lines the headline takes at that size. */
+  headlineLines: number;
   /** Whether the card is set in a CJK locale: taller lines, open tracking, smaller message. */
   isCjk: boolean;
 };

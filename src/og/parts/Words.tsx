@@ -83,10 +83,12 @@ type MessageProps = {
   family: string;
   /** Whether the card is set in a CJK locale. */
   isCjk: boolean;
+  /** Most lines; five when absent, a safety net no real postcard text reaches. */
+  maxLines?: number;
 };
 
 /**
- * Render the message under the headline. Five lines at most: a safety net no real text reaches.
+ * Render the message under the headline, cut with an ellipsis after its last allowed line.
  *
  * @param props - Message props.
  * @param props.text - The message.
@@ -94,13 +96,21 @@ type MessageProps = {
  * @param props.color - Text colour.
  * @param props.family - Font list.
  * @param props.isCjk - Whether the card is set in a CJK locale.
+ * @param props.maxLines - Most lines.
  * @returns The message block.
  * @example
  * ```tsx
  * <Message text={text.message} size={31} color={COLOR.text} family={families.message} isCjk={false} />
  * ```
  */
-export function Message({ text, size, color, family, isCjk }: MessageProps): VNode {
+export function Message({
+  text,
+  size,
+  color,
+  family,
+  isCjk,
+  maxLines = MESSAGE.maxLines
+}: MessageProps): VNode {
   return (
     <div
       style={{
@@ -112,7 +122,7 @@ export function Message({ text, size, color, family, isCjk }: MessageProps): VNo
         fontSize: isCjk ? MESSAGE.cjkSize : size,
         lineHeight: isCjk ? MESSAGE.lineHeight.cjk : MESSAGE.lineHeight.latin,
         color,
-        lineClamp: MESSAGE.maxLines
+        lineClamp: maxLines
       }}
     >
       {text}

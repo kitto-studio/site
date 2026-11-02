@@ -58,11 +58,12 @@ type PostcardProps = OgCardProps & {
  * @param props.art - The art images.
  * @param props.families - Font lists of the text styles.
  * @param props.headlineSize - Headline size.
+ * @param props.headlineLines - Lines the headline takes.
  * @param props.isCjk - Whether the card is set in a CJK locale.
  * @returns The card tree for satori.
  * @example
  * ```tsx
- * <Postcard card={OG_CARDS.home} text={text} site="kitto.studio" art={art} families={families} headlineSize={74} isCjk={false} />
+ * <Postcard card={OG_CARDS.home} text={text} site="kitto.studio" art={art} families={families} headlineSize={74} headlineLines={2} isCjk={false} />
  * ```
  */
 export function Postcard({
@@ -72,6 +73,7 @@ export function Postcard({
   art,
   families,
   headlineSize,
+  headlineLines,
   isCjk
 }: PostcardProps): VNode {
   const side = POSTCARD_SIDES[card.side];
@@ -112,8 +114,9 @@ export function Postcard({
           isCjk={isCjk}
           paddingTop={10}
         />
-        {card.messageGap !== undefined && (
-          <div style={{ flexShrink: 0, height: card.messageGap }} />
+        {/* The prototype's gap is under a one-line headline; a longer one leaves no room for it. */}
+        {card.messageGap !== undefined && headlineLines === 1 && (
+          <div style={{ flexGrow: 1, maxHeight: card.messageGap }} />
         )}
         <Message
           text={text.message}

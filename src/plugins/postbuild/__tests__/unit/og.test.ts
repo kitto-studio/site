@@ -7,7 +7,9 @@ import { t } from "../../../../i18n";
 import { LOCALES, type Locale } from "../../../../i18n/languages";
 import { typeset } from "../../../../lib/typography";
 import { OG_CARDS } from "../../../../og/cards";
+import { LegalLetter } from "../../../../og/LegalLetter";
 import { Postcard } from "../../../../og/Postcard";
+import { Message } from "../../../../og/parts/Words";
 import type { OgCardSpec } from "../../../../og/types";
 import { cardText, renderOgCard, writeOgCards } from "../../og";
 import { createArtStore } from "../../og/art";
@@ -65,22 +67,54 @@ const stylesOf = (node: unknown): Record<string, unknown>[] => {
   return [...(props.style === undefined ? [] : [props.style]), ...stylesOf(props.children)];
 };
 
-// Catches: a row's message gap dropped, so a short headline's message sits higher than the design.
+// Catches: a row's message gap dropped, so a short headline's message sits higher than the design,
+// and a gap kept under a two-line headline, pushing the message under the postmark (es about).
 describe("Postcard", () => {
-  it("puts the row's message gap between the headline and the message", () => {
+  it("puts the row's message gap under a one-line headline only", () => {
     const props = {
       text: cardText(OG_CARDS.home, "en"),
       site: "kitto.studio",
       art: { stamp: "", print: "" },
       families: { heading: "H", message: "M", strong: "S", quiet: "Q" },
       headlineSize: 74,
+      headlineLines: 1,
       isCjk: false
     };
-    const gapped = stylesOf(Postcard({ ...props, card: { ...OG_CARDS.home, messageGap: 47 } }));
+    const card = { ...OG_CARDS.home, messageGap: 47 };
+    const gapped = stylesOf(Postcard({ ...props, card }));
+    const twoLines = stylesOf(Postcard({ ...props, card, headlineLines: 2 }));
     const plain = stylesOf(Postcard({ ...props, card: OG_CARDS.home }));
 
-    expect(gapped).toContainEqual({ flexShrink: 0, height: 47 });
-    expect(plain.some(style => style.height === 47)).toBe(false);
+    expect(gapped).toContainEqual({ flexGrow: 1, maxHeight: 47 });
+    expect(twoLines.some(style => style.maxHeight === 47)).toBe(false);
+    expect(plain.some(style => style.maxHeight === 47)).toBe(false);
+  });
+});
+
+/** The props of every `Message` in a card tree. */
+const messagesOf = (node: unknown): Record<string, unknown>[] => {
+  if (Array.isArray(node)) return node.flatMap(child => messagesOf(child));
+  if (typeof node !== "object" || node === null || !("props" in node)) return [];
+  const props = node.props as Record<string, unknown>;
+  const own = "type" in node && node.type === Message ? [props] : [];
+  return [...own, ...messagesOf(props.children)];
+};
+
+// Catches: a long legal description (fr, uk delete-data) running on under the postmark.
+describe("LegalLetter", () => {
+  it("cuts the message after three lines", () => {
+    const tree = LegalLetter({
+      card: LETTER,
+      text: cardText(LETTER, "fr"),
+      site: "kitto.studio",
+      art: { stamp: "" },
+      families: { heading: "H", message: "M", strong: "S", quiet: "Q" },
+      headlineSize: 84,
+      headlineLines: 1,
+      isCjk: false
+    });
+
+    expect(messagesOf(tree).map(props => props.maxLines)).toEqual([3]);
   });
 });
 

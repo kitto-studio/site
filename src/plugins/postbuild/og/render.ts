@@ -15,7 +15,7 @@ import { OgCard } from "../../../og/OgCard";
 import { OG_CARD_SIZE } from "../../../og/tokens";
 import type { OgCardSpec } from "../../../og/types";
 import { loadArt } from "./art";
-import { fitHeadline, headlineFrame } from "./fit";
+import { fitHeadline, headlineFrame, headlineLines } from "./fit";
 import { loadStack } from "./fonts";
 import type { CardFont, CardStacks, CardStores, FontFace, OgCardText } from "./types";
 
@@ -175,6 +175,7 @@ export async function renderOgCard(
       quiet: quiet.family
     },
     headlineSize,
+    headlineLines: headlineLines(text.headline, headlineSize, frame.width),
     isCjk: CJK.has(locale)
   });
   const svg = await satori(tree, {
