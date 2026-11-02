@@ -51,4 +51,36 @@ describe("sheet-stack island", () => {
     expect(calls.filter(call => call === "write")).toHaveLength(6);
     expect(calls.slice(firstWrite)).not.toContain("read");
   });
+
+  // Catches: a phone that still follows each sheet's lift, restyling every sheet per scrolled frame.
+  it("does not follow the lift on a touch screen", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query === "(hover: none)",
+      media: query
+    }));
+    const lifts = vi.fn();
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation(name => {
+      if (name === "--lift") lifts();
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+
+    globalThis.dispatchEvent(new Event("scroll"));
+    vi.advanceTimersToNextFrame();
+
+    expect(lifts).not.toHaveBeenCalled();
+  });
+
+  // Catches: a sheet taller than the window pinned by its top, so its lower part hides for good
+  // under the next sheet (the phone home, game sheet 805 px in 593 px of room).
+  it("sticks a sheet taller than the window by its bottom", () => {
+    vi.stubGlobal("innerHeight", 500);
+    const tops: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--stick-top") tops.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+
+    // 600 px sheets in a 500 px window stick 116 px above it: 500 - 600 - 16.
+    expect(tops).toEqual(["-116px", "-116px", "-116px"]);
+  });
 });

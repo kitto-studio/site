@@ -14,3 +14,15 @@ const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 export function prefersReducedMotion(): boolean {
   return globalThis.matchMedia?.(REDUCED_MOTION_QUERY).matches ?? false;
 }
+
+/** The media query of a screen used by touch, with no hover: a phone or a tablet. */
+const TOUCH_SCREEN_QUERY = "(hover: none)";
+
+/**
+ * Whether the screen is used by touch. A browser with no `matchMedia` counts as no.
+ *
+ * @returns True with `hover: none`.
+ */
+export function isTouchScreen(): boolean {
+  return globalThis.matchMedia?.(TOUCH_SCREEN_QUERY).matches ?? false;
+}

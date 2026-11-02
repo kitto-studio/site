@@ -1,5 +1,5 @@
 /* Site header (B1): sticky, 76 px (64 px phone), always on a paper plate (paper 92% + blur,
-   hairline). Nav words on paper tabs: hover lifts the tab, the current page has the orange outline.
+   solid paper on a touch screen, hairline). Nav words on paper tabs: hover lifts the tab, the current page has the orange outline.
    Below 900 px the nav and the tools give way to the Menu button (long RU/UK labels).
    Donut scope: nested components (logo, picker, switch, sheet) style themselves. */
 @scope ([data-component="header"]) to ([data-component]) {
@@ -24,6 +24,16 @@
     transition:
       background-color var(--duration-crossfade) ease,
       box-shadow 0.3s ease;
+  }
+
+  /* A touch screen gets the plate solid: the blur over moving content cost the phone's GPU every
+     scrolled frame. */
+  @media (hover: none) {
+    [data-bar] {
+      background-color: var(--paper);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   :scope[data-scrolled] [data-bar] {

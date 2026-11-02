@@ -3,6 +3,7 @@
    Stacked sheets ([data-stack], the home) are moved by the sheet-stack island through:
      --lift   1 entering at the window bottom … 0 landed in its place
      --cover  0 … 1, how far the next sheet lies over it
+     --stick-top  the sticky top of a sheet taller than the window, so it sticks by its bottom
    A parent may set --sheet-columns to change the split face's columns. */
 @scope ([data-component="paper-sheet"]) {
   :scope {
@@ -34,7 +35,8 @@
     --cover: 0;
     --stack-index: 0;
     --enter-tilt: 0deg;
-    top: calc(var(--header-height) + 18px + var(--stack-index) * 16px);
+    /* A sheet taller than the room sticks by its bottom: the island sets `--stick-top`. */
+    top: var(--stick-top, calc(var(--header-height) + 18px + var(--stack-index) * 16px));
     margin-bottom: 24vh;
     transform-origin: 50% 0;
     transform: translateY(calc(var(--lift) * 18px))
@@ -85,6 +87,13 @@
   @media (min-height: 620px) {
     :scope[data-stack] {
       position: sticky;
+    }
+
+    /* The last sheet has nothing to land on it, so it scrolls away with the page instead of
+       staying pinned while the footer slides over it. */
+    :scope[data-stack]:last-child {
+      position: relative;
+      top: 0;
     }
   }
 
@@ -156,8 +165,8 @@
     }
 
     :scope[data-stack] {
-      top: calc(var(--header-height) + 10px + var(--stack-index) * 12px);
-      margin-bottom: 16vh;
+      top: var(--stick-top, calc(var(--header-height) + 10px + var(--stack-index) * 12px));
+      margin-bottom: 8vh;
     }
 
     :scope[data-stack="0"] {

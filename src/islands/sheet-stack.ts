@@ -9,7 +9,7 @@
  */
 import { createIsland } from "@moku-labs/web/browser";
 import { FOLD_AT, POP_AT, sheetCover, sheetLift } from "../lib/parallax";
-import { prefersReducedMotion } from "./motion-pref";
+import { isTouchScreen, prefersReducedMotion } from "./motion-pref";
 import { foldFlat, popUp, standUp } from "./popup-sticker";
 
 /** Delay before a landing sheet's sticker springs up, ms. */
@@ -23,6 +23,9 @@ const PEEK_MARGIN = 40;
 
 /** ...and below this part of the window. */
 const PEEK_FLOOR = 0.25;
+
+/** Room kept under a sheet taller than the window when it sticks by its bottom, px. */
+const PIN_MARGIN = 16;
 
 /** One sheet of the stack and what moves with it. */
 type StackSheet = {
@@ -138,6 +141,28 @@ function peekingStickers(sheets: readonly StackSheet[]): HTMLElement[] {
 }
 
 /**
+ * Stick each sheet taller than the room under its sticky top by its bottom instead, so no part of
+ * it hides under the next sheet. Runs at load and on resize, never per scrolled frame.
+ *
+ * @param sheets - The sheets of the stack.
+ * @returns {void} Nothing; a tall sheet has its `--stick-top`, every other sheet its CSS top.
+ */
+function pinTallSheets(sheets: readonly StackSheet[]): void {
+  for (const { sheet } of sheets) {
+    sheet.style.removeProperty("--stick-top");
+  }
+  const tall = sheets.flatMap(({ sheet }) => {
+    const stickTop = Number.parseFloat(getComputedStyle(sheet).top) || 0;
+    const height = sheet.offsetHeight;
+    const room = globalThis.innerHeight - stickTop - PIN_MARGIN;
+    return height > room ? [{ sheet, top: globalThis.innerHeight - height - PIN_MARGIN }] : [];
+  });
+  for (const { sheet, top } of tall) {
+    sheet.style.setProperty("--stick-top", `${String(Math.round(top))}px`);
+  }
+}
+
+/**
  * Start the stack: follow the scroll and the window size until stopped.
  *
  * @param root - The stack element.
@@ -145,7 +170,9 @@ function peekingStickers(sheets: readonly StackSheet[]): HTMLElement[] {
  */
 function startStack(root: Element): () => void {
   const sheets = collectSheets(root);
-  const reduced = prefersReducedMotion();
+  // A touch screen keeps the sheets still, as under reduced motion: following the lift restyled
+  // every sheet on every scrolled frame.
+  const reduced = prefersReducedMotion() || isTouchScreen();
   let armed = false;
   let frame = 0;
 
@@ -173,8 +200,12 @@ function startStack(root: Element): () => void {
       });
     }
   };
-  const onResize = (): void => render(true);
+  const onResize = (): void => {
+    pinTallSheets(sheets);
+    render(true);
+  };
 
+  pinTallSheets(sheets);
   render(true);
   if (!reduced) {
     // A sheet already peeking in at load (a phone) pops as the last beat of the entrance.

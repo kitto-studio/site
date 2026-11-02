@@ -130,3 +130,28 @@ a:hover {
 :where(:root:lang(de)) :is(p, li) {
   hyphens: auto;
 }
+
+/* The SPA's navigation progress bar (`<div data-progress>`, from @moku-labs/web): a thin link-colour
+   line over the header, shown when the next page takes more than 150 ms. */
+[data-progress] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 0;
+  height: 3px;
+  background-color: var(--link);
+  opacity: 0;
+  pointer-events: none;
+  /* Fades out first, then drops back to zero width unseen. */
+  transition:
+    opacity 0.3s ease,
+    width 0s 0.3s;
+}
+
+[data-progress][data-active] {
+  opacity: 1;
+  transition:
+    width 0.2s ease,
+    opacity 0.15s ease;
+}
