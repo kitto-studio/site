@@ -6,6 +6,7 @@
 import { createHash, type Hash } from "node:crypto";
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { SITE } from "../../../config";
 import type { Locale } from "../../../i18n/languages";
 import { OG_CARD_NAMES } from "../../../lib/head";
 import { OG_CARDS, type OgCardName } from "../../../og/cards";
@@ -14,8 +15,12 @@ import { artImages } from "./art";
 import { cardText } from "./render";
 import type { OgInputs } from "./types";
 
-/** The card code, relative to the project: the satori tree, this module, the site and typography. */
-const SOURCES = ["src/og", "src/plugins/assets/og", "src/config.ts", "src/lib/typography.ts"];
+/**
+ * The card code, relative to the project: the satori tree, this module and typography. Not
+ * `src/config.ts`: a card reads only the site address from it, which `cardHash` takes as a value,
+ * so a change elsewhere in the config redraws nothing.
+ */
+const SOURCES = ["src/og", "src/plugins/assets/og", "src/lib/typography.ts"];
 
 /** The packages that lay out, rasterise and encode a card, and the five font packages. */
 const PACKAGES = [
@@ -191,8 +196,8 @@ export async function ogInputs(mediaDirectory: string): Promise<OgInputs> {
 }
 
 /**
- * The input hash of one card in one locale: its row, its words, the card code and its art. The
- * manifest keeps it under `{card}/{locale}`.
+ * The input hash of one card in one locale: its row, its words, the site address, the card code and
+ * its art. The manifest keeps it under `{card}/{locale}`.
  *
  * @param name - The card.
  * @param locale - The card locale.
@@ -210,6 +215,7 @@ export function cardHash(name: OgCardName, locale: Locale, inputs: OgInputs): st
     locale,
     card,
     text: cardText(card, locale),
+    site: SITE.url,
     code: inputs.code,
     art: inputs.art.get(name)
   };
