@@ -69,4 +69,18 @@ describe("sheet-stack island", () => {
 
     expect(lifts).not.toHaveBeenCalled();
   });
+
+  // Catches: a sheet taller than the window pinned by its top, so its lower part hides for good
+  // under the next sheet (the phone home, game sheet 805 px in 593 px of room).
+  it("sticks a sheet taller than the window by its bottom", () => {
+    vi.stubGlobal("innerHeight", 500);
+    const tops: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--stick-top") tops.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+
+    // 600 px sheets in a 500 px window stick 116 px above it: 500 - 600 - 16.
+    expect(tops).toEqual(["-116px", "-116px", "-116px"]);
+  });
 });
