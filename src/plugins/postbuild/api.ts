@@ -5,7 +5,6 @@
  */
 import path from "node:path";
 import { writeNotFoundPages } from "./not-found";
-import { writeOgCards } from "./og";
 import { writeRedirects } from "./redirects";
 import { writeSitemap } from "./sitemap";
 import type { Api, PostbuildContext, PostbuildResult } from "./types";
@@ -33,8 +32,7 @@ export function joinRun<Result>(
 
 /**
  * Write every post-build file. The 404 pages go first: they read the build's own output, so a
- * broken build stops the run before anything else is written. The pages come from the config,
- * and the OG cards drawn by an earlier run come from the state.
+ * broken build stops the run before anything else is written. The pages come from the config.
  *
  * @param ctx - Plugin context.
  * @param outputDirectory - The built output directory.
@@ -48,8 +46,7 @@ async function writePostbuildFiles(
   const notFound = await writeNotFoundPages(outputDirectory, template);
   const sitemap = await writeSitemap(outputDirectory, pages);
   const redirects = await writeRedirects(outputDirectory, pages);
-  const cards = await writeOgCards(outputDirectory, ctx.state.cards);
-  return [...notFound, ...sitemap, ...redirects, ...cards];
+  return [...notFound, ...sitemap, ...redirects];
 }
 
 /**

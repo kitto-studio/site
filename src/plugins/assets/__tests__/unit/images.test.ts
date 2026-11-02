@@ -14,7 +14,9 @@ const PLAN: Config = {
   maxSize: 1600,
   thumbSize: 256,
   thumbFolders: ["clues", "game"],
-  icons: []
+  icons: [],
+  ogDir: "og",
+  ogManifest: "og-manifest.json"
 };
 
 let root = "";

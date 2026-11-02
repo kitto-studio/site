@@ -1,11 +1,15 @@
-import { mkdir, mkdtemp, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { createApp } from "@moku-labs/web";
 import sharp from "sharp";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SITE } from "../../../../config";
+import { LOCALES } from "../../../../i18n/languages";
+import { OG_CARD_NAMES } from "../../../../lib/head";
 import { assetsPlugin } from "../..";
+import { cardHash, ogInputs } from "../../og/hash";
+import type { OgManifest } from "../../og/types";
 
 let root = "";
 
@@ -26,16 +30,22 @@ const writeMaster = async (relative: string): Promise<void> => {
   await (relative.endsWith(".webp") ? image.webp() : image.png()).toFile(file);
 };
 
-/** The app as `src/app.ts` composes the plugin, over the temporary folders. */
-const createAssetsApp = () =>
+/**
+ * The app as `src/app.ts` composes the plugin, over the temporary folders.
+ *
+ * @param outDir - The served art folder; the temporary one unless a test reads the site's art.
+ */
+const createAssetsApp = (outDir = path.join(root, "media")) =>
   createApp({
     plugins: [assetsPlugin],
     pluginConfigs: {
       site: SITE,
       assets: {
         sourceDir: path.join(root, "art"),
-        outDir: path.join(root, "media"),
-        icons: [{ output: path.join(root, "apple-touch-icon.png"), size: 180 }]
+        outDir,
+        icons: [{ output: path.join(root, "apple-touch-icon.png"), size: 180 }],
+        ogDir: path.join(root, "og"),
+        ogManifest: path.join(root, "og-manifest.json")
       }
     }
   });
@@ -73,5 +83,32 @@ describe("assets plugin", () => {
     const icon = path.join(root, "apple-touch-icon.png");
     expect(files).toEqual([icon]);
     expect(print).toHaveBeenCalledWith(expect.stringContaining(`icons: ${icon} (180×180)`));
+  });
+
+  // Catches: `og` not mounted on `app.assets`, the configured card folder or manifest ignored (the
+  // run would draw into `public/og`), and the line `bun run og` prints gone.
+  it("draws no card when the manifest matches every card", async () => {
+    const print = vi.spyOn(console, "log").mockImplementation(() => undefined);
+    const inputs = await ogInputs("public/media");
+    const manifest: OgManifest = {};
+    for (const name of OG_CARD_NAMES) {
+      for (const locale of LOCALES) {
+        manifest[`${name}/${locale}`] = cardHash(name, locale, inputs);
+        await mkdir(path.join(root, "og", locale), { recursive: true });
+        await writeFile(path.join(root, "og", locale, `${name}.png`), "drawn");
+      }
+    }
+    const manifestFile = path.join(root, "og-manifest.json");
+    await writeFile(manifestFile, JSON.stringify(manifest));
+    const app = createAssetsApp("public/media");
+
+    const result = await app.assets.og();
+
+    const cards = OG_CARD_NAMES.length * LOCALES.length;
+    expect(result).toEqual({ written: [], upToDate: cards });
+    expect(JSON.parse(await readFile(manifestFile, "utf8"))).toEqual(manifest);
+    expect(print).toHaveBeenCalledWith(
+      expect.stringContaining(`og: 0 written, ${cards} up to date`)
+    );
   });
 });
