@@ -1,10 +1,10 @@
 /**
- * Postbuild plugin — Complex tier: the OG cards are a sub-domain in `og/`. Node only, composed into
- * `src/app.ts` alone.
+ * Postbuild plugin — Standard tier. Node only, composed into `src/app.ts` alone.
  *
  * The site's post-build steps, run after every build on the framework's `build:complete` event:
- * `sitemap.xml` with `hreflang` alternates and `robots.txt`, `_redirects` for bare paths, the root
- * and per-locale `404.html`, and the OG cards. `app.postbuild.run(outDir)` runs them on demand.
+ * `sitemap.xml` with `hreflang` alternates and `robots.txt`, `_redirects` for bare paths, and the
+ * root and per-locale `404.html`. The OG cards are drawn ahead by `bun run og` (`app.assets.og()`)
+ * and committed in `public/og`. `app.postbuild.run(outDir)` runs the steps on demand.
  * Emits no events.
  *
  * @see README.md

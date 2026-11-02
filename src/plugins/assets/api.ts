@@ -1,10 +1,11 @@
 /**
- * @file Assets API: `images` and `icons` run their pipeline over the plugin config and print the
- * same branded lines `bun run images` and `bun run icons` always printed.
+ * @file Assets API: `images`, `icons` and `og` run their pipeline over the plugin config and print
+ * one branded line per result for `bun run images`, `bun run icons` and `bun run og`.
  */
 import { createBrandConsole } from "@moku-labs/common/cli";
 import { writeIcons } from "./icons";
 import { writeImages } from "./images";
+import { writeOgCards } from "./og/write";
 import type { Api, AssetsContext } from "./types";
 
 /**
@@ -26,6 +27,11 @@ export function createAssetsApi(ctx: AssetsContext): Api {
       for (const { output, size } of ctx.config.icons) {
         ui.info(`icons: ${output} (${size}×${size})`);
       }
+      return result;
+    },
+    og: async () => {
+      const result = await writeOgCards(ctx.config);
+      ui.info(`og: ${result.written.length} written, ${result.upToDate} up to date`);
       return result;
     }
   };

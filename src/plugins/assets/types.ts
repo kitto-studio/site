@@ -1,6 +1,7 @@
 /**
  * @file Shared types of the assets plugin: config, the public API and its results, the context
- * slice the API reads, and the jobs the image pipeline plans.
+ * slice the API reads, and the jobs the image pipeline plans. The OG card types live in
+ * `og/types.ts`.
  */
 
 /** One PNG icon drawn from the favicon. */
@@ -34,6 +35,10 @@ export type Config = {
   thumbFolders: readonly string[];
   /** The PNG icons drawn from `public/favicon.svg`. */
   icons: readonly Icon[];
+  /** Folder the OG cards are written to, `<ogDir>/<locale>/<card>.png`; served as `/og/…`. */
+  ogDir: string;
+  /** The manifest of drawn cards, their input hashes; kept outside `public/`, so never served. */
+  ogManifest: string;
 };
 
 /** What one `images()` run did. */
@@ -41,6 +46,14 @@ export type ImagesResult = {
   /** Every output written, relative to the project, in source order. */
   written: readonly string[];
   /** How many outputs were newer than their source and skipped. */
+  upToDate: number;
+};
+
+/** What one `og()` run did. */
+export type OgResult = {
+  /** Every card written, relative to the project, card by card. */
+  written: readonly string[];
+  /** How many cards matched the manifest and were skipped. */
   upToDate: number;
 };
 
@@ -56,7 +69,7 @@ export type AssetsContext = {
   readonly config: Config;
 };
 
-/** Public API, mounted as `app.assets`. Both methods print one line per result. */
+/** Public API, mounted as `app.assets`. Every method prints one line per result. */
 export type Api = {
   /**
    * Turn the masters in `sourceDir` into the served files in `outDir`. Every PNG becomes a webp at
@@ -89,6 +102,23 @@ export type Api = {
    * ```
    */
   icons(): Promise<IconsResult>;
+  /**
+   * Draw the OG cards into `ogDir`: one 1200 × 630 PNG per row of `OG_CARDS` in every locale. A
+   * card's hash covers its row, its words, the card code, the installed satori, resvg, sharp and
+   * font packages, and its art in `outDir`. A card whose hash matches `ogManifest` and whose PNG
+   * exists is skipped; the rest are drawn, and the manifest is written last. Rejects when a card
+   * cannot be drawn, for example a character no card font covers.
+   *
+   * @returns The cards written and the count of cards that were up to date.
+   * @example
+   * ```ts
+   * // The zh game title was edited in src/i18n/locales/zh.ts:
+   * const { written, upToDate } = await app.assets.og();
+   * written; // ["public/og/zh/game.png"]
+   * upToDate; // 87
+   * ```
+   */
+  og(): Promise<OgResult>;
 };
 
 /** One file an `images()` run produces. */

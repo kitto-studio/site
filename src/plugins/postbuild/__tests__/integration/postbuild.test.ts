@@ -36,9 +36,8 @@ afterEach(async () => {
   await rm(outDir, { recursive: true, force: true });
 });
 
-// Catches: the hook on the wrong event, or not wired at all (a build without sitemap, redirects,
-// 404s or cards), and a run that writes somewhere else than the build's output directory. The run
-// draws every card in every locale (88), about a minute on a CI runner, hence the long waits.
+// Catches: the hook on the wrong event, or not wired at all (a build without sitemap, redirects or
+// 404s), and a run that writes somewhere else than the build's output directory.
 describe("postbuild plugin", () => {
   it("writes every post-build file into the build's output directory on build:complete", async () => {
     const app = createApp({
@@ -55,19 +54,13 @@ describe("postbuild plugin", () => {
     app.buildEnd.complete(outDir);
     await vi.waitFor(
       () => expect(app.log.trace().some(entry => entry.event === "postbuild:done")).toBe(true),
-      { timeout: 240_000, interval: 50 }
+      { timeout: 4000, interval: 50 }
     );
 
-    for (const file of [
-      "sitemap.xml",
-      "robots.txt",
-      "_redirects",
-      "ru/404.html",
-      "og/ja/home.png"
-    ]) {
+    for (const file of ["sitemap.xml", "robots.txt", "_redirects", "ru/404.html"]) {
       expect(existsSync(path.join(outDir, file)), file).toBe(true);
     }
     expect(await readFile(path.join(outDir, "ko/404.html"), "utf8")).toContain(ASSETS);
     await app.stop();
-  }, 270_000);
+  });
 });
