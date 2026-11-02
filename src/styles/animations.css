@@ -2,6 +2,12 @@
    Reduced motion guard: nothing moves, every animation jumps to its end state, so the page is
    complete and static. This layer sits above components, so no !important is needed. */
 
+/* A link followed from below the top: the kernel has already jumped to the top of the old page,
+   which the reader never saw there. Fade the new page in from the paper instead (chrome island). */
+:root[data-nav-from-below]::view-transition-old(root) {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-crossfade: 0s;

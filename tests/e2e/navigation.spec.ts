@@ -122,8 +122,71 @@ test("a hard load of a deep page works and the chrome mounts", async ({ page }) 
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
 });
 
+/**
+ * Record, for the next view transition, whether the old page's snapshot is drawn.
+ *
+ * @param page - The page.
+ */
+async function watchOldSnapshot(page: import("@playwright/test").Page): Promise<void> {
+  await page.evaluate(() => {
+    const own = globalThis as unknown as { oldSnapshotShown?: boolean };
+    const start = document.startViewTransition.bind(document);
+    document.startViewTransition = (update => {
+      const transition = start(update);
+      void transition.ready.then(() => {
+        const old = getComputedStyle(document.documentElement, "::view-transition-old(root)");
+        own.oldSnapshotShown = old.display !== "none";
+      });
+      return transition;
+    }) as typeof document.startViewTransition;
+  });
+}
+
+/**
+ * Whether the last view transition drew the old page's snapshot.
+ *
+ * @param page - The page.
+ * @returns True when it did, `undefined` while no transition ran.
+ */
+function oldSnapshotShown(page: import("@playwright/test").Page): Promise<boolean | undefined> {
+  return page.evaluate(
+    () => (globalThis as unknown as { oldSnapshotShown?: boolean }).oldSnapshotShown
+  );
+}
+
 test.describe("with motion", () => {
   test.use({ contextOptions: { reducedMotion: "no-preference" } });
+
+  test("a link low on the page fades in the new page, not the top of the old one", async ({
+    page
+  }) => {
+    // The kernel scrolls to the top before the old snapshot is taken: from the footer the crossfade
+    // started from the home hero, a page the reader never saw there.
+    await visit(page, "/en/");
+    test.skip(
+      await page.evaluate(() => typeof document.startViewTransition !== "function"),
+      "no view transitions in this engine"
+    );
+    await watchOldSnapshot(page);
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    await page.locator('[data-component="footer"] a[href="/en/privacy/"]').click();
+    await page.waitForURL(url => url.pathname === "/en/privacy/");
+    await expect.poll(() => oldSnapshotShown(page)).toBe(false);
+  });
+
+  test("a link at the top of the page keeps the crossfade from the old page", async ({ page }) => {
+    await visit(page, "/en/");
+    test.skip(
+      await page.evaluate(() => typeof document.startViewTransition !== "function"),
+      "no view transitions in this engine"
+    );
+    await watchOldSnapshot(page);
+    await page.locator('[data-component="footer"] a[href="/en/privacy/"]').focus();
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.keyboard.press("Enter");
+    await page.waitForURL(url => url.pathname === "/en/privacy/");
+    await expect.poll(() => oldSnapshotShown(page)).toBe(true);
+  });
 
   test("Forward returns to where the reader left a long page", async ({ page }) => {
     // Known defect of @moku-labs/web 2.4.11 (SPA kernel): with the crossfade on, Back takes the
