@@ -42,16 +42,17 @@ export const HEAD = {
 } as const;
 
 /**
- * SPA options, the same in the build and in the browser: the island registry, a crossfade between
- * pages, no progress bar, and a swap of the `[data-page]` element only.
+ * SPA options, the same in the build and in the browser: the island registry, an instant swap of
+ * the `[data-page]` element only, and the progress bar while the next page loads. A crossfade froze
+ * the page for its length after every tap on a phone.
  */
 export const SPA = {
   /** Every island of the site. */
   islands,
-  /** View transition between pages. */
-  viewTransitions: "crossfade",
-  /** No navigation progress bar. */
-  progressBar: false,
+  /** No view transition: the new page is there at once. */
+  viewTransitions: "none",
+  /** The progress bar shows a tap was taken while the next page loads. */
+  progressBar: true,
   /** The element a navigation swaps. */
   swapSelector: "[data-page]"
 } as const;

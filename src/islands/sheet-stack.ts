@@ -9,7 +9,7 @@
  */
 import { createIsland } from "@moku-labs/web/browser";
 import { FOLD_AT, POP_AT, sheetCover, sheetLift } from "../lib/parallax";
-import { prefersReducedMotion } from "./motion-pref";
+import { isTouchScreen, prefersReducedMotion } from "./motion-pref";
 import { foldFlat, popUp, standUp } from "./popup-sticker";
 
 /** Delay before a landing sheet's sticker springs up, ms. */
@@ -145,7 +145,9 @@ function peekingStickers(sheets: readonly StackSheet[]): HTMLElement[] {
  */
 function startStack(root: Element): () => void {
   const sheets = collectSheets(root);
-  const reduced = prefersReducedMotion();
+  // A touch screen keeps the sheets still, as under reduced motion: following the lift restyled
+  // every sheet on every scrolled frame.
+  const reduced = prefersReducedMotion() || isTouchScreen();
   let armed = false;
   let frame = 0;
 

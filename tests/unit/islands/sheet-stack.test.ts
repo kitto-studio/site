@@ -51,4 +51,22 @@ describe("sheet-stack island", () => {
     expect(calls.filter(call => call === "write")).toHaveLength(6);
     expect(calls.slice(firstWrite)).not.toContain("read");
   });
+
+  // Catches: a phone that still follows each sheet's lift, restyling every sheet per scrolled frame.
+  it("does not follow the lift on a touch screen", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query === "(hover: none)",
+      media: query
+    }));
+    const lifts = vi.fn();
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation(name => {
+      if (name === "--lift") lifts();
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+
+    globalThis.dispatchEvent(new Event("scroll"));
+    vi.advanceTimersToNextFrame();
+
+    expect(lifts).not.toHaveBeenCalled();
+  });
 });
