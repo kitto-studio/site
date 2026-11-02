@@ -4,7 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { sheetStackIsland } from "../../../src/islands/sheet-stack";
 
 /** Three sheets of the stack, each after its zero-height marker, as the home page renders them. */
-const STACK = "<span data-stack-mark></span><section data-stack></section>".repeat(3);
+const STACK =
+  '<span data-stack-mark></span><section data-stack style="position: sticky"></section>'.repeat(3);
 
 let handle: IslandHandle | undefined;
 
@@ -116,5 +117,20 @@ describe("sheet-stack island", () => {
 
     // 600 px sheets in a 500 px window: 500 - 600 - 16.
     expect(tops).toEqual(["-116px", "-116px", "-116px"]);
+  });
+
+  // Catches: a top set on a sheet that does not stick (a touch screen's plain list), which shifts
+  // the sheet down or up instead of pinning it.
+  it("pins no sheet that does not stick", () => {
+    vi.stubGlobal("innerHeight", 500);
+    const tops: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--stick-top") tops.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, {
+      html: STACK.replaceAll(' style="position: sticky"', "")
+    });
+
+    expect(tops).toEqual([]);
   });
 });

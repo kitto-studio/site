@@ -28,6 +28,11 @@
       visibility 0s linear 0.42s;
   }
 
+  /* Closed by a followed link: gone at once, no slide over the new page. */
+  [data-menu-instant] :scope :is([data-menu-scrim], [data-menu-sheet]) {
+    transition: none;
+  }
+
   [data-menu-open] :scope [data-menu-scrim] {
     opacity: 1;
     visibility: visible;

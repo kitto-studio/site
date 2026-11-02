@@ -153,6 +153,9 @@ function pinTallSheets(sheets: readonly StackSheet[]): void {
     sheet.style.removeProperty("--stick-top");
   }
   const tall = sheets.flatMap(({ sheet }) => {
+    // Only a sticky sheet sticks: on a touch screen the sheets are a plain list, and a top there
+    // would shift them.
+    if (getComputedStyle(sheet).position !== "sticky") return [];
     const stickTop = Number.parseFloat(getComputedStyle(sheet).top) || 0;
     const height = sheet.offsetHeight;
     const room = globalThis.innerHeight - stickTop - PIN_MARGIN;

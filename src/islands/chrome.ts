@@ -171,7 +171,7 @@ export const chromeIsland = createIsland("chrome", {
     "change [data-theme-choice]": onRoot((root, _event, radio) => chooseTheme(root, radio)),
     "click [data-menu-toggle]": onRoot(root => toggleMenu(root)),
     "click [data-menu-scrim]": onRoot(root => closeMenu(root, true)),
-    "click [data-menu-sheet] a": onRoot(root => closeMenu(root, false))
+    "click [data-menu-sheet] a": onRoot(root => closeMenu(root, false, true))
   },
   /**
    * On the header: show the saved or previewed theme and start listening beyond the header.
