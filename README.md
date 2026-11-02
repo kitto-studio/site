@@ -57,13 +57,14 @@ Open <http://localhost:4173/>. The dev server builds, serves, watches and reload
 flowchart LR
   R["routes.tsx<br/>pages · i18n"] --> B["Node app<br/>src/app.ts"]
   A["assets/site-art<br/>bun run images"] --> P["public/"]
+  O["OG_CARDS · strings<br/>bun run og"] --> P
   P --> B
   S["spa.tsx<br/>islands"] --> B
-  B --> D["dist/<br/>88 pages · root · 404s<br/>sitemap · OG cards"]
+  B --> D["dist/<br/>88 pages · root · 404s<br/>sitemap · public/"]
   D --> C["kitto.studio<br/>Cloudflare Pages"]
   classDef u fill:#0b7285,stroke:#08525f,color:#fff;
   classDef m fill:#1864ab,stroke:#0d3d6e,color:#fff;
-  class R,A,S,C u
+  class R,A,O,S,C u
   class B,P,D m
 ```
 
@@ -72,8 +73,10 @@ flowchart LR
 - `src/spa.tsx` is the browser side: the islands and the in-locale navigation. It carries no page
   code and no string tables (`tests/integration/bundle.test.ts` guards this).
 - After the build, `src/plugins/postbuild` writes the per-locale 404 pages, `sitemap.xml` with
-  hreflang, `robots.txt`, `_redirects` and the OG cards. See its
-  [README](src/plugins/postbuild/README.md).
+  hreflang, `robots.txt` and `_redirects`. See its [README](src/plugins/postbuild/README.md).
+- The build draws no OG card. `bun run og` draws them once (`src/plugins/assets`, see its
+  [README](src/plugins/assets/README.md)), into `public/og/{lang}/{card}.png`. The PNGs and
+  `assets/og-manifest.json` are committed, like `public/media`. The build copies them.
 
 ## URL map
 
@@ -120,6 +123,7 @@ Mail: `support@kitto.studio` for support, `delete@kitto.studio` for data deletio
 | `bun run preview` | Serve the built `dist/`. |
 | `bun run images` | Turn the PNG masters in `assets/site-art/` into webp in `public/media/`. |
 | `bun run icons` | Render `public/apple-touch-icon.png` and `public/icon-512.png` from `public/favicon.svg`. |
+| `bun run og` | Draw the OG cards that changed into `public/og/`, update `assets/og-manifest.json`. |
 | `bun run lint` | Biome check and oxlint. |
 | `bun run lint:fix` | The same, with fixes written. |
 | `bun run format` | Biome format. |
@@ -149,7 +153,8 @@ Mail: `support@kitto.studio` for support, `delete@kitto.studio` for data deletio
    `tests/unit/i18n.test.ts` fails on a missing key.
 5. **Catalog.** Add a card to `src/pages/GamesPage.tsx`. `GameCard` shows A Memory Missing today,
    so give it the game to show.
-6. **OG card.** Add a card kind in `src/lib/head.ts` and `src/plugins/postbuild/og/index.ts`.
+6. **OG card.** Add a row to `OG_CARDS` in `src/og/cards.ts`. Then
+   [redraw the cards](#change-an-og-card).
 7. **Legal.** Add the new app ID (`studio.kitto.<game>`) to the privacy and delete-data texts of
    every locale.
 8. **Counts.** The sitemap, `_redirects` and 404s follow the route table. Update the page count
@@ -164,15 +169,28 @@ Mail: `support@kitto.studio` for support, `delete@kitto.studio` for data deletio
 3. Wire them in `src/i18n/index.ts` (`STRINGS` and `LEGAL`).
 4. Fonts: Latin and Cyrillic are covered. For another script, vendor a font in
    `public/fonts/<family>/`, add `public/css/fonts-<code>.css`, add the code to `CJK`, and add the
-   face to `CJK_FACES` in `src/plugins/postbuild/og/index.ts` (from a pinned `@fontsource` package).
+   face to `CJK_FACES` in `src/plugins/assets/og/render.ts` (from a pinned `@fontsource` package).
 5. Typography rules, if the language has them, go in `src/lib/typography.ts`.
-6. Run the three review passes and add the language to [docs/translations.md](docs/translations.md).
+6. [Redraw the cards](#change-an-og-card): the new language gets its own.
+7. Run the three review passes and add the language to [docs/translations.md](docs/translations.md).
 
 ### Add or change art
 
 1. Put the PNG master in `assets/site-art/<set>/` and add its prompt and size to the
    `manifest.json` beside it.
 2. Run `bun run images`. It writes webp (quality 82, at most 1600 px) to `public/media/<set>/`.
+3. If an OG card shows the picture, [redraw the cards](#change-an-og-card).
+
+### Change an OG card
+
+A card is drawn from its row in `OG_CARDS`, its words in `src/i18n/locales/`, the card code
+(`src/og/`, `src/plugins/assets/og/`, `src/config.ts`, `src/lib/typography.ts`), the drawing
+packages and its art in `public/media/`. A change to any of them makes the card stale.
+
+1. Run `bun run og`. It redraws only the stale cards and prints how many it wrote.
+2. Commit the PNGs in `public/og/` and `assets/og-manifest.json` with the change.
+
+`src/plugins/assets/__tests__/unit/og-manifest.test.ts` fails on a stale card and names it.
    It skips outputs newer than their source, so a rerun writes nothing.
 3. Commit the master and the webp together.
 
