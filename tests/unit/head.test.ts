@@ -1,5 +1,6 @@
 import { createUrls, hreflang, type Router } from "@moku-labs/web/browser";
 import { describe, expect, it } from "vitest";
+import { t } from "../../src/i18n";
 import { pageHead, type RoutePage } from "../../src/lib/head";
 import { OG_CARDS } from "../../src/og/cards";
 import { routes } from "../../src/routes";
@@ -29,8 +30,8 @@ describe("pageHead", () => {
   it("returns the page's own title and description", () => {
     const head = headOf("privacy", "en");
 
-    expect(head.title).toBe("Privacy Policy");
-    expect(head.description).toContain("No accounts, no analytics");
+    expect(head.title).toBe(t("en").meta.privacy.title);
+    expect(head.description).toBe(t("en").meta.privacy.description);
   });
 
   it("links the CJK font stylesheet only on ja, ko and zh pages", () => {
@@ -76,7 +77,6 @@ describe("pageHead", () => {
     const root = headOf("root", "en");
     const home = headOf("home", "en");
 
-    expect(root.title).toBe("Surely worth playing.");
     expect(root.title).toBe(home.title);
     expect(root.description).toBe(home.description);
   });

@@ -69,6 +69,7 @@ export const OG_CARDS = {
     side: "left",
     headline: 96,
     messageGap: 35,
+    messageLines: 4,
     print: {
       rotate: -2.8,
       ground: "radial-gradient(circle at 50% 42%, #fff8ec 0%, #f1e5d1 60%, #e6d6bc 100%)"

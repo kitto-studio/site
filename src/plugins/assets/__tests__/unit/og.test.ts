@@ -95,6 +95,23 @@ describe("Postcard", () => {
     expect(twoLines.some(style => style.maxHeight === 47)).toBe(false);
     expect(plain.some(style => style.maxHeight === 47)).toBe(false);
   });
+
+  // Catches: the support card's five-line message (fr, es, ja) running into the postmark, because
+  // the row's line limit never reaches the message.
+  it("cuts the message after the row's line limit", () => {
+    const tree = Postcard({
+      card: OG_CARDS.support,
+      text: cardText(OG_CARDS.support, "fr"),
+      site: "kitto.studio",
+      art: { stamp: "", print: "" },
+      families: { heading: "H", message: "M", strong: "S", quiet: "Q" },
+      headlineSize: 96,
+      headlineLines: 1,
+      isCjk: false
+    });
+
+    expect(messagesOf(tree).map(props => props.maxLines)).toEqual([4]);
+  });
 });
 
 /** The props of every `Message` in a card tree. */
@@ -143,8 +160,21 @@ describe("cardText", () => {
 
   // Catches: a Japanese headline wrapping mid-word instead of after its comma, as the design sets it.
   it("breaks the ja headline after the first 、", () => {
-    expect(cardText(OG_CARDS.home, "ja").headline).toBe("きっと、\n遊ぶ価値がある。");
+    const headline = cardText(OG_CARDS.home, "ja").headline;
+    const comma = headline.indexOf("、");
+
+    expect(comma).toBeGreaterThan(0);
+    expect(headline.slice(comma + 1, comma + 2)).toBe("\n");
     expect(cardText(OG_CARDS.home, "ko").headline).not.toContain("\n");
+  });
+
+  // Catches: the French narrow no-break space reaching a card. Nunito and Golos Text have no
+  // U+202F, so satori draws a box before the colon.
+  it("sets the French space before a colon as a no-break space the card fonts have", () => {
+    const { message } = cardText(OG_CARDS.support, "fr");
+
+    expect(message).not.toContain("\u{202F}");
+    expect(message).toContain("\u{A0}:");
   });
 });
 

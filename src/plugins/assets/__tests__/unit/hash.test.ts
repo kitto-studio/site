@@ -94,6 +94,10 @@ describe("ogInputs", () => {
 // Catches: a card hash that ignores the drawing code (a satori update redraws nothing), ignores its
 // own art, or takes another card's art (one picture edit redrawing the wrong card).
 describe("cardHash", () => {
+  afterEach(() => {
+    vi.doUnmock("../../../../config");
+  });
+
   it("changes with the code and with the card's own art only", () => {
     const inputs: OgInputs = {
       code: "code",
@@ -125,6 +129,5 @@ describe("cardHash", () => {
     const moved = await import("../../og/hash");
 
     expect(moved.cardHash("home", "en", inputs)).not.toBe(before);
-    vi.doUnmock("../../../../config");
   });
 });

@@ -124,6 +124,7 @@ export function Postcard({
           color={COLOR.text}
           family={families.message}
           isCjk={isCjk}
+          maxLines={card.messageLines}
         />
         <div style={{ flexGrow: 1 }} />
         <div style={{ display: "flex", flexShrink: 0, paddingLeft: writing.indent }}>

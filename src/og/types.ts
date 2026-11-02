@@ -1,9 +1,8 @@
 /**
  * @file Types of the OG cards: a row of the card table (`OG_CARDS` in `cards.ts`), the art of a
- * photo print, and the props the layouts take. Every number of a row is card px (1200 × 630).
+ * photo print, the words on a card, and the props the layouts take. Every number of a row is card px (1200 × 630).
  */
 import type { PageId } from "../i18n/types";
-import type { OgCardText } from "../plugins/assets/og/types";
 
 /** A page whose head copy a card shows: every page with a `meta` entry. */
 export type OgCardPage = Exclude<PageId, "root" | "notFound">;
@@ -128,6 +127,11 @@ export type OgPostcardSpec = {
   status?: boolean;
   /** Writes the support address on the address line. */
   email?: boolean;
+  /**
+   * Most lines the message may take; 5 when absent. A row whose message runs long sets fewer, so
+   * the last line stays clear of the postmark.
+   */
+  messageLines?: number;
 };
 
 /**
@@ -147,6 +151,18 @@ export type OgLetterSpec = {
   headline: number;
   /** The stamp. */
   stamp: OgStamp;
+};
+
+/** The words on one OG card. */
+export type OgCardText = {
+  /** The big line: the page title. A ja title breaks after its first `、`. */
+  headline: string;
+  /** The line under it: the page description. */
+  message: string;
+  /** The store status in a chip, on the game card. */
+  status?: string;
+  /** The support address on the address line, on the support card. */
+  email?: string;
 };
 
 /** One row of the card table. */

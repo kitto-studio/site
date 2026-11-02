@@ -84,7 +84,7 @@ type MessageProps = {
   /** Whether the card is set in a CJK locale. */
   isCjk: boolean;
   /** Most lines; five when absent, a safety net no real postcard text reaches. */
-  maxLines?: number;
+  maxLines?: number | undefined;
 };
 
 /**
