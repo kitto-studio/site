@@ -13,6 +13,7 @@ Use `bun` exclusively. Never npm, yarn or pnpm.
 - `bun run preview` — serve the built `dist/`
 - `bun run images` — `assets/site-art/**` PNG masters → `public/media/**` webp (idempotent, outputs committed)
 - `bun run icons` — `public/favicon.svg` → `public/apple-touch-icon.png` and `public/icon-512.png`
+- `bun run og` — redraw the stale OG cards → `public/og/**` PNG + `assets/og-manifest.json` (idempotent, outputs committed). Run it after a change to a card's row, words, art or code
 - `bun run lint` — Biome check + oxlint (`lint:fix` writes the fixes)
 - `bun run format` — Biome format
 - `bun run typecheck` — `tsc --noEmit` (TypeScript 7)
@@ -36,8 +37,8 @@ Code:
 - `src/components/` — SSG markup, one `.tsx` + `.css` each (`@scope` on `data-component`, no class selectors)
 - `src/islands/` — client behaviour; `index.ts` is the registry. Bigger islands split into a folder (`chrome/`, `gallery/`, `merge-board/`). Islands read their strings from `data-*` attributes written at build time
 - `src/lib/` — pure helpers: locale pick, Jump physics, parallax, gallery, merge game, typography, legal, head, 404 body, `game.ts` (`GALLERY`)
-- `src/plugins/assets/` — Node-only Layer-3 plugin: `app.assets.images()` (Astra PNG masters in `assets/site-art` → `public/media` webp + thumbs) and `app.assets.icons()` (apple-touch and 512 icons). `scripts/images.ts` and `scripts/icons.ts` are one-line passthroughs
-- `src/plugins/postbuild/` — Node-only Layer-3 plugin on `build:complete`: per-locale 404s, hreflang sitemap, `robots.txt`, `_redirects`, OG cards (satori + resvg, `src/og/OgCard.tsx`, code in `og/`). Tests in its `__tests__/`
+- `src/plugins/assets/` — Node-only Layer-3 plugin: `app.assets.images()` (Astra PNG masters in `assets/site-art` → `public/media` webp + thumbs), `app.assets.icons()` (apple-touch and 512 icons) and `app.assets.og()` (OG cards, satori + resvg, `src/og/OgCard.tsx`, code in `og/` → `public/og` PNG + `assets/og-manifest.json`, only the stale cards). `scripts/images.ts`, `scripts/icons.ts` and `scripts/og.ts` are one-line passthroughs. `__tests__/unit/og-manifest.test.ts` fails on a stale card
+- `src/plugins/postbuild/` — Node-only Layer-3 plugin on `build:complete`: per-locale 404s, hreflang sitemap, `robots.txt`, `_redirects`. Tests in its `__tests__/`
 - `src/i18n/` — `languages.ts` (11 locales), `types.ts` (`UIStrings`), `locales/<code>.ts`, `legal/{privacy,terms,delete-data}/<code>.ts`, `index.ts` (`t(locale)`, `LEGAL`)
 - `src/styles/` — `main.css` layer order `reset, tokens, base, components, animations, utilities`; `tokens.css` primitives + semantic tokens; `fonts.css` Latin faces
 - `scripts/*.ts` — `build`, `serve`, `preview`, `deploy` are thin entries over `app.cli.*`; `images` and `icons` are sharp pipelines
