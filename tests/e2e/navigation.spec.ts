@@ -126,6 +126,7 @@ test("a hard load of a deep page works and the chrome mounts", async ({ page }) 
  * Record, for the next view transition, whether the old page's snapshot is drawn.
  *
  * @param page - The page.
+ * @returns Resolves once the hook is installed.
  */
 async function watchOldSnapshot(page: import("@playwright/test").Page): Promise<void> {
   await page.evaluate(() => {
@@ -169,6 +170,9 @@ test.describe("with motion", () => {
     );
     await watchOldSnapshot(page);
     await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    expect(await page.evaluate(() => scrollY), "the click is made below the top").toBeGreaterThan(
+      0
+    );
     await page.locator('[data-component="footer"] a[href="/en/privacy/"]').click();
     await page.waitForURL(url => url.pathname === "/en/privacy/");
     await expect.poll(() => oldSnapshotShown(page)).toBe(false);
@@ -183,6 +187,7 @@ test.describe("with motion", () => {
     await watchOldSnapshot(page);
     await page.locator('[data-component="footer"] a[href="/en/privacy/"]').focus();
     await page.evaluate(() => scrollTo(0, 0));
+    expect(await page.evaluate(() => scrollY), "the click is made at the top").toBe(0);
     await page.keyboard.press("Enter");
     await page.waitForURL(url => url.pathname === "/en/privacy/");
     await expect.poll(() => oldSnapshotShown(page)).toBe(true);

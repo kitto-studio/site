@@ -41,6 +41,16 @@ function forgetNavFromBelow(): void {
   delete document.documentElement.dataset.navFromBelow;
 }
 
+/**
+ * Whether a click landed on a link or inside one.
+ *
+ * @param target - The click target.
+ * @returns True for a click on an `a[href]`.
+ */
+function isLinkClick(target: EventTarget | null): boolean {
+  return target instanceof Element && target.closest("a[href]") !== null;
+}
+
 /** An event handler that works on the island root as an HTML element. */
 type RootHandler = (root: HTMLElement, event: Event, target: Element) => void;
 
@@ -128,7 +138,7 @@ function watchHeader(ctx: Spa.IslandContext<object>, root: HTMLElement): void {
   // The kernel jumps to the top before the crossfade takes its picture of the old page, so a link
   // followed from lower down would fade out of the top of the old page. Mark that case for the CSS.
   const onLinkClick = (event: MouseEvent): void => {
-    if (!(event.target instanceof Element && event.target.closest("a[href]"))) return;
+    if (!isLinkClick(event.target)) return;
     if (scrollY > 0) document.documentElement.dataset.navFromBelow = "";
     else forgetNavFromBelow();
   };
