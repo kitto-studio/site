@@ -124,11 +124,15 @@ function measureLift(item: StackSheet, reduced: boolean): number | undefined {
   if (reduced || !mark) {
     return undefined;
   }
-  return sheetLift({
-    markTop: mark.getBoundingClientRect().top,
-    viewportHeight: globalThis.innerHeight,
-    stickTop: Number.parseFloat(getComputedStyle(sheet).top) || 0
-  });
+  const markTop = mark.getBoundingClientRect().top;
+  const viewportHeight = globalThis.innerHeight;
+  const scrollRoom = document.documentElement.scrollHeight - viewportHeight - globalThis.scrollY;
+  const stickTop = Number.parseFloat(getComputedStyle(sheet).top) || 0;
+
+  // A sheet lands where it sticks, or where the page ends under it if that comes first (the last
+  // sheet in a tall window), so at the very bottom every sheet has landed.
+  const landTop = Math.max(stickTop, markTop - Math.max(0, scrollRoom));
+  return sheetLift({ markTop, viewportHeight, stickTop: landTop });
 }
 
 /**

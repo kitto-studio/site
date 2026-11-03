@@ -119,6 +119,59 @@ describe("sheet-stack island", () => {
     expect(tops).toEqual(["-116px", "-116px", "-116px"]);
   });
 
+  // Catches: a sheet the page ends under before it reaches its place (the last sheet in a tall
+  // window, lift stuck at 0.42 at the very bottom), whose sticker never springs up.
+  it("lands a sheet at the bottom of the page even short of its place", () => {
+    vi.stubGlobal("innerHeight", 1000);
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(
+      () => new DOMRect(0, 500, 1000, 600)
+    );
+    const room = { height: 4000, y: 0 };
+    vi.spyOn(document.documentElement, "scrollHeight", "get").mockImplementation(() => room.height);
+    vi.stubGlobal("scrollY", 0);
+    const lifts: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--lift") lifts.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, { html: STACK });
+
+    // Far from the end: half the window still to travel.
+    expect(lifts.at(-1)).toBe("0.500");
+
+    // 200 px of page left: it can only travel to 300 px, (500 - 300) / (1000 - 300) to go.
+    vi.stubGlobal("scrollY", 2800);
+    globalThis.dispatchEvent(new Event("scroll"));
+    vi.advanceTimersToNextFrame();
+    expect(lifts.at(-1)).toBe("0.286");
+
+    // The very bottom of the page: nowhere left to travel, so it has landed.
+    vi.stubGlobal("scrollY", 3000);
+    globalThis.dispatchEvent(new Event("scroll"));
+    vi.advanceTimersToNextFrame();
+    expect(lifts.at(-1)).toBe("0.000");
+  });
+
+  // Catches: a sheet that sticks before the page ends landing at the page end instead, below its
+  // sticky place.
+  it("still lands a sheet at its sticky place when the page goes on below it", () => {
+    vi.stubGlobal("innerHeight", 1000);
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(
+      () => new DOMRect(0, 500, 1000, 600)
+    );
+    vi.spyOn(document.documentElement, "scrollHeight", "get").mockImplementation(() => 4000);
+    vi.stubGlobal("scrollY", 2800);
+    const lifts: string[] = [];
+    vi.mocked(CSSStyleDeclaration.prototype.setProperty).mockImplementation((name, value) => {
+      if (name === "--lift") lifts.push(String(value));
+    });
+    handle = mountIsland(sheetStackIsland, {
+      html: STACK.replaceAll('style="position: sticky"', 'style="position: sticky; top: 400px"')
+    });
+
+    // It sticks at 400 px, lower than the 300 px the page end would allow: (500 - 400) / 600.
+    expect(lifts.at(-1)).toBe("0.167");
+  });
+
   // Catches: a top set on a sheet that does not stick (a touch screen's plain list), which shifts
   // the sheet down or up instead of pinning it.
   it("pins no sheet that does not stick", () => {
