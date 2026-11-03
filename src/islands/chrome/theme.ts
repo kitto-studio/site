@@ -3,15 +3,12 @@
  * removes it, so the colours follow `prefers-color-scheme` live through CSS. A choice is saved as
  * `kitto-theme`; `?theme=` previews a theme without saving it.
  *
- * A choice switches at once: `data-theme-fade` turns the per-element colour fades off for two
- * frames, so the page is redrawn once instead of every frame for their 0.9 s. A window crossfade
- * (view transition) is not used: while it runs the browser hit-tests the snapshot, and a second
- * quick tap on the switch was lost.
+ * A choice crossfades the whole window in one view transition where the browser has them: the two
+ * snapshots fade on the compositor, while `data-theme-fade` turns the per-element colour fades off.
+ * Those fades redrew the whole page every frame for their 0.9 s. Elsewhere the colour fades run.
  */
+import { prefersReducedMotion } from "../motion-pref";
 import { readChoice, saveChoice } from "./storage";
-
-/** The pending frame that turns the colour fades back on after a switch, 0 when none. */
-let fadeFrame = 0;
 
 /** One theme choice. */
 type Theme = "light" | "system" | "dark";
@@ -68,7 +65,7 @@ export function applyTheme(root: Element, theme: Theme): void {
 
 /**
  * Choose the theme of the stop the reader checked (click, tap or arrow key): save it and show it in
- * both switches at once, with the colour fades off for the switch.
+ * both switches, in one window crossfade where the browser has view transitions.
  *
  * @param root - The header.
  * @param radio - The radio input that changed.
@@ -80,13 +77,15 @@ export function chooseTheme(root: Element, radio: Element): void {
   if (theme === undefined) return;
   saveChoice(STORAGE_KEY, theme);
 
-  // Switch with the fades off, and let them back on once the new colours are drawn. A quick second
-  // choice restarts the wait, so the first one cannot turn the fades on in the middle of it.
+  // Show it: at once without view transitions, else inside one window crossfade.
+  const canCrossfade =
+    typeof document.startViewTransition === "function" && !prefersReducedMotion();
+  if (!canCrossfade) {
+    applyTheme(root, theme);
+    return;
+  }
   const html = document.documentElement;
   html.dataset.themeFade = "";
-  applyTheme(root, theme);
-  cancelAnimationFrame(fadeFrame);
-  fadeFrame = requestAnimationFrame(() => {
-    fadeFrame = requestAnimationFrame(() => delete html.dataset.themeFade);
-  });
+  const fade = document.startViewTransition(() => applyTheme(root, theme));
+  void fade.finished.finally(() => delete html.dataset.themeFade);
 }
