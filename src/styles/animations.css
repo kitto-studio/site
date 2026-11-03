@@ -8,15 +8,12 @@
   display: none;
 }
 
-/* A theme choice (chrome island): the whole window crossfades once on the compositor, so the
-   per-element colour fades are off until it ends. */
-:root[data-theme-fade] :is(*, *::before, *::after) {
+/* A theme choice (chrome island) switches at once: the per-element colour fades are off for the
+   switch, so the page is redrawn once, not every frame of a 0.9 s fade. */
+:root[data-theme-fade] *,
+:root[data-theme-fade] *::before,
+:root[data-theme-fade] *::after {
   transition: none;
-}
-
-:root[data-theme-fade]::view-transition-old(root),
-:root[data-theme-fade]::view-transition-new(root) {
-  animation-duration: var(--duration-crossfade);
 }
 
 @media (prefers-reduced-motion: reduce) {

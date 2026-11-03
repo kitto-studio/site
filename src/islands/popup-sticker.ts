@@ -18,8 +18,8 @@ import { isBelowFold, revealOnView } from "./reveal";
 /** A sticker lying flat on its sheet, degrees. */
 const FLAT = 90;
 
-/** Delay before a sticker in view at load springs up: after the logo's dot has landed, ms. */
-const ENTRANCE_DELAY = 650;
+/** Delay before a sticker in view at load springs up, ms: short, so a page opened by a tap answers at once. */
+const ENTRANCE_DELAY = 250;
 
 /** Delay before a sticker that scrolled into view springs up, ms. */
 const VIEW_DELAY = 120;
